@@ -1,5 +1,6 @@
 # assembly
 A repository for testing thoughts and ideas in assembly language.
+(currently mostly taken from books)
 
 | Program         | Description                                 |
 |:---------------:|:-------------------------------------------:|
