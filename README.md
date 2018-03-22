@@ -8,3 +8,5 @@ A repository for testing thoughts and ideas in assembly language.
 | prog3b + prog3c | Test program for learning to use part files |
 | prog6a          | Simple 32-bit addition                      |
 | prog6b          | 64-bit addition                             |
+| prog6c          | 32-bit multiplication                       |
+| prog6d          | Using MLA                                   |
