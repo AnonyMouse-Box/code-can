@@ -12,3 +12,5 @@ A repository for testing thoughts and ideas in assembly language.
 | prog6d          | Using MLA                                       |
 | prog7a          | Using Syscall 4 to write a string to the screen |
 | prog7b          | Using Syscall 3 to write a string to the screen |
+| prog8a          | Converting character case                       |
+| prog8b          | Printing a number as a binary string            |
