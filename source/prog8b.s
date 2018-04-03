@@ -24,7 +24,7 @@ _print0:
   MOV R6, R8      @ MOV no, preserve
 
 _noprint1:
-  MOVS R9, R9, LSR #1   @ shuffle mask bits
+  MOV S R9, R9, LSR #1   @ shuffle mask bits
   BNE _bits
 
 _exit:
