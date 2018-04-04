@@ -1,4 +1,5 @@
-  .global _start
+/* Program for performing a Caesar Cipher to a string */
+.global _start
 _start:
 _read:
                     @ read syscall
