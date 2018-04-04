@@ -21,4 +21,4 @@ _exit:
 
 .data
 string:
-.ascii "Hello World String\n"
+.ascii ""
