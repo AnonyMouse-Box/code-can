@@ -17,7 +17,7 @@ _lower:
 
 _algorithm:
 /* will focus on simply decrypting the most likely and leave dictionary resolving for later */
-/* etaoinshrdlucmfwypvbgkjqxz */
+/* eta oin shr dlu cmf wyp vbg kjq xz */
 
 _write:
   MOV R7, #4        @ Syscall number
