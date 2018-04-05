@@ -26,7 +26,7 @@ _cipher:
 _write:
   MOV R7, #4        @ Syscall number
   MOV R0, #1        @ Stdout is monitor
-  MOV R2, #1        @ string is 1 chars long
+  MOV R2, #1        @ string is 1 char long
   LDR R1,=string    @ string is located at string:
   SWI 0
 
