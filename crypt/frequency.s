@@ -1,5 +1,4 @@
 /* program for performing an alphabet frequency attack to break ciphers and basic encyption - TBC */
-/* will focus on simply decrypting the most likely and leave dictionary resolving for later */
   .global _start
 _start:
 _read:
@@ -17,6 +16,7 @@ _lower:
   STR R4, [R1]        @ write char back
 
 _algorithm:
+/* will focus on simply decrypting the most likely and leave dictionary resolving for later */
 
 _write:
   MOV R7, #4        @ Syscall number
