@@ -8,6 +8,7 @@ _read:
 /* needs to be: 40<x<5B (send to lower) or 60<x<7B */
   LDR R1,=string    @ string placed at string:
   SWI 0
+/* need to store additional value (1-26) as R3 */
 
 _lower:
   LDR R1,=string      @ address of char
