@@ -11,7 +11,7 @@ _read:
 
 _lower:
   LDR R1,=string      @ address of char
-  LDR R4, [R1]        @ load it into R3
+  LDR R4, [R1]        @ load it into R4
   ORR R4, R4, #0x20   @ change case
   STR R4, [R1]        @ write char back
 
