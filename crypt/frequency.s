@@ -18,6 +18,7 @@ _lower:
 _algorithm:
 /* will focus on simply decrypting the most likely and leave dictionary resolving for later */
 /* etaoinshrdlcumwfgypbvkjxqz */
+
 _write:
   MOV R7, #4        @ Syscall number
   MOV R0, #1        @ Stdout is monitor
