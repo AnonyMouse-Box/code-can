@@ -21,6 +21,7 @@ _cipher:
   SUB S R6, R5, 0x7A    @ subtract z with flags
   ADD GT R1, R6, 0x60   @ if R6>0 add a-1
   MOV LE R1, R5         @ if R6<=0 store R5
+/* check writing to R1 in this way has intended effect */
 
 _write:
   MOV R7, #4        @ Syscall number
