@@ -9,21 +9,21 @@ _read:
   SWI 0
 /* need to store additional value (1-26) as R3 */
 
-/* needs to be: 40<x<5B (send to lower) or 60<x<7B
 _errchk0:
-  CMP R1, 0x40
-  B LE _error
-  CMP GT R1, 0x5B
-  B GE _errchk1
-  B LT _lower
+  CMP R1, 0x40      @ Check not lower than A
+  B LE _error       @ If false send error
+  CMP GT R1, 0x5B   @ If true check not higher than Z
+  B GE _errchk1     @ If false send to lowercase check
+  B LT _lower       @ If true send for case lowering
 
 _errchk1:
-  CMP R1, 0x60
-  B LE _error
-  CMP GT R1, 0x7B
-  B GE _error
-  B LT _cipher
-  */
+  CMP R1, 0x60      @ Check not lower than a
+  B LE _error       @ If false send error
+  CMP GT R1, 0x7B   @ If true check not higher than z
+  B GE _error       @ If false send error
+  B LT _cipher      @ If true send for ciphering
+
+_error:
 
 _lower:
   LDR R1,=string      @ address of char
