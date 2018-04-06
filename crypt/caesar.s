@@ -5,10 +5,25 @@ _read:
   MOV R7, #3        @ Syscall number
   MOV R0, #0        @ Stdin is keyboard
   MOV R2, #1        @ read first character
-/* needs to be: 40<x<5B (send to lower) or 60<x<7B */
   LDR R1,=string    @ string placed at string:
   SWI 0
 /* need to store additional value (1-26) as R3 */
+
+/* needs to be: 40<x<5B (send to lower) or 60<x<7B
+_errchk0:
+  CMP R1, 0x40
+  B LE _error
+  CMP GT R1, 0x5B
+  B GE _errchk1
+  B LT _lower
+
+_errchk1:
+  CMP R1, 0x60
+  B LE _error
+  CMP GT R1, 0x7B
+  B GE _error
+  B LT _cipher
+  */
 
 _lower:
   LDR R1,=string      @ address of char
