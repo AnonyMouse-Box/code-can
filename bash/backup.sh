@@ -6,3 +6,6 @@ tar -cvf /home/user/backup.tar /source/
 
 echo compressing files...
 bzip2 -zvk backup.tar
+
+echo testing integrity...
+bzip2 -t backup.tar.bz2
