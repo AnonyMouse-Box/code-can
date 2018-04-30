@@ -1,62 +1,63 @@
 #!/bin/bash
 # gradually building a backup script as it will be useful to have
 
-SRC=/source
+SRC=/home
+LOG=/tmp/backup.txt
 BAK=/tmp/backup
 MBK=/tmp/backup-$(date +%b)
 WBK=/tmp/backup-$(date +%d)
 DBK=/tmp/backup-$(date +%a)
 
-echo backup process begun $(date +%c):
+echo backup process begun $(date +%c): >> $LOG
 
-echo building tar archive...
-tar -cvf $BAK.tar $SRC
-echo \n
+echo building tar archive... >>$LOG
+tar -cvf $BAK.tar $SRC >> $LOG
+echo \n  >> $LOG
 
-echo compressing files...
-bzip2 -zvk $BAK.tar
-echo \n
+echo compressing files... >> $LOG
+bzip2 -zvk $BAK.tar >> $LOG
+echo \n >> $LOG
 
-echo testing integrity...
-bzip2 -t $BAK.tar.bz2
-echo \n
+echo testing integrity... >> $LOG
+bzip2 -t $BAK.tar.bz2 >> $LOG
+echo \n >> $LOG
 
 # when I've figued out how to read the integrity output I'll split it with an if statement here
 # runs every day
 
-echo constructing backup schema...
-echo creating daily backup...
-cp $BAK.tar.bz2 $DBK.tbz2
-echo \n
+echo constructing backup schema... >> $LOG
+echo creating daily backup... >> $LOG
+cp $BAK.tar.bz2 $DBK.tbz2 >> $LOG
+echo \n >> $LOG
 
-echo copying daily to server...
-rsync $DBK.tbz2
-echo \n
+echo copying daily to server... >> $LOG
+rsync $DBK.tbz2 >> $LOG
+echo \n >> $LOG
 
 # runs every 1st, 8th, 15th, 22nd and 29th
 
-echo creating weekly backup...
-cp $BAK.tar.bz2 $WBK.tbz2
-echo \n
+echo creating weekly backup... >> $LOG
+cp $BAK.tar.bz2 $WBK.tbz2 >> $LOG
+echo \n >> $LOG
 
-echo copying weekly to server...
-rsync $WBK.tbz2
-echo \n
+echo copying weekly to server... >> $LOG
+rsync $WBK.tbz2 >> $LOG
+echo \n >> $LOG
 
 # runs every 1st
 
-echo creating monthly backup...
-cp $BAK.tar.bz2 $MBK.tbz2
-echo \n
+echo creating monthly backup... >> $LOG
+cp $BAK.tar.bz2 $MBK.tbz2 >> $LOG
+echo \n >> $LOG
 
-echo copying monthly to server...
-rsync $MBK
-echo \n
+echo copying monthly to server... >> $LOG
+rsync $MBK >> $LOG
+echo \n >> $LOG
 
-echo cleaning up temporary files...
-rm $BAK.tar $BAK.tar.bz2 $DBK.tbz2 $WBK.tbz2 $MBK.tbz2
-echo \n
+echo cleaning up temporary files... >> $LOG
+rm $BAK.tar $BAK.tar.bz2 $DBK.tbz2 $WBK.tbz2 $MBK.tbz2 >> $LOG
+echo \n >> $LOG
 
-echo backup complete $(date +%c).
-echo \n
-echo \n
+echo backup complete $(date +%c). >> $LOG
+echo \n >> $LOG
+echo \n >> $LOG
