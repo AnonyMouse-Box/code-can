@@ -7,6 +7,8 @@ MBK=/tmp/backup-$(date +%b)
 WBK=/tmp/backup-$(date +%d)
 DBK=/tmp/backup-$(date +%a)
 
+echo backup process begun $(date +%c):
+
 echo building tar archive...
 tar -cvf $BAK.tar $SRC
 echo \n
@@ -55,4 +57,6 @@ echo cleaning up temporary files...
 rm $BAK.tar $BAK.tar.bz2 $DBK.tbz2 $WBK.tbz2 $MBK.tbz2
 echo \n
 
-echo backup complete.
+echo backup complete $(date +%c).
+echo \n
+echo \n
