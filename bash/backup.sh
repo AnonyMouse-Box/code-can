@@ -1,12 +1,12 @@
 #!/bin/bash
 # gradually building a backup script as it will be useful to have
 
-SRC=/home
-LOG=/tmp/backup.txt
-BAK=/tmp/backup
-MBK=/tmp/backup-$(date +%b)
-WBK=/tmp/backup-$(date +%d)
-DBK=/tmp/backup-$(date +%a)
+SRC="/home"
+LOG="/tmp/backup.txt"
+BAK="/tmp/backup"
+MBK="/tmp/backup-$(date +%b)"
+WBK="/tmp/backup-$(date +%d)"
+DBK="/tmp/backup-$(date +%a)"
 
 echo "backup process begun $(date +%c):" >> $LOG
 
