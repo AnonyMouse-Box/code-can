@@ -23,7 +23,6 @@ bzip2 -t $BAK.tar.bz2 >> $LOG
 echo \n >> $LOG
 
 # when I've figued out how to read the integrity output I'll split it with an if statement here
-# runs every day
 
 echo "constructing backup schema..." >> $LOG
 echo "creating daily backup..." >> $LOG
@@ -35,9 +34,7 @@ rsync $DBK.tbz2 >> $LOG
 echo \n >> $LOG
 
 if [ "$(date +%d)" == "01" ] || [ "$(date +%d)" == "08" ] || [ "$(date +%d)" == "15" ] || [ "$(date +%d)" == "22" ] || [ "$(date +%d)" == "29" ]
-  then
-    # runs every 1st, 8th, 15th, 22nd and 29th
-    
+  then    
     echo "creating weekly backup..." >> $LOG
     cp $BAK.tar.bz2 $WBK.tbz2 >> $LOG
     echo \n >> $LOG
