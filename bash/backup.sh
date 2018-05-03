@@ -14,7 +14,7 @@ DBK="/tmp/backup-$(date +%a)"
 echo "backup process begun $(date +%c):" >> $LOG
 
 echo "building tar archive..." >>$LOG
-tar -cvf $BAK.tar $SRC >> $LOG
+tar --exclude="$USR" -cvf $BAK.tar $SRC >> $LOG
 echo \n  >> $LOG
 
 echo "compressing files..." >> $LOG
