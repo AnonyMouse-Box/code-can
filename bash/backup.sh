@@ -1,6 +1,8 @@
 #!/bin/bash
 # gradually building a backup script as it will be useful to have
 
+USR=""
+HST=""
 SRC="/home"
 LOG="/tmp/backup.txt"
 BAK="/tmp/backup"
@@ -30,7 +32,7 @@ cp $BAK.tar.bz2 $DBK.tbz2 >> $LOG
 echo \n >> $LOG
 
 echo "copying daily to server..." >> $LOG
-rsync $DBK.tbz2 >> $LOG
+rsync $DBK.tbz2 "$USR"@"$HST" >> $LOG
 echo \n >> $LOG
 
 if [ "$(date +%d)" == "01" ] || [ "$(date +%d)" == "08" ] || [ "$(date +%d)" == "15" ] || [ "$(date +%d)" == "22" ] || [ "$(date +%d)" == "29" ]
@@ -40,7 +42,7 @@ if [ "$(date +%d)" == "01" ] || [ "$(date +%d)" == "08" ] || [ "$(date +%d)" == 
     echo \n >> $LOG
     
     echo "copying weekly to server..." >> $LOG
-    rsync $WBK.tbz2 >> $LOG
+    rsync $WBK.tbz2 "$USR"@"$HST" >> $LOG
     echo \n >> $LOG
     
     if [ "$(date +%d)" == "01" ]
@@ -50,7 +52,7 @@ if [ "$(date +%d)" == "01" ] || [ "$(date +%d)" == "08" ] || [ "$(date +%d)" == 
         echo \n >> $LOG
         
         echo "copying monthly to server..." >> $LOG
-        rsync $MBK >> $LOG
+        rsync $MBK "$USR"@"$HST" >> $LOG
         echo \n >> $LOG
     fi
 fi
