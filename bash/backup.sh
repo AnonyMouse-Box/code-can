@@ -1,9 +1,10 @@
 #!/bin/bash
 # gradually building a backup script as it will be useful to have
 
-USR=""
-HST=""
+USR="jsmith"
+HST="127.0.0.1"
 SRC="/home"
+DST="/mnt/backup"
 LOG="/tmp/backup.txt"
 BAK="/tmp/backup"
 MBK="/tmp/backup-$(date +%b)"
