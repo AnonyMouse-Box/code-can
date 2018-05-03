@@ -29,37 +29,37 @@ echo \n >> $LOG
 
 echo "constructing backup schema..." >> $LOG
 echo "creating daily backup..." >> $LOG
-cp $BAK.tar.bz2 $DBK.tbz2 >> $LOG
+cp -v $BAK.tar.bz2 $DBK.tbz2 >> $LOG
 echo \n >> $LOG
 
 echo "copying daily to server..." >> $LOG
-rsync $DBK.tbz2 $USR@$HST:$DST >> $LOG
+rsync -v $DBK.tbz2 $USR@$HST:$DST >> $LOG
 echo \n >> $LOG
 
 if [ "$(date +%d)" == "01" ] || [ "$(date +%d)" == "08" ] || [ "$(date +%d)" == "15" ] || [ "$(date +%d)" == "22" ] || [ "$(date +%d)" == "29" ]
   then    
     echo "creating weekly backup..." >> $LOG
-    cp $BAK.tar.bz2 $WBK.tbz2 >> $LOG
+    cp -v $BAK.tar.bz2 $WBK.tbz2 >> $LOG
     echo \n >> $LOG
     
     echo "copying weekly to server..." >> $LOG
-    rsync $WBK.tbz2 $USR@$HST:$DST >> $LOG
+    rsync -v $WBK.tbz2 $USR@$HST:$DST >> $LOG
     echo \n >> $LOG
     
     if [ "$(date +%d)" == "01" ]
       then
         echo "creating monthly backup..." >> $LOG
-        cp $BAK.tar.bz2 $MBK.tbz2 >> $LOG
+        cp -v $BAK.tar.bz2 $MBK.tbz2 >> $LOG
         echo \n >> $LOG
         
         echo "copying monthly to server..." >> $LOG
-        rsync $MBK $USR@$HST:$DST >> $LOG
+        rsync -v $MBK $USR@$HST:$DST >> $LOG
         echo \n >> $LOG
     fi
 fi
 
 echo "cleaning up temporary files..." >> $LOG
-rm $BAK.tar $BAK.tar.bz2 $DBK.tbz2 $WBK.tbz2 $MBK.tbz2 >> $LOG
+rm -v $BAK.tar $BAK.tar.bz2 $DBK.tbz2 $WBK.tbz2 $MBK.tbz2 >> $LOG
 echo \n >> $LOG
 
 echo "backup complete $(date +%c)." >> $LOG
