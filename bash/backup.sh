@@ -30,7 +30,7 @@ echo "\n"
 echo "backup process begun $(date +%c):" >> $LOG
 
 echo "building tar archive..." >> $LOG
-tar --exclude="$LOG" -cvf $BAK.tar $SRC >> $LOG
+tar --exclude="$LOG" -cpvf $BAK.tar $SRC >> $LOG
 echo "\n"  >> $LOG
 
 echo "compressing files..." >> $LOG
