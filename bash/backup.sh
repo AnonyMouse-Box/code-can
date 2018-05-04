@@ -11,7 +11,6 @@ MBK="/tmp/backup-$(date +%b)"
 WBK="/tmp/backup-$(date +%d)"
 DBK="/tmp/backup-$(date +%a)"
 
-
 echo "preparing variables.." >> $LOG
 if [ "$#" == "0" ];
   then
@@ -26,6 +25,7 @@ if [ "$USER" == "root" ];
         mkdir -p /home/admin
     fi
 fi
+echo "\n"
 
 echo "backup process begun $(date +%c):" >> $LOG
 
