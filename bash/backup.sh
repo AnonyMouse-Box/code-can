@@ -1,5 +1,5 @@
 #!/bin/bash
-# gradually building a backup script as it will be useful to have
+# gradually building a backup script as it will be useful to have -vrpEogtSxhm
 
 USR="$USER"
 HST="127.0.0.1"
