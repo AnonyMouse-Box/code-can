@@ -1,7 +1,7 @@
 #!/bin/bash
 # gradually building a backup script as it will be useful to have
 
-USR="jsmith"
+USR="$USER"
 HST="127.0.0.1"
 SRC="$1"
 DST="/mnt/backup"
@@ -11,14 +11,25 @@ MBK="/tmp/backup-$(date +%b)"
 WBK="/tmp/backup-$(date +%d)"
 DBK="/tmp/backup-$(date +%a)"
 
-if [ "$#" == "0" ]
+
+echo "preparing variables.." >> $LOG
+if [ "$#" == "0" ];
   then
     SRC="/home"
 fi
 
+if [ "$USER" == "root" ];
+  then
+    USR="admin"
+    if [ ! -d /home/admin ];
+      then
+        mkdir -p /home/admin
+    fi
+fi
+
 echo "backup process begun $(date +%c):" >> $LOG
 
-echo "building tar archive..." >>$LOG
+echo "building tar archive..." >> $LOG
 tar --exclude="$LOG" -cvf $BAK.tar $SRC >> $LOG
 echo "\n"  >> $LOG
 
@@ -41,7 +52,7 @@ echo "copying daily to server..." >> $LOG
 rsync -htyv $DBK.tbz2 $USR@$HST:$DST >> $LOG
 echo "\n" >> $LOG
 
-if [ "$(date +%d)" == "01" ] || [ "$(date +%d)" == "08" ] || [ "$(date +%d)" == "15" ] || [ "$(date +%d)" == "22" ] || [ "$(date +%d)" == "29" ]
+if [ "$(date +%d)" == "01" ] || [ "$(date +%d)" == "08" ] || [ "$(date +%d)" == "15" ] || [ "$(date +%d)" == "22" ] || [ "$(date +%d)" == "29" ];
   then    
     echo "creating weekly backup..." >> $LOG
     cp -v $BAK.tar.bz2 $WBK.tbz2 >> $LOG
@@ -51,7 +62,7 @@ if [ "$(date +%d)" == "01" ] || [ "$(date +%d)" == "08" ] || [ "$(date +%d)" == 
     rsync -htyv $WBK.tbz2 $USR@$HST:$DST >> $LOG
     echo "\n" >> $LOG
     
-    if [ "$(date +%d)" == "01" ]
+    if [ "$(date +%d)" == "01" ];
       then
         echo "creating monthly backup..." >> $LOG
         cp -v $BAK.tar.bz2 $MBK.tbz2 >> $LOG
