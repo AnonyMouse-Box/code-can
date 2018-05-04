@@ -33,7 +33,7 @@ cp -v $BAK.tar.bz2 $DBK.tbz2 >> $LOG
 echo \n >> $LOG
 
 echo "copying daily to server..." >> $LOG
-rsync -htyzv $DBK.tbz2 $USR@$HST:$DST >> $LOG
+rsync -htyv $DBK.tbz2 $USR@$HST:$DST >> $LOG
 echo \n >> $LOG
 
 if [ "$(date +%d)" == "01" ] || [ "$(date +%d)" == "08" ] || [ "$(date +%d)" == "15" ] || [ "$(date +%d)" == "22" ] || [ "$(date +%d)" == "29" ]
@@ -43,7 +43,7 @@ if [ "$(date +%d)" == "01" ] || [ "$(date +%d)" == "08" ] || [ "$(date +%d)" == 
     echo \n >> $LOG
     
     echo "copying weekly to server..." >> $LOG
-    rsync -htyzv $WBK.tbz2 $USR@$HST:$DST >> $LOG
+    rsync -htyv $WBK.tbz2 $USR@$HST:$DST >> $LOG
     echo \n >> $LOG
     
     if [ "$(date +%d)" == "01" ]
@@ -53,7 +53,7 @@ if [ "$(date +%d)" == "01" ] || [ "$(date +%d)" == "08" ] || [ "$(date +%d)" == 
         echo \n >> $LOG
         
         echo "copying monthly to server..." >> $LOG
-        rsync -htyzv $MBK.tbz2 $USR@$HST:$DST >> $LOG
+        rsync -htyv $MBK.tbz2 $USR@$HST:$DST >> $LOG
         echo \n >> $LOG
     fi
 fi
