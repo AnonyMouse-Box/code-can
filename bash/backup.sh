@@ -5,13 +5,13 @@ USR="$USER"
 HST="127.0.0.1"
 SRC="$1"
 DST="/mnt/backup"
-LOG="/home/$USR/backup.log"
+LOG="/home/$USR/backup-$(date +%a).log"
 BAK="/tmp/backup"
 MBK="/tmp/backup-$(date +%b)"
 WBK="/tmp/backup-$(date +%d)"
 DBK="/tmp/backup-$(date +%a)"
 
-echo "preparing variables.." >> $LOG
+echo "preparing variables.." > $LOG
 if [ "$#" == "0" ];
   then
     SRC="/home"
