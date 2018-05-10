@@ -42,7 +42,7 @@ bzip2 -vt $BAK.tar.bz2 >> $LOG
 TST="$(tail -n 1 $LOG)"
 echo "\n" >> $LOG
 
-if [ "$TST" != "$BAK.tar.bz2: ok" ];
+if [ "$TST" != "  $BAK.tar.bz2: ok" ];
   then
     echo "failed integrity test" >> $LOG
     echo "retrying..." >> $LOG
