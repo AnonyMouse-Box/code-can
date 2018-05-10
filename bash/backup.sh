@@ -49,6 +49,7 @@ while [ $t -lt "3" ]; do
     then
       echo "failed integrity test" &>> $LOG
       let "t += 1"
+      rm -v $BAK.tar $BAK.tar.bz2 &>> $LOG
       sleep 300
       echo "retrying..." &>> $LOG
   
