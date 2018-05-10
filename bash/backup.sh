@@ -42,6 +42,14 @@ bzip2 -vt $BAK.tar.bz2 >> $LOG
 TST="$(tail -n 1 $LOG)"
 echo "\n" >> $LOG
 
+if [ "$TST" != "$BAK.tar.bz2: ok" ];
+  then
+    echo "failed integrity test" >> $LOG
+    echo "retrying..." >> $LOG
+    echo "failed too many times..." >> $LOG
+    echo "removing files and giving up :(" >> $LOG
+fi
+
 # when I've figued out how to read the integrity output I'll split it with an if statement here
 
 echo "constructing backup schema..." >> $LOG
@@ -79,6 +87,6 @@ echo "cleaning up temporary files..." >> $LOG
 rm -v $BAK.tar $BAK.tar.bz2 $DBK.tbz2 $WBK.tbz2 $MBK.tbz2 >> $LOG
 echo "\n" >> $LOG
 
-echo "backup complete $(date +%c)." >> $LOG
+echo "backup complete :) $(date +%c)." >> $LOG
 echo "\n" >> $LOG
 echo "\n" >> $LOG
