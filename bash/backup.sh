@@ -40,7 +40,7 @@ echo "\n" >> $LOG
 echo "testing integrity..." >> $LOG
 bzip2 -vt $BAK.tar.bz2 >> $LOG
 echo "\n" >> $LOG
-TST="$(cat -n 1 $LOG)"
+TST="$(tail -n 1 $LOG)"
 
 # when I've figued out how to read the integrity output I'll split it with an if statement here
 
