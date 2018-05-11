@@ -2,11 +2,11 @@
 # gradually building a backup script as it will be useful to have -vrpEogtSxhm
 
 t="0"
-USR="$USER"
-HST="127.0.0.1"
+USR="$USER"                               # $2
+HST="127.0.0.1"                           # $3
 SRC="$1"
-DST="/mnt/backup"
-LOG="/home/$USR/backup-$(date +%a).log"
+DST="/mnt/backup"                         # $4
+LOG="/home/$USR/backup-$(date +%a).log"   # $5
 BAK="/tmp/backup"
 MBK="/tmp/backup-$(date +%b)"
 WBK="/tmp/backup-$(date +%d)"
