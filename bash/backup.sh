@@ -43,8 +43,8 @@ while [ $t -lt "3" ]; do
   echo "testing integrity..." &>> $LOG
   bzip2 -vt $BAK.tar.bz2 &>> $LOG
   TST="$(tail -n 1 $LOG)"
-  echo &>> $LOG
-  
+  echo &>> $LOG  
+
   if [ "$TST" != "  $BAK.tar.bz2: ok" ];
     then
       echo "failed integrity test" &>> $LOG
@@ -52,10 +52,9 @@ while [ $t -lt "3" ]; do
       rm -v $BAK.tar $BAK.tar.bz2 &>> $LOG
       sleep 300
       echo "retrying..." &>> $LOG
+      echo &>> $LOG  
       continue
   fi
-
-  # when I've figued out how to read the integrity output I'll split it with an if statement here
   
   echo "constructing backup schema..." &>> $LOG
   echo "creating daily backup..." &>> $LOG
@@ -100,5 +99,9 @@ done
 if [ $t == "3" ];
   then
     echo "failed too many times..." &>> $LOG
-    echo "removing files and giving up :(" &>> $LOG
+    echo "removing files..." &>> $LOG
+    rm -v $BAK.tar $BAK.tar.bz2 &>> $LOG
+    echo "backup aborted :( $(date +%c)." &>> $LOG
+    echo &>> $LOG
+    echo &>> $LOG
 fi
