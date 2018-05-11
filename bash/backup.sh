@@ -52,7 +52,7 @@ while [ $t -lt "3" ]; do
       rm -v $BAK.tar $BAK.tar.bz2 &>> $LOG
       sleep 300
       echo "retrying..." &>> $LOG
-  
+      continue
   fi
 
   # when I've figued out how to read the integrity output I'll split it with an if statement here
@@ -95,8 +95,10 @@ while [ $t -lt "3" ]; do
   echo "backup complete :) $(date +%c)." &>> $LOG
   echo &>> $LOG
   echo &>> $LOG
-  
 done    
-    
-echo "failed too many times..." &>> $LOG
-echo "removing files and giving up :(" &>> $LOG
+
+if [ $t == "3" ];
+  then
+    echo "failed too many times..." &>> $LOG
+    echo "removing files and giving up :(" &>> $LOG
+fi
