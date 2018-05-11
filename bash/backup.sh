@@ -13,9 +13,11 @@ WBK="/tmp/backup-$(date +%d)"
 DBK="/tmp/backup-$(date +%a)"
 
 echo "preparing variables.." &> $LOG
-if [ $# == "0" ];
-  then
-    SRC="/home"
+if [ $# -lt "2"];
+  if [ $# == "0" ];
+    then
+      SRC="/home"
+  fi
 fi
 
 if [ $USER == "root" ];
