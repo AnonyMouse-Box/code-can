@@ -45,11 +45,10 @@ while [ $t -lt "3" ]; do
   
   echo "testing integrity..." &>> $LOG
   bzip2 -vt $BAK.tar.bz2 &>> $LOG
-  TST="$(tail -n 1 $LOG)"
-  echo &>> $LOG  
 
   if [ $? != "0" ];
     then
+      echo &>> $LOG
       echo "failed integrity test" &>> $LOG
       let "t += 1"
       rm -v $BAK.tar $BAK.tar.bz2 &>> $LOG
@@ -58,6 +57,8 @@ while [ $t -lt "3" ]; do
       echo &>> $LOG  
       continue
   fi
+  
+  echo &>> $LOG  
   
   echo "constructing backup schema..." &>> $LOG
   echo "creating daily backup..." &>> $LOG
@@ -108,5 +109,5 @@ if [ $t == "3" ];
     echo "backup aborted :( $(date +%c)." &>> $LOG
     echo &>> $LOG
     echo &>> $LOG
-    exit 1
+    exit 2
 fi
