@@ -4,11 +4,11 @@
 echo "preparing variables.." &> $LOG
 
 t="0"
-USR="$USER"                               # $2
-HST="127.0.0.1"                           # $3
+USR="$2"
+HST="$3"
 SRC="$1"
-DST="/mnt/backup"                         # $4
-LOG="/home/$USR/backup-$(date +%a).log"   # $5
+DST="$4"
+LOG="$5"
 BAK="/tmp/backup"
 MBK="/tmp/backup-$(date +%b)"
 WBK="/tmp/backup-$(date +%d)"
@@ -26,9 +26,13 @@ if [ $# -lt "5" ];
                   then
                     SRC="/home"
                 fi
+                USR="$USER"
             fi
+            HST="127.0.0.1"
         fi
+        DST="/mnt/backup"
     fi
+    LOG="/home/$USR/backup-$(date +%a.log)"
 fi
 
 if [ $USER == "root" ];
