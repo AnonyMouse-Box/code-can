@@ -14,11 +14,21 @@ MBK="/tmp/backup-$(date +%b)"
 WBK="/tmp/backup-$(date +%d)"
 DBK="/tmp/backup-$(date +%a)"
 
-if [ $# -lt "2"];
-  if [ $# == "0" ];
-    then
-      SRC="/home"
-  fi
+if [ $# -lt "5" ];
+  then
+    if [ $# -lt "4" ];
+      then
+        if [ $# -lt "3" ];
+          then
+            if [ $# -lt "2" ];
+              then
+                if [ $# == "0" ];
+                  then
+                    SRC="/home"
+                fi
+            fi
+        fi
+    fi
 fi
 
 if [ $USER == "root" ];
