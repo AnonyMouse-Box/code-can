@@ -96,6 +96,7 @@ while [ $t -lt "3" ]; do
   echo "backup complete :) $(date +%c)." &>> $LOG
   echo &>> $LOG
   echo &>> $LOG
+  exit 0
 done    
 
 if [ $t == "3" ];
@@ -106,4 +107,5 @@ if [ $t == "3" ];
     echo "backup aborted :( $(date +%c)." &>> $LOG
     echo &>> $LOG
     echo &>> $LOG
+    exit 1
 fi
