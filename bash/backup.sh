@@ -1,6 +1,8 @@
 #!/bin/bash
 # gradually building a backup script as it will be useful to have -vrpEogtSxhm
 
+echo "preparing variables.." &> $LOG
+
 t="0"
 USR="$USER"                               # $2
 HST="127.0.0.1"                           # $3
@@ -12,7 +14,6 @@ MBK="/tmp/backup-$(date +%b)"
 WBK="/tmp/backup-$(date +%d)"
 DBK="/tmp/backup-$(date +%a)"
 
-echo "preparing variables.." &> $LOG
 if [ $# -lt "2"];
   if [ $# == "0" ];
     then
@@ -47,7 +48,7 @@ while [ $t -lt "3" ]; do
   TST="$(tail -n 1 $LOG)"
   echo &>> $LOG  
 
-  if [ "$TST" != "  $BAK.tar.bz2: ok" ];
+  if [ $? != "0" ];
     then
       echo "failed integrity test" &>> $LOG
       let "t += 1"
@@ -67,7 +68,7 @@ while [ $t -lt "3" ]; do
   rsync -htvpEogSm $DBK.tbz2 $USR@$HST:$DST &>> $LOG
   echo &>> $LOG
   
-  if [ "$(date +%d)" == "01" ] || [ "$(date +%d)" == "08" ] || [ "$(date +%d)" == "15" ] || [ "$(date +%d)" == "22" ] || [ "$(date +%d)" == "29" ];
+  if [ $(date +%d) == "01" ] || [ $(date +%d) == "08" ] || [ $(date +%d) == "15" ] || [ $(date +%d) == "22" ] || [ $(date +%d) == "29" ];
     then    
       echo "creating weekly backup..." &>> $LOG
       cp -v $BAK.tar.bz2 $WBK.tbz2 &>> $LOG
@@ -77,7 +78,7 @@ while [ $t -lt "3" ]; do
       rsync -htvpEogSm $WBK.tbz2 $USR@$HST:$DST &>> $LOG
       echo &>> $LOG
       
-      if [ "$(date +%d)" == "01" ];
+      if [ $(date +%d) == "01" ];
         then
           echo "creating monthly backup..." &>> $LOG
           cp -v $BAK.tar.bz2 $MBK.tbz2 &>> $LOG
