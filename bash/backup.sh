@@ -1,7 +1,7 @@
 #!/bin/bash
 # gradually building a backup script as it will be useful to have -vrpEogtSxhm
 
-echo "preparing variables.." &> $LOG
+
 
 t="0"
 USR="$2"
@@ -38,11 +38,14 @@ fi
 if [ $USER == "root" ];
   then
     USR="admin"
-    if [ ! -d /home/admin ];
-      then
-        mkdir -p /home/admin
-    fi
 fi
+
+if [ ! -d /home/$USR ];
+  then
+    mkdir -p /home/$USR
+fi
+
+echo "preparing variables.." &> $LOG
 
 if [ ! -d $USER@$HST:$DST ];
   then
