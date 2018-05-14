@@ -113,6 +113,7 @@ while [ $t -lt "3" ]; do
   echo &>> $LOG
   echo &>> $LOG
   exit 0
+  break
 done    
 
 if [ $t == "3" ];
