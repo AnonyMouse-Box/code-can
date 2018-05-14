@@ -43,6 +43,11 @@ if [ $USER == "root" ];
         mkdir -p /home/admin
     fi
 fi
+
+if [ ! -d $USER@$HST:$DST ];
+  then
+    mkdir -p $USER@$HST:$DST
+fi
 echo &>> $LOG
 
 echo "backup process begun $(date +%c):" &>> $LOG
