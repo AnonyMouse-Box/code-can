@@ -43,7 +43,7 @@ if [ ! -d /home/$USR ];
     mkdir -p /home/$USR
 fi
 
-echo "preparing variables.." &> $LOG
+echo "preparing filesystem.." &> $LOG
 
 if [ ! -d $USER@$HST:$DST ];
   then
