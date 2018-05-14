@@ -80,7 +80,7 @@ while [ $t -lt "3" ]; do
   echo &>> $LOG
   
   echo "copying daily to server..." &>> $LOG
-  rsync -htvpEogSm $DBK.tbz2 $USR@$HST:$DST &>> $LOG
+  rsync -htvpEogSm $DBK.tbz2 $USER@$HST:$DST &>> $LOG
   echo &>> $LOG
   
   if [ $(date +%d) == "01" ] || [ $(date +%d) == "08" ] || [ $(date +%d) == "15" ] || [ $(date +%d) == "22" ] || [ $(date +%d) == "29" ];
@@ -90,7 +90,7 @@ while [ $t -lt "3" ]; do
       echo &>> $LOG
       
       echo "copying weekly to server..." &>> $LOG
-      rsync -htvpEogSm $WBK.tbz2 $USR@$HST:$DST &>> $LOG
+      rsync -htvpEogSm $WBK.tbz2 $USER@$HST:$DST &>> $LOG
       echo &>> $LOG
       
       if [ $(date +%d) == "01" ];
@@ -100,7 +100,7 @@ while [ $t -lt "3" ]; do
           echo &>> $LOG
           
           echo "copying monthly to server..." &>> $LOG
-          rsync -htvpEogSm $MBK.tbz2 $USR@$HST:$DST &>> $LOG
+          rsync -htvpEogSm $MBK.tbz2 $USER@$HST:$DST &>> $LOG
           echo &>> $LOG
       fi
   fi
