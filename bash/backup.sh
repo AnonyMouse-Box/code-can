@@ -2,7 +2,6 @@
 # gradually building a backup script as it will be useful to have -vrpEogtSxhm
 # backup.sh Files User Remote Folder Log
 
-t="0"
 USR="$2"
 HST="$3"
 SRC="$1"
@@ -57,12 +56,14 @@ BAK="/tmp/backup"
 MBK="/tmp/backup-$(date +%b)"
 WBK="/tmp/backup-$(date +%d)"
 DBK="/tmp/backup-$(date +%a)"
+i="0"
+d="0"
 
 echo &>> $LOG
 
 echo "backup process begun $(date +%c):" &>> $LOG
 
-while [ $t -lt "3" ]; do
+while [ $i -lt "3" ]; do
   
   echo "building archive..." &>> $LOG
   tar --exclude="$LOG" -cpvf $BAK.tar $SRC &>> $LOG
@@ -79,7 +80,7 @@ while [ $t -lt "3" ]; do
     then
       echo &>> $LOG
       echo "failed integrity test" &>> $LOG
-      let "t += 1"
+      let "i += 1"
       rm -v $BAK.tar $BAK.tar.bz2 &>> $LOG
       sleep 300
       echo "retrying..." &>> $LOG
@@ -94,8 +95,29 @@ while [ $t -lt "3" ]; do
   cp -v $BAK.tar.bz2 $DBK.tbz2 &>> $LOG
   echo &>> $LOG
   
-  echo "copying daily to server..." &>> $LOG
-  rsync -htvpEogSm $DBK.tbz2 $USER@$HST:$DST &>> $LOG
+  while [ $d -lt "3" ]; do
+    
+    echo "copying daily to server..." &>> $LOG
+    rsync -htvpEogSm $DBK.tbz2 $USER@$HST:$DST &>> $LOG
+  
+    if [ $? != "0" ];
+      then
+        echo &>> $LOG
+        echo "failed sync" &>> $LOG
+        let "d += 1"
+        sleep 300
+        echo "retrying..." &>> $LOG
+        echo &>> $LOG  
+        continue
+    fi
+    break
+  done
+  
+  if [ $d == "3" ];
+    then
+      break
+  fi
+  
   echo &>> $LOG
   
   if [ $(date +%d) == "01" ] || [ $(date +%d) == "08" ] || [ $(date +%d) == "15" ] || [ $(date +%d) == "22" ] || [ $(date +%d) == "29" ];
@@ -131,11 +153,11 @@ while [ $t -lt "3" ]; do
   break
 done    
 
-if [ $t == "3" ];
+if [ $i == "3" ] || [ $d == "3" ];
   then
     echo "failed too many times..." &>> $LOG
     echo "removing files..." &>> $LOG
-    rm -v $BAK.tar $BAK.tar.bz2 &>> $LOG
+    rm -v $BAK.tar $BAK.tar.bz2 $DBK.tbz2 $WBK.tbz2 $MBK.tbz2 &>> $LOG
     echo "backup aborted :( $(date +%c)." &>> $LOG
     echo &>> $LOG
     echo &>> $LOG
