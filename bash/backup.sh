@@ -62,6 +62,7 @@ weekly="0"
 monthly="0"
 tar="0"
 compress="0"
+copy="0"
 
 echo &>> $LOG
 
