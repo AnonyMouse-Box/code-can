@@ -8,10 +8,6 @@ HST="$3"
 SRC="$1"
 DST="$4"
 FOL="$5"
-BAK="/tmp/backup"
-MBK="/tmp/backup-$(date +%b)"
-WBK="/tmp/backup-$(date +%d)"
-DBK="/tmp/backup-$(date +%a)"
 
 if [ $# -lt "2" ];
   then
@@ -56,6 +52,11 @@ if [ $# -lt "4" ];
   then 
     DST="/mnt/backup"
 fi
+
+BAK="/tmp/backup"
+MBK="/tmp/backup-$(date +%b)"
+WBK="/tmp/backup-$(date +%d)"
+DBK="/tmp/backup-$(date +%a)"
 
 echo &>> $LOG
 
