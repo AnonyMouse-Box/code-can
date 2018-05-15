@@ -13,16 +13,40 @@ MBK="/tmp/backup-$(date +%b)"
 WBK="/tmp/backup-$(date +%d)"
 DBK="/tmp/backup-$(date +%a)"
 
+if [ $# -lt "2" ];
+  then
+    USR="$USER"
+fi
+
+if [ $USER == "root" ];
+  then
+    USR="admin"
+fi
+
+if [ $# -lt "5" ];
+  then
+    FOL="/home/$USR/"
+fi
+
+if [ ! -d $FOL ];
+  then
+    mkdir -p $FOL
+fi
+
+LOG="$FOL/backup-$(date +%a.log)"
+
+echo "preparing variables.." &> $LOG
+
+if [ ! -d $USER@$HST:$DST ];
+  then
+    mkdir -p $USER@$HST:$DST
+fi
+
 if [ $# == "0" ];
   then
     SRC="/home"
 fi
                 
-if [ $# -lt "2" ];
-  then
-    USR="$USER"
-fi
-            
 if [ $# -lt "3" ];
   then
     HST="127.0.0.1"
@@ -33,29 +57,6 @@ if [ $# -lt "4" ];
     DST="/mnt/backup"
 fi
 
-if [ $# -lt "5" ];
-  then
-    FOL="/home/$USR/"
-fi
-
-LOG="$FOL/backup-$(date +%a.log)"
-
-if [ $USER == "root" ];
-  then
-    USR="admin"
-fi
-
-if [ ! -d $FOL ];
-  then
-    mkdir -p $FOL
-fi
-
-echo "preparing filesystem.." &> $LOG
-
-if [ ! -d $USER@$HST:$DST ];
-  then
-    mkdir -p $USER@$HST:$DST
-fi
 echo &>> $LOG
 
 echo "backup process begun $(date +%c):" &>> $LOG
