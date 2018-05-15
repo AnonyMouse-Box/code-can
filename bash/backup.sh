@@ -56,14 +56,18 @@ BAK="/tmp/backup"
 MBK="/tmp/backup-$(date +%b)"
 WBK="/tmp/backup-$(date +%d)"
 DBK="/tmp/backup-$(date +%a)"
-i="0"
-d="0"
+integrity="0"
+daily="0"
+weekly="0"
+monthly="0"
+tar="0"
+compress="0"
 
 echo &>> $LOG
 
 echo "backup process begun $(date +%c):" &>> $LOG
 
-while [ $i -lt "3" ]; do
+while [ $integrity -lt "3" ]; do
   
   echo "building archive..." &>> $LOG
   tar --exclude="$LOG" -cpvf $BAK.tar $SRC &>> $LOG
@@ -80,7 +84,7 @@ while [ $i -lt "3" ]; do
     then
       echo &>> $LOG
       echo "failed integrity test" &>> $LOG
-      let "i += 1"
+      let "integrity += 1"
       rm -v $BAK.tar $BAK.tar.bz2 &>> $LOG
       sleep 300
       echo "retrying..." &>> $LOG
@@ -95,7 +99,7 @@ while [ $i -lt "3" ]; do
   cp -v $BAK.tar.bz2 $DBK.tbz2 &>> $LOG
   echo &>> $LOG
   
-  while [ $d -lt "3" ]; do
+  while [ $daily -lt "3" ]; do
     
     echo "copying daily to server..." &>> $LOG
     rsync -htvpEogSm $DBK.tbz2 $USER@$HST:$DST &>> $LOG
@@ -104,7 +108,7 @@ while [ $i -lt "3" ]; do
       then
         echo &>> $LOG
         echo "failed sync" &>> $LOG
-        let "d += 1"
+        let "daily += 1"
         sleep 300
         echo "retrying..." &>> $LOG
         echo &>> $LOG  
@@ -113,7 +117,7 @@ while [ $i -lt "3" ]; do
     break
   done
   
-  if [ $d == "3" ];
+  if [ $daily == "3" ];
     then
       break
   fi
@@ -153,7 +157,7 @@ while [ $i -lt "3" ]; do
   break
 done    
 
-if [ $i == "3" ] || [ $d == "3" ];
+if [ $integrity == "3" ] || [ $daily == "3" ];
   then
     echo "failed too many times..." &>> $LOG
     echo "removing files..." &>> $LOG
