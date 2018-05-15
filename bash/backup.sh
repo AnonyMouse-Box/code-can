@@ -133,8 +133,29 @@ while [ $integrity -lt "3" ]; do
       cp -v $BAK.tar.bz2 $WBK.tbz2 &>> $LOG
       echo &>> $LOG
       
-      echo "copying weekly to server..." &>> $LOG
-      rsync -htvpEogSm $WBK.tbz2 $USER@$HST:$DST &>> $LOG
+      while [ $weekly -lt "3" ]; do
+        
+        echo "copying weekly to server..." &>> $LOG
+        rsync -htvpEogSm $WBK.tbz2 $USER@$HST:$DST &>> $LOG
+        
+        if [ $? != "0" ];
+          then
+            echo &>> $LOG
+            echo "failed sync" &>> $LOG
+            let "weekly += 1"
+            sleep 300
+            echo "retrying..." &>> $LOG
+            echo &>> $LOG  
+            continue
+        fi
+        break
+      done
+  
+      if [ $weekly == "3" ];
+        then
+          break
+      fi
+  
       echo &>> $LOG
       
       if [ $(date +%d) == "01" ];
@@ -143,9 +164,31 @@ while [ $integrity -lt "3" ]; do
           cp -v $BAK.tar.bz2 $MBK.tbz2 &>> $LOG
           echo &>> $LOG
           
-          echo "copying monthly to server..." &>> $LOG
-          rsync -htvpEogSm $MBK.tbz2 $USER@$HST:$DST &>> $LOG
+          while [ $monthly -lt "3" ]; do          
+            
+            echo "copying monthly to server..." &>> $LOG
+            rsync -htvpEogSm $MBK.tbz2 $USER@$HST:$DST &>> $LOG
+            
+            if [ $? != "0" ];
+              then
+                echo &>> $LOG
+                echo "failed sync" &>> $LOG
+                let "monthly += 1"
+                sleep 300
+                echo "retrying..." &>> $LOG
+                echo &>> $LOG  
+                continue
+            fi
+            break
+          done
+  
+          if [ $monthly == "3" ];
+            then
+              break
+          fi
+  
           echo &>> $LOG
+  
       fi
   fi
   
@@ -160,7 +203,7 @@ while [ $integrity -lt "3" ]; do
   break
 done    
 
-if [ $integrity == "3" ] || [ $daily == "3" ];
+if [ $integrity == "3" ] || [ $daily == "3" ] || [ $weekly == "3" ] || [ $monthly == "3" ];
   then
     echo "failed too many times..." &>> $LOG
     echo "removing files..." &>> $LOG
