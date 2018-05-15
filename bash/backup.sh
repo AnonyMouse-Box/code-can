@@ -7,41 +7,47 @@ USR="$2"
 HST="$3"
 SRC="$1"
 DST="$4"
-LOG="$5"
+FOL="$5"
 BAK="/tmp/backup"
 MBK="/tmp/backup-$(date +%b)"
 WBK="/tmp/backup-$(date +%d)"
 DBK="/tmp/backup-$(date +%a)"
 
+if [ $# == "0" ];
+  then
+    SRC="/home"
+fi
+                
+if [ $# -lt "2" ];
+  then
+    USR="$USER"
+fi
+            
+if [ $# -lt "3" ];
+  then
+    HST="127.0.0.1"
+fi
+       
+if [ $# -lt "4" ];
+  then 
+    DST="/mnt/backup"
+fi
+
 if [ $# -lt "5" ];
   then
-    if [ $# -lt "4" ];
-      then
-        if [ $# -lt "3" ];
-          then
-            if [ $# -lt "2" ];
-              then
-                if [ $# == "0" ];
-                  then
-                    SRC="/home"
-                fi
-                USR="$USER"
-            fi
-            HST="127.0.0.1"
-        fi
-        DST="/mnt/backup"
-    fi
-    LOG="/home/$USR/backup-$(date +%a.log)"
+    FOL="/home/$USR/"
 fi
+
+LOG="$FOL/backup-$(date +%a.log)"
 
 if [ $USER == "root" ];
   then
     USR="admin"
 fi
 
-if [ ! -d /home/$USR ];
+if [ ! -d $FOL ];
   then
-    mkdir -p /home/$USR
+    mkdir -p $FOL
 fi
 
 echo "preparing filesystem.." &> $LOG
