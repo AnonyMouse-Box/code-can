@@ -88,6 +88,8 @@ while [ $integrity -lt "3" ]; do
       rm -v $BAK.tar $BAK.tar.bz2 &>> $LOG
       sleep 300
       echo "retrying..." &>> $LOG
+      tar="0"
+      compress="0"
       echo &>> $LOG  
       continue
   fi
