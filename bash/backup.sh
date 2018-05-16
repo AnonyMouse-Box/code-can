@@ -70,8 +70,29 @@ echo "backup process begun $(date +%c):" &>> $LOG
 
 while [ $integrity -lt "3" ]; do
   
-  echo "building archive..." &>> $LOG
-  tar --exclude="$LOG" -cpvf $BAK.tar $SRC &>> $LOG
+  while [ $tar -lt "3" ]; do
+    
+    echo "building archive..." &>> $LOG
+    tar --exclude="$LOG" -cpvf $BAK.tar $SRC &>> $LOG
+    
+    if [ $? != "0" ];
+      then
+        echo &>> $LOG
+        echo "failed sync" &>> $LOG
+        let "tar += 1"
+        sleep 300
+        echo "retrying..." &>> $LOG
+        echo &>> $LOG  
+        continue
+    fi
+    break
+  done
+  
+  if [ $tar == "3" ];
+    then
+      break
+  fi
+  
   echo &>> $LOG
   
   echo "compressing files..." &>> $LOG
@@ -98,6 +119,7 @@ while [ $integrity -lt "3" ]; do
   echo &>> $LOG  
   
   echo "constructing backup schema..." &>> $LOG
+  
   echo "creating daily backup..." &>> $LOG
   cp -v $BAK.tar.bz2 $DBK.tbz2 &>> $LOG
   echo &>> $LOG
@@ -211,5 +233,5 @@ if [ $integrity == "3" ] || [ $daily == "3" ] || [ $weekly == "3" ] || [ $monthl
     echo "backup aborted :( $(date +%c)." &>> $LOG
     echo &>> $LOG
     echo &>> $LOG
-    exit 2
+    exit 1
 fi
