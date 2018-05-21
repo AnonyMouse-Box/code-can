@@ -94,9 +94,30 @@ while [ $integrity -lt "3" ]; do
   fi
   
   echo &>> $LOG
+    
+  while [ $compress -lt "3" ]; do
+      
+    echo "compressing files..." &>> $LOG
+    bzip2 -zvk $BAK.tar &>> $LOG
+    
+    if [ $? != "0" ];
+      then
+        echo &>> $LOG
+        echo "failed sync" &>> $LOG
+        let "tar += 1"
+        sleep 300
+        echo "retrying..." &>> $LOG
+        echo &>> $LOG  
+        continue
+    fi
+    break
+  done
   
-  echo "compressing files..." &>> $LOG
-  bzip2 -zvk $BAK.tar &>> $LOG
+  if [ $compress == "3" ];
+    then
+      break
+  fi
+  
   echo &>> $LOG
   
   echo "testing integrity..." &>> $LOG
@@ -225,7 +246,7 @@ while [ $integrity -lt "3" ]; do
   break
 done    
 
-if [ $integrity == "3" ] || [ $daily == "3" ] || [ $weekly == "3" ] || [ $monthly == "3" ];
+if [ $integrity == "3" ] || [ $daily == "3" ] || [ $weekly == "3" ] || [ $monthly == "3" ] || [ $tar == "3" ] || [ $compress == "3" ];
   then
     echo "failed too many times..." &>> $LOG
     echo "removing files..." &>> $LOG
