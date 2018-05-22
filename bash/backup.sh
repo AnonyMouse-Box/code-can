@@ -104,7 +104,7 @@ while [ $integrity -lt "3" ]; do
       then
         echo &>> $LOG
         echo "failed sync" &>> $LOG
-        let "tar += 1"
+        let "compress += 1"
         sleep 300
         echo "retrying..." &>> $LOG
         echo &>> $LOG  
