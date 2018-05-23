@@ -206,22 +206,22 @@ for i in {1..3};
             cp -v $BAK.tar.bz2 $MBK.tbz2 &>> $LOG
             echo &>> $LOG
             
-            while [ $monthly -lt "3" ]; do          
-              
-              echo "copying monthly to server..." &>> $LOG
-              rsync -htvpEogSm $MBK.tbz2 $USER@$HST:$DST &>> $LOG
-              
-              if [ $? != "0" ];
-                then
-                  echo &>> $LOG
-                  echo "failed sync" &>> $LOG
-                  let "monthly += 1"
-                  sleep 300
-                  echo "retrying..." &>> $LOG
-                  echo &>> $LOG  
-                  continue
-              fi
-              break
+            for m in {1..1};
+              do
+                echo "copying monthly to server..." &>> $LOG
+                rsync -htvpEogSm $MBK.tbz2 $USER@$HST:$DST &>> $LOG
+                
+                if [ $? != "0" ];
+                  then
+                    echo &>> $LOG
+                    echo "failed sync" &>> $LOG
+                    let "monthly += 1"
+                    sleep 300
+                    echo "retrying..." &>> $LOG
+                    echo &>> $LOG  
+                    continue
+                fi
+                break
             done
     
             if [ $monthly == "3" ];
