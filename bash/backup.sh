@@ -144,22 +144,22 @@ for i in {1..3};
     cp -v $BAK.tar.bz2 $DBK.tbz2 &>> $LOG
     echo &>> $LOG
     
-    while [ $daily -lt "3" ]; do
+    for d in {1..3};
+      do
+        echo "copying daily to server..." &>> $LOG
+        rsync -htvpEogSm $DBK.tbz2 $USER@$HST:$DST &>> $LOG
       
-      echo "copying daily to server..." &>> $LOG
-      rsync -htvpEogSm $DBK.tbz2 $USER@$HST:$DST &>> $LOG
-    
-      if [ $? != "0" ];
-        then
-          echo &>> $LOG
-          echo "failed sync" &>> $LOG
-          let "daily += 1"
-          sleep 300
-          echo "retrying..." &>> $LOG
-          echo &>> $LOG  
-          continue
-      fi
-      break
+        if [ $? != "0" ];
+          then
+            echo &>> $LOG
+            echo "failed sync" &>> $LOG
+            let "daily += 1"
+            sleep 300
+            echo "retrying..." &>> $LOG
+            echo &>> $LOG  
+            continue
+        fi
+        break
     done
     
     if [ $daily == "3" ];
