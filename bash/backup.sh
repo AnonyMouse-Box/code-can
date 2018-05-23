@@ -243,16 +243,12 @@ for i in {1..3};
     echo &>> $LOG
     echo &>> $LOG
     exit 0
-    break
 done    
 
-if [ $integrity == "3" ] || [ $daily == "3" ] || [ $weekly == "3" ] || [ $monthly == "3" ] || [ $tar == "3" ] || [ $compress == "3" ];
-  then
-    echo "failed too many times..." &>> $LOG
-    echo "removing files..." &>> $LOG
-    rm -v $BAK.tar $BAK.tar.bz2 $DBK.tbz2 $WBK.tbz2 $MBK.tbz2 &>> $LOG
-    echo "backup aborted :( $(date +%c)." &>> $LOG
-    echo &>> $LOG
-    echo &>> $LOG
-    exit 1
-fi
+echo "failed too many times..." &>> $LOG
+echo "removing files..." &>> $LOG
+rm -v $BAK.tar $BAK.tar.bz2 $DBK.tbz2 $WBK.tbz2 $MBK.tbz2 &>> $LOG
+echo "backup aborted :( $(date +%c)." &>> $LOG
+echo &>> $LOG
+echo &>> $LOG
+exit 1
