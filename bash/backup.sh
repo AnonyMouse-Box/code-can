@@ -95,22 +95,22 @@ for i in {1..3};
     
     echo &>> $LOG
       
-    while [ $compress -lt "3" ]; do
+    for c in {1..3};
+      do
+        echo "compressing files..." &>> $LOG
+        bzip2 -zvk $BAK.tar &>> $LOG
         
-      echo "compressing files..." &>> $LOG
-      bzip2 -zvk $BAK.tar &>> $LOG
-      
-      if [ $? != "0" ];
-        then
-          echo &>> $LOG
-          echo "failed sync" &>> $LOG
-          let "compress += 1"
-          sleep 300
-          echo "retrying..." &>> $LOG
-          echo &>> $LOG  
-          continue
-      fi
-      break
+        if [ $? != "0" ];
+          then
+            echo &>> $LOG
+            echo "failed sync" &>> $LOG
+            let "compress += 1"
+            sleep 300
+            echo "retrying..." &>> $LOG
+            echo &>> $LOG  
+            continue
+        fi
+        break
     done
     
     if [ $compress == "3" ];
