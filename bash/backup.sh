@@ -78,7 +78,7 @@ for i in {1..3};
         if [ $? != "0" ];
           then
             echo &>> $LOG
-            echo "failed sync" &>> $LOG
+            echo "archive failed" &>> $LOG
             let "tar += 1"
             sleep 300
             echo "retrying..." &>> $LOG
@@ -103,7 +103,7 @@ for i in {1..3};
         if [ $? != "0" ];
           then
             echo &>> $LOG
-            echo "failed sync" &>> $LOG
+            echo "compress failed" &>> $LOG
             let "compress += 1"
             sleep 300
             echo "retrying..." &>> $LOG
@@ -175,22 +175,22 @@ for i in {1..3};
         cp -v $BAK.tar.bz2 $WBK.tbz2 &>> $LOG
         echo &>> $LOG
         
-        while [ $weekly -lt "3" ]; do
-          
-          echo "copying weekly to server..." &>> $LOG
-          rsync -htvpEogSm $WBK.tbz2 $USER@$HST:$DST &>> $LOG
-          
-          if [ $? != "0" ];
-            then
-              echo &>> $LOG
-              echo "failed sync" &>> $LOG
-              let "weekly += 1"
-              sleep 300
-              echo "retrying..." &>> $LOG
-              echo &>> $LOG  
-              continue
-          fi
-          break
+        for w in {1..3};
+          do
+            echo "copying weekly to server..." &>> $LOG
+            rsync -htvpEogSm $WBK.tbz2 $USER@$HST:$DST &>> $LOG
+            
+            if [ $? != "0" ];
+              then
+                echo &>> $LOG
+                echo "failed sync" &>> $LOG
+                let "weekly += 1"
+                sleep 300
+                echo "retrying..." &>> $LOG
+                echo &>> $LOG  
+                continue
+            fi
+            break
         done
     
         if [ $weekly == "3" ];
