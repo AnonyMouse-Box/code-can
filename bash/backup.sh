@@ -56,7 +56,6 @@ BAK="/tmp/backup"
 MBK="/tmp/backup-$(date +%b)"
 WBK="/tmp/backup-$(date +%d)"
 DBK="/tmp/backup-$(date +%a)"
-integrity="0"
 daily="0"
 weekly="0"
 monthly="0"
@@ -71,22 +70,22 @@ echo "backup process begun $(date +%c):" &>> $LOG
 for i in {1..3};
   do
     
-    while [ $tar -lt "3" ]; do
-      
-      echo "building archive..." &>> $LOG
-      tar --exclude="$LOG" -cpvf $BAK.tar $SRC &>> $LOG
-      
-      if [ $? != "0" ];
-        then
-          echo &>> $LOG
-          echo "failed sync" &>> $LOG
-          let "tar += 1"
-          sleep 300
-          echo "retrying..." &>> $LOG
-          echo &>> $LOG  
-          continue
-      fi
-      break
+    for t in {1..3};
+      do
+        echo "building archive..." &>> $LOG
+        tar --exclude="$LOG" -cpvf $BAK.tar $SRC &>> $LOG
+        
+        if [ $? != "0" ];
+          then
+            echo &>> $LOG
+            echo "failed sync" &>> $LOG
+            let "tar += 1"
+            sleep 300
+            echo "retrying..." &>> $LOG
+            echo &>> $LOG  
+            continue
+        fi
+        break
     done
     
     if [ $tar == "3" ];
