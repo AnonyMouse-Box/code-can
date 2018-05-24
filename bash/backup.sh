@@ -2,6 +2,7 @@
 # gradually building a backup script as it will be useful to have -vrpEogtSxhm
 # backup.sh Files User Remote Folder Log
 
+NOW=$(date +%c)
 USR="$2"
 HST="$3"
 SRC="$1"
@@ -65,7 +66,7 @@ copy="0"
 
 echo &>> $LOG
 
-echo "backup process begun $(date +%c):" &>> $LOG
+echo "backup process begun $NOW:" &>> $LOG
 
 for i in {1..3};
   do
@@ -169,8 +170,8 @@ for i in {1..3};
     
     echo &>> $LOG
     
-    if [ $(date +%d) == "01" ] || [ $(date +%d) == "08" ] || [ $(date +%d) == "15" ] || [ $(date +%d) == "22" ] || [ $(date +%d) == "29" ];
-      then    
+    case $(date +%d) in
+      01|08|15|22|29)
         echo "creating weekly backup..." &>> $LOG
         cp -v $BAK.tar.bz2 $WBK.tbz2 &>> $LOG
         echo &>> $LOG
@@ -232,13 +233,16 @@ for i in {1..3};
             echo &>> $LOG
     
         fi
-    fi
+        ;;
+      *)
+        ;;
+    esac
     
     echo "cleaning up temporary files..." &>> $LOG
     rm -v $BAK.tar $BAK.tar.bz2 $DBK.tbz2 $WBK.tbz2 $MBK.tbz2 &>> $LOG
     echo &>> $LOG
     
-    echo "backup complete :) $(date +%c)." &>> $LOG
+    echo "backup complete :) $NOW." &>> $LOG
     echo &>> $LOG
     echo &>> $LOG
     exit 0
