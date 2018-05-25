@@ -21,7 +21,7 @@ DST="$4"
 FOL="$5"
 
 ARGLessThan 2
-if [ BOO == true ];
+if [ $BOO == true ];
   then
     USR="$USER"
 fi
