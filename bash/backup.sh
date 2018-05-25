@@ -31,6 +31,15 @@ function VarEqualThree(){
  fi
 }
 
+function ExitNotZero(){
+ if [ $EXI != "0" ];
+  then
+   BOO=true
+  else
+   BOO=false
+ fi
+}
+
 NOW=$(date +%c)
 USR="$2"
 HST="$3"
@@ -112,7 +121,9 @@ for i in {1..3};
         echo "building archive..." &>> $LOG
         tar --exclude="$LOG" -cpvf $BAK.tar $SRC &>> $LOG
         
-        if [ $? != "0" ];
+        EXI="$?"
+        ExitNotZero
+        if [ $BOO == true ];
           then
             echo &>> $LOG
             echo "archive failed" &>> $LOG
@@ -138,7 +149,9 @@ for i in {1..3};
         echo "compressing files..." &>> $LOG
         bzip2 -zvk $BAK.tar &>> $LOG
         
-        if [ $? != "0" ];
+        EXI="$?"
+        ExitNotZero
+        if [ $BOO == true ];
           then
             echo &>> $LOG
             echo "compress failed" &>> $LOG
@@ -162,7 +175,9 @@ for i in {1..3};
     echo "testing integrity..." &>> $LOG
     bzip2 -vt $BAK.tar.bz2 &>> $LOG
   
-    if [ $? != "0" ];
+    EXI="$?"
+    ExitNotZero
+    if [ $BOO == true ];
       then
         echo &>> $LOG
         echo "failed integrity test" &>> $LOG
@@ -187,8 +202,10 @@ for i in {1..3};
       do
         echo "copying daily to server..." &>> $LOG
         rsync -htvpEogSm $DBK.tbz2 $USER@$HST:$DST &>> $LOG
-      
-        if [ $? != "0" ];
+        
+        EXI="$?"
+        ExitNotZero
+        if [ $BOO == true ];
           then
             echo &>> $LOG
             echo "failed sync" &>> $LOG
@@ -220,7 +237,9 @@ for i in {1..3};
             echo "copying weekly to server..." &>> $LOG
             rsync -htvpEogSm $WBK.tbz2 $USER@$HST:$DST &>> $LOG
             
-            if [ $? != "0" ];
+            EXI="$?"
+            ExitNotZero
+            if [ $BOO == true ];
               then
                 echo &>> $LOG
                 echo "failed sync" &>> $LOG
@@ -252,7 +271,9 @@ for i in {1..3};
                 echo "copying monthly to server..." &>> $LOG
                 rsync -htvpEogSm $MBK.tbz2 $USER@$HST:$DST &>> $LOG
                 
-                if [ $? != "0" ];
+                EXI="$?"
+                ExitNotZero
+                if [ $BOO == true ];
                   then
                     echo &>> $LOG
                     echo "failed sync" &>> $LOG
