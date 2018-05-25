@@ -2,9 +2,15 @@
 # gradually building a backup script as it will be useful to have -vrpEogtSxhm
 # backup.sh Files User Remote Folder Log
 
-function name(){
- Commands
- return $TRUE
+ARG="$#"
+
+function LessThan(){
+ if [ $ARG -lt $1 ];
+  then
+   return $TRUE
+  else
+   return $FALSE
+ fi
 }
 
 NOW=$(date +%c)
