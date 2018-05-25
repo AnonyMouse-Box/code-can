@@ -3,6 +3,7 @@
 # backup.sh Files User Remote Folder Log
 
 ARG="$#"
+
 function PrintBlank(){
  echo &>> $LOG
 }
