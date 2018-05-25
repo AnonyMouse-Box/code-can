@@ -2,6 +2,11 @@
 # gradually building a backup script as it will be useful to have -vrpEogtSxhm
 # backup.sh Files User Remote Folder Log
 
+function name(){
+ Commands
+ return $TRUE
+}
+
 NOW=$(date +%c)
 USR="$2"
 HST="$3"
