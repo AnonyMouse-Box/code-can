@@ -74,7 +74,7 @@ if [ $BOO == true ];
     mkdir -p $FOL
 fi
 
-LOG="$FOL/backup-$(date +%a.log)"
+LOG="$FOL/backup-$(date +%y-%m-%d).log"
 
 echo "preparing variables.." &> $LOG
 
