@@ -3,6 +3,9 @@
 # backup.sh Files User Remote Folder Log
 
 ARG="$#"
+function PrintBlank(){
+ echo &>> $LOG
+}
 
 function ARGLessThan(){
  if [ $ARG -lt $1 ];
@@ -109,7 +112,7 @@ tar="0"
 compress="0"
 copy="0"
 
-echo &>> $LOG
+PrintBlank
 
 echo "backup process begun $NOW:" &>> $LOG
 
@@ -125,12 +128,12 @@ for i in {1..3};
         ExitNotZero
         if [ $BOO == true ];
           then
-            echo &>> $LOG
+            PrintBlank
             echo "archive failed" &>> $LOG
             let "tar += 1"
             sleep 300
             echo "retrying..." &>> $LOG
-            echo &>> $LOG  
+            PrintBlank  
             continue
         fi
         break
@@ -142,7 +145,7 @@ for i in {1..3};
         break
     fi
     
-    echo &>> $LOG
+    PrintBlank
       
     for c in {1..3};
       do
@@ -153,12 +156,12 @@ for i in {1..3};
         ExitNotZero
         if [ $BOO == true ];
           then
-            echo &>> $LOG
+            PrintBlank
             echo "compress failed" &>> $LOG
             let "compress += 1"
             sleep 300
             echo "retrying..." &>> $LOG
-            echo &>> $LOG  
+            PrintBlank  
             continue
         fi
         break
@@ -170,7 +173,7 @@ for i in {1..3};
         break
     fi
     
-    echo &>> $LOG
+    PrintBlank
     
     echo "testing integrity..." &>> $LOG
     bzip2 -vt $BAK.tar.bz2 &>> $LOG
@@ -179,24 +182,24 @@ for i in {1..3};
     ExitNotZero
     if [ $BOO == true ];
       then
-        echo &>> $LOG
+        PrintBlank
         echo "failed integrity test" &>> $LOG
         rm -v $BAK.tar $BAK.tar.bz2 &>> $LOG
         sleep 300
         echo "retrying..." &>> $LOG
         tar="0"
         compress="0"
-        echo &>> $LOG  
+        PrintBlank  
         continue
     fi
     
-    echo &>> $LOG  
+    PrintBlank  
     
     echo "constructing backup schema..." &>> $LOG
     
     echo "creating daily backup..." &>> $LOG
     cp -v $BAK.tar.bz2 $DBK.tbz2 &>> $LOG
-    echo &>> $LOG
+    PrintBlank
     
     for d in {1..3};
       do
@@ -207,12 +210,12 @@ for i in {1..3};
         ExitNotZero
         if [ $BOO == true ];
           then
-            echo &>> $LOG
+            PrintBlank
             echo "failed sync" &>> $LOG
             let "daily += 1"
             sleep 300
             echo "retrying..." &>> $LOG
-            echo &>> $LOG  
+            PrintBlank  
             continue
         fi
         break
@@ -230,7 +233,7 @@ for i in {1..3};
       01|08|15|22|29)
         echo "creating weekly backup..." &>> $LOG
         cp -v $BAK.tar.bz2 $WBK.tbz2 &>> $LOG
-        echo &>> $LOG
+        PrintBlank
         
         for w in {1..3};
           do
@@ -241,12 +244,12 @@ for i in {1..3};
             ExitNotZero
             if [ $BOO == true ];
               then
-                echo &>> $LOG
+                PrintBlank
                 echo "failed sync" &>> $LOG
                 let "weekly += 1"
                 sleep 300
                 echo "retrying..." &>> $LOG
-                echo &>> $LOG  
+                PrintBlank  
                 continue
             fi
             break
@@ -258,13 +261,13 @@ for i in {1..3};
             break
         fi
     
-        echo &>> $LOG
+        PrintBlank
         
         if [ $(date +%d) == "01" ];
           then
             echo "creating monthly backup..." &>> $LOG
             cp -v $BAK.tar.bz2 $MBK.tbz2 &>> $LOG
-            echo &>> $LOG
+            PrintBlank
             
             for m in {1..1};
               do
@@ -275,12 +278,12 @@ for i in {1..3};
                 ExitNotZero
                 if [ $BOO == true ];
                   then
-                    echo &>> $LOG
+                    PrintBlank
                     echo "failed sync" &>> $LOG
                     let "monthly += 1"
                     sleep 300
                     echo "retrying..." &>> $LOG
-                    echo &>> $LOG  
+                    PrintBlank  
                     continue
                 fi
                 break
@@ -292,7 +295,7 @@ for i in {1..3};
                 break
             fi
     
-            echo &>> $LOG
+            PrintBlank
     
         fi
         ;;
@@ -302,11 +305,11 @@ for i in {1..3};
     
     echo "cleaning up temporary files..." &>> $LOG
     rm -v $BAK.tar $BAK.tar.bz2 $DBK.tbz2 $WBK.tbz2 $MBK.tbz2 &>> $LOG
-    echo &>> $LOG
+    PrintBlank
     
     echo "backup complete :) $NOW." &>> $LOG
-    echo &>> $LOG
-    echo &>> $LOG
+    PrintBlank
+    PrintBlank
     exit 0
 done    
 
@@ -314,6 +317,6 @@ echo "failed too many times..." &>> $LOG
 echo "removing files..." &>> $LOG
 rm -v $BAK.tar $BAK.tar.bz2 $DBK.tbz2 $WBK.tbz2 $MBK.tbz2 &>> $LOG
 echo "backup aborted :( $(date +%c)." &>> $LOG
-echo &>> $LOG
-echo &>> $LOG
+PrintBlank
+PrintBlank
 exit 1
