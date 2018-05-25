@@ -13,6 +13,15 @@ function ARGLessThan(){
  fi
 }
 
+function DirNotExist(){
+ if [ ! -d $1 ];
+  then
+   BOO=true
+  else
+   BOO=false
+ fi
+}
+
 NOW=$(date +%c)
 USR="$2"
 HST="$3"
@@ -37,7 +46,8 @@ if [ $BOO == true ];
     FOL="/home/$USR/"
 fi
 
-if [ ! -d $FOL ];
+DirNotExist $FOL
+if [ $BOO == true ];
   then
     mkdir -p $FOL
 fi
@@ -46,7 +56,8 @@ LOG="$FOL/backup-$(date +%a.log)"
 
 echo "preparing variables.." &> $LOG
 
-if [ ! -d $USER@$HST:$DST ];
+DirNotExist $USER@$HST:$DST
+if [ $BOO == true ];
   then
     mkdir -p $USER@$HST:$DST
 fi
