@@ -4,12 +4,12 @@
 
 ARG="$#"
 
-function LessThan(){
+function ARGLessThan(){
  if [ $ARG -lt $1 ];
   then
-   return $TRUE
+   BOO=true
   else
-   return $FALSE
+   BOO=false
  fi
 }
 
@@ -20,7 +20,8 @@ SRC="$1"
 DST="$4"
 FOL="$5"
 
-if [ $# -lt "2" ];
+ARGLessThan 2
+if [ BOO == true ];
   then
     USR="$USER"
 fi
