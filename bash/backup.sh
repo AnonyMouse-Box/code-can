@@ -31,7 +31,8 @@ if [ $USER == "root" ];
     USR="admin"
 fi
 
-if [ $# -lt "5" ];
+ARGLessThan 5
+if [ $BOO == true ];
   then
     FOL="/home/$USR/"
 fi
@@ -50,17 +51,20 @@ if [ ! -d $USER@$HST:$DST ];
     mkdir -p $USER@$HST:$DST
 fi
 
-if [ $# == "0" ];
+ARGLessThan 1
+if [ $BOO == true ];
   then
     SRC="/home"
 fi
-                
-if [ $# -lt "3" ];
+
+ARGLessThan 3
+if [ $BOO == true ];
   then
     HST="127.0.0.1"
 fi
-       
-if [ $# -lt "4" ];
+
+ARGLessThan 4
+if [ $BOO == true ];
   then 
     DST="/mnt/backup"
 fi
