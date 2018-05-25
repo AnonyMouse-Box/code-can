@@ -22,6 +22,15 @@ function DirNotExist(){
  fi
 }
 
+function VarEqualThree(){
+ if [ $1 == 3 ];
+  then
+   BOO=true
+  else
+   BOO=false
+ fi
+}
+
 NOW=$(date +%c)
 USR="$2"
 HST="$3"
@@ -116,7 +125,8 @@ for i in {1..3};
         break
     done
     
-    if [ $tar == "3" ];
+    VarEqualThree $tar
+    if [ $BOO == true ];
       then
         break
     fi
@@ -141,7 +151,8 @@ for i in {1..3};
         break
     done
     
-    if [ $compress == "3" ];
+    VarEqualThree $compress
+    if [ $BOO == true ];
       then
         break
     fi
@@ -190,7 +201,8 @@ for i in {1..3};
         break
     done
     
-    if [ $daily == "3" ];
+    VarEqualThree $daily
+    if [ $BOO == true ];
       then
         break
     fi
@@ -221,8 +233,9 @@ for i in {1..3};
             break
         done
     
-        if [ $weekly == "3" ];
-          then
+        VarEqualThree $weekly
+        if [ $BOO == true ];
+         then
             break
         fi
     
@@ -252,7 +265,8 @@ for i in {1..3};
                 break
             done
     
-            if [ $monthly == "3" ];
+            VarEqualThree $monthly
+            if [ $BOO == true ];
               then
                 break
             fi
