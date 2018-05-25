@@ -1,5 +1,4 @@
 #!/bin/bash
-# gradually building a backup script as it will be useful to have -vrpEogtSxhm
 # backup.sh Files User Remote Folder Log
 
 ARG="$#"
