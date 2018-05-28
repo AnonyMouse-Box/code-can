@@ -1,19 +1,8 @@
 #!/bin/bash
 # backup.sh Files User Remote Folder Log
 
-ARG="$#"
-
 function PrintBlank(){
  echo &>> $LOG
-}
-
-function ARGLessThan(){
- if [ $ARG -lt $1 ];
-  then
-   BOO=true
-  else
-   BOO=false
- fi
 }
 
 function DirNotExist(){
@@ -43,6 +32,7 @@ function ExitNotZero(){
  fi
 }
 
+ARG=$#
 NOW=$(date +%c)
 USR="$2"
 HST="$3"
@@ -50,38 +40,39 @@ SRC="$1"
 DST="$4"
 FOL="$5"
 
-case $# in
- 5)
+for a in {1..6};
+ case $ARG in
+  0)
+   SRC="/home"
+   ;;
+  1)
+   USR="$USER"
   ;;
- [0-4])
+  2)
+   HST="127.0.0.1"
+   ;;
+  3)
+   DST="/mnt/backup"
   ;;
- [0-3])
+  4)
+   FOL="/home/$USR/"
   ;;
- [0-2])
+  5)
   ;;
- [0-1])
+  *)
+   echo "syntax error, exiting"
+   exit 1
   ;;
- 0)
-  ;;
- *)
-  ;;
-esac
-
-ARGLessThan 2
-if [ $BOO == true ];
+ esac
+ if [ $ARG == 5 ];
   then
-    USR="$USER"
-fi
+   let "ARG += 1"
+ fi
+done
 
 if [ $USER == "root" ];
   then
     USR="admin"
-fi
-
-ARGLessThan 5
-if [ $BOO == true ];
-  then
-    FOL="/home/$USR/"
 fi
 
 DirNotExist $FOL
@@ -98,24 +89,6 @@ DirNotExist $USER@$HST:$DST
 if [ $BOO == true ];
   then
     mkdir -p $USER@$HST:$DST
-fi
-
-ARGLessThan 1
-if [ $BOO == true ];
-  then
-    SRC="/home"
-fi
-
-ARGLessThan 3
-if [ $BOO == true ];
-  then
-    HST="127.0.0.1"
-fi
-
-ARGLessThan 4
-if [ $BOO == true ];
-  then 
-    DST="/mnt/backup"
 fi
 
 BAK="/tmp/backup"
