@@ -73,6 +73,7 @@ done
 if [ $USER == "root" ];
   then
     USR="admin"
+    FOL="/home/$USR/"
 fi
 
 DirNotExist $FOL
