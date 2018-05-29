@@ -55,6 +55,10 @@ for a in {1..6};
    DST="/mnt/backup"
   ;;
   4)
+   if [ $USER == "root" ];
+    then
+     USR="admin"
+   fi
    FOL="/home/$USR/"
   ;;
   5)
@@ -70,11 +74,7 @@ for a in {1..6};
  fi
 done
 
-if [ $USER == "root" ];
-  then
-    USR="admin"
-    FOL="/home/$USR/"
-fi
+
 
 DirNotExist $FOL
 if [ $BOO == true ];
