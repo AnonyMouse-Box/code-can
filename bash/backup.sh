@@ -279,6 +279,9 @@ for i in {1..3};
             fi
     
             PrintBlank
+            
+            echo "cleaning up old log files..." &>> $LOG
+            tar  -cpvf $FOL/*.log $FOL/archive/log- &>> $LOG
     
         fi
         ;;
