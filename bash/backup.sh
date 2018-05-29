@@ -64,7 +64,7 @@ for a in {1..6};
    exit 1
   ;;
  esac
- if [ $ARG == 5 ];
+ if [ $ARG != 5 ];
   then
    let "ARG += 1"
  fi
