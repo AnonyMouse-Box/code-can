@@ -59,7 +59,7 @@ for a in {1..6};
     then
      USR="admin"
    fi
-   FOL="/home/$USR/"
+   FOL="/home/$USR/log"
   ;;
   5)
   ;;
@@ -284,14 +284,15 @@ for i in {1..3};
             tar="0"
             compress="0"
             integrity="0"
-            BAK="$FOL/log-$(date +%b)"
+            BLO="$FOL/log-$(date +%b)"
+            ARC="$FOL/archive/log-$(date +%b).tbz2"
             
             for i in {1..3};
              do
               for t in {1..3};
                do
                 echo "archiving logs..." &>> $LOG
-                tar -cpvf $BAK.tar $FOL/*.log &>> $LOG
+                tar -cpvf $BLO.tar $FOL/*.log &>> $LOG
                 
                 EXI="$?"
                 ExitNotZero
@@ -317,7 +318,7 @@ for i in {1..3};
               for c in {1..3};
                do
                 echo "compressing log..." &>> $LOG
-                bzip2 -zvk $BAK.tar &>> $LOG
+                bzip2 -zvk $BLO.tar &>> $LOG
                 
                 EXI="$?"
                 ExitNotZero
@@ -341,7 +342,7 @@ for i in {1..3};
               fi
               
               echo "testing integrity..." &>> $LOG
-              bzip2 -vt $BAK.tar.bz2 &>> $LOG
+              bzip2 -vt $BLO.tar.bz2 &>> $LOG
               
               EXI="$?"
               ExitNotZero
@@ -350,7 +351,7 @@ for i in {1..3};
                 PrintBlank
                 echo "failed integrity test" &>> $LOG
                 let "integrity += 1"
-                rm -v $BAK.tar $BAK.tar.bz2 &>> $LOG
+                rm -v $BLO.tar $BLO.tar.bz2 &>> $LOG
                 sleep 300
                 echo "retrying..." &>> $LOG
                 tar="0"
@@ -366,6 +367,12 @@ for i in {1..3};
                 break 2
               fi
             done
+            echo "moving to archive..." &>> $LOG
+            cp -v $BLO.tar.bz2 $ARC &>> $LOG
+            PrintBlank
+            echo "clearing log folder..." &>> $LOG
+            rm -v $BLO.tar $BLO.tar.bz2 $BLO.tbz2 $FOL/*.log &>> $LOG
+            PrintBlank
         fi
         ;;
       *)
