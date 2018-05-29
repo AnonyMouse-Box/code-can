@@ -281,8 +281,91 @@ for i in {1..3};
             PrintBlank
             
             echo "cleaning up old log files..." &>> $LOG
-            tar  -cpvf $FOL/*.log $FOL/archive/log- &>> $LOG
-    
+            tar="0"
+            compress="0"
+            integrity="0"
+            BAK="$FOL/log-$(date +%b)"
+            
+            for i in {1..3};
+             do
+              for t in {1..3};
+               do
+                echo "archiving logs..." &>> $LOG
+                tar -cpvf $BAK.tar $FOL/*.log &>> $LOG
+                
+                EXI="$?"
+                ExitNotZero
+                if [ $BOO == true ];
+                 then
+                  PrintBlank
+                  echo "archive failed" &>> $LOG
+                  let "tar += 1"
+                  sleep 300
+                  echo "retrying..." &>> $LOG
+                  PrintBlank  
+                  continue
+                fi
+                break
+              done
+              
+              VarEqualThree $tar
+              if [ $BOO == true ];
+               then
+                break 2
+              fi
+              
+              for c in {1..3};
+               do
+                echo "compressing log..." &>> $LOG
+                bzip2 -zvk $BAK.tar &>> $LOG
+                
+                EXI="$?"
+                ExitNotZero
+                if [ $BOO == true ];
+                 then
+                  PrintBlank
+                  echo "compress failed" &>> $LOG
+                  let "compress += 1"
+                  sleep 300
+                  echo "retrying..." &>> $LOG
+                  PrintBlank  
+                  continue
+                fi
+                break
+              done
+              
+              VarEqualThree $compress
+              if [ $BOO == true ];
+               then
+                break 2
+              fi
+              
+              echo "testing integrity..." &>> $LOG
+              bzip2 -vt $BAK.tar.bz2 &>> $LOG
+              
+              EXI="$?"
+              ExitNotZero
+              if [ $BOO == true ];
+               then
+                PrintBlank
+                echo "failed integrity test" &>> $LOG
+                let "integrity += 1"
+                rm -v $BAK.tar $BAK.tar.bz2 &>> $LOG
+                sleep 300
+                echo "retrying..." &>> $LOG
+                tar="0"
+                compress="0"
+                PrintBlank  
+                continue
+              fi
+              break
+              
+              VarEqualThree $integrity
+              if [ $BOO == true ];
+               then
+                break 2
+              fi
+            done
         fi
         ;;
       *)
