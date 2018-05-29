@@ -74,8 +74,6 @@ for a in {1..6};
  fi
 done
 
-
-
 DirNotExist $FOL
 if [ $BOO == true ];
   then
