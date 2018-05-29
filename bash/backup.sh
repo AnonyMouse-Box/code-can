@@ -84,12 +84,6 @@ LOG="$FOL/backup-$(date +%d).log"
 
 echo "preparing variables.." &> $LOG
 
-DirNotExist $USER@$HST:$DST
-if [ $BOO == true ];
-  then
-    mkdir -p $USER@$HST:$DST
-fi
-
 BAK="/tmp/backup"
 MBK="/tmp/backup-$(date +%b)"
 WBK="/tmp/backup-$(date +%d)"
