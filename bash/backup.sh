@@ -48,6 +48,12 @@ function ExitNotZero(){
  fi
 }
 
+function CopyLog(){
+ echo "copying log..." &>>TMP
+ cp -v $TMP $LOG &>> $LOG
+ PrintBlankLog
+}
+
 ARG=$#
 NOW=$(date +%c)
 USR="$2"
@@ -394,8 +400,10 @@ for i in {1..3};
         ;;
     esac
     
+    CopyLog
+    
     echo "cleaning up temporary files..." &>> $LOG
-    rm -v $BAK.tar $BAK.tar.bz2 $DBK.tbz2 $WBK.tbz2 $MBK.tbz2 &>> $LOG
+    rm -v $BAK.tar $BAK.tar.bz2 $DBK.tbz2 $WBK.tbz2 $MBK.tbz2 $TMP &>> $LOG
     PrintBlankLog
     
     echo "backup complete :) $NOW." &>> $LOG
@@ -405,10 +413,11 @@ for i in {1..3};
 done    
 
 echo "failed too many times..." &>> $TMP
-echo "copying log..." &>>TMP
+
+CopyLog
 
 echo "removing files..." &>> $LOG
-rm -v $BAK.tar $BAK.tar.bz2 $DBK.tbz2 $WBK.tbz2 $MBK.tbz2 &>> $LOG
+rm -v $BAK.tar $BAK.tar.bz2 $DBK.tbz2 $WBK.tbz2 $MBK.tbz2 $TMP &>> $LOG
 echo "backup aborted :( $(date +%c)." &>> $LOG
 PrintBlankLog
 PrintBlankLog
