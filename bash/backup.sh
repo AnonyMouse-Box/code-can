@@ -69,6 +69,12 @@ function TestIntegrity(){
  PrintBlank
  }
  
+ function CopyBackup(){
+  echo "finalizing backup..." &>> $TMP
+  cp -v $1 $2 &>> $TMP
+  PrintBlank
+ }
+ 
 function CopyLog(){
  echo "copying log..." &>>TMP
  cp -v $TMP $LOG &>> $LOG
@@ -147,7 +153,6 @@ echo "backup process begun $NOW:" &>> $TMP
 
 for i in {1..3};
   do
-    
     for t in {1..3};
       do
         Archive $SRC $BAK.tar $FOL
@@ -156,7 +161,6 @@ for i in {1..3};
         ExitNotZero
         if [ $BOO == true ];
           then
-            PrintBlank
             echo "archive failed" &>> $TMP
             let "tar += 1"
             sleep 300
@@ -172,8 +176,6 @@ for i in {1..3};
       then
         break
     fi
-    
-    PrintBlank
       
     for c in {1..3};
       do
@@ -183,7 +185,6 @@ for i in {1..3};
         ExitNotZero
         if [ $BOO == true ];
           then
-            PrintBlank
             echo "compress failed" &>> $TMP
             let "compress += 1"
             sleep 300
@@ -200,15 +201,12 @@ for i in {1..3};
         break
     fi
     
-    PrintBlank
-    
     TestIntegrity $BAK.tar.bz2
   
     EXI="$?"
     ExitNotZero
     if [ $BOO == true ];
       then
-        PrintBlank
         echo "failed integrity test" &>> $TMP
         rm -v $BAK.tar $BAK.tar.bz2 &>> $TMP
         sleep 300
@@ -217,26 +215,22 @@ for i in {1..3};
         compress="0"
         PrintBlank  
         continue
-    fi
-    
-    PrintBlank  
+    fi  
     
     echo "constructing backup schema..." &>> $TMP
-    
     echo "creating daily backup..." &>> $TMP
-    cp -v $BAK.tar.bz2 $DBK.tbz2 &>> $TMP
-    PrintBlank
+    CopyBackup "$BAK.tar.bz2" "$DBK.tbz2"
     
     for d in {1..3};
       do
         echo "copying daily to server..." &>> $TMP
         rsync -htvpEogSm $DBK.tbz2 $USER@$HST:$DST &>> $TMP
+        PrintBlank
         
         EXI="$?"
         ExitNotZero
         if [ $BOO == true ];
           then
-            PrintBlank
             echo "failed sync" &>> $TMP
             let "daily += 1"
             sleep 300
@@ -253,24 +247,21 @@ for i in {1..3};
         break
     fi
     
-    echo &>> $TMP
-    
     case $(date +%d) in
       01|08|15|22|29)
         echo "creating weekly backup..." &>> $TMP
-        cp -v $BAK.tar.bz2 $WBK.tbz2 &>> $TMP
-        PrintBlank
+        CopyBackup "$BAK.tar.bz2" "$WBK.tbz2"
         
         for w in {1..3};
           do
             echo "copying weekly to server..." &>> $TMP
             rsync -htvpEogSm $WBK.tbz2 $USER@$HST:$DST &>> $TMP
+            PrintBlank
             
             EXI="$?"
             ExitNotZero
             if [ $BOO == true ];
               then
-                PrintBlank
                 echo "failed sync" &>> $TMP
                 let "weekly += 1"
                 sleep 300
@@ -286,25 +277,22 @@ for i in {1..3};
          then
             break
         fi
-    
-        PrintBlank
         
         if [ $(date +%d) == "01" ];
           then
             echo "creating monthly backup..." &>> $TMP
-            cp -v $BAK.tar.bz2 $MBK.tbz2 &>> $TMP
-            PrintBlank
+            CopyBackup "$BAK.tar.bz2" "$MBK.tbz2"
             
             for m in {1..1};
               do
                 echo "copying monthly to server..." &>> $TMP
                 rsync -htvpEogSm $MBK.tbz2 $USER@$HST:$DST &>> $TMP
+                PrintBlank
                 
                 EXI="$?"
                 ExitNotZero
                 if [ $BOO == true ];
                   then
-                    PrintBlank
                     echo "failed sync" &>> $TMP
                     let "monthly += 1"
                     sleep 300
@@ -320,8 +308,6 @@ for i in {1..3};
               then
                 break
             fi
-    
-            PrintBlank
             
             echo "cleaning up old log files..." &>> $TMP
             tar="0"
@@ -405,8 +391,8 @@ for i in {1..3};
               fi
             done
             echo "moving to archive..." &>> $TMP
-            cp -v $BLO.tar.bz2 $ARC &>> $TMP
-            PrintBlank
+            CopyBackup "$BLO.tar.bz2" "$ARC"
+            
             echo "clearing log folder..." &>> $TMP
             rm -v $BLO.tar $BLO.tar.bz2 $BLO.tbz2 $FOL/*.log &>> $TMP
             PrintBlank
