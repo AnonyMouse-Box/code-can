@@ -62,6 +62,7 @@ function Fail(){
 function Archive(){
  echo "building archive..." &>> $TMP
  tar --exclude="$3" -cpvf $2 $1 &>> $TMP
+ PrintBlank
 }
 
 function Compress(){
@@ -74,13 +75,19 @@ function TestIntegrity(){
  echo "testing integrity..." &>> $TMP
  bzip2 -vt $1 &>> $TMP
  PrintBlank
- }
- 
- function CopyBackup(){
-  echo "finalizing backup..." &>> $TMP
-  cp -v $1 $2 &>> $TMP
-  PrintBlank
- }
+}
+
+function IntegrityCleanup(){
+ rm -v "$1.tar" "$1.tar.bz2" &>> $TMP
+ tar="0"
+ compress="0"
+}
+
+function CopyBackup(){
+ echo "finalizing backup..." &>> $TMP
+ cp -v $1 $2 &>> $TMP
+ PrintBlank
+}
  
 function CopyLog(){
  echo "copying log..." &>>TMP
@@ -210,10 +217,8 @@ for i in {1..3};
     if [ $BOO == true ];
       then
         echo "failed integrity test" &>> $TMP
-        rm -v $BAK.tar $BAK.tar.bz2 &>> $TMP
         Fail integrity
-        tar="0"
-        compress="0" 
+        IntegrityCleanup "$BAK"
         continue
     fi  
     
@@ -337,7 +342,7 @@ for i in {1..3};
               break
             fi
     
-            for m in {1..1};
+            for m in {1..3};
               do
                 echo "copying monthly to server..." &>> $TMP
                 rsync -htvpEogSm $MBK.tbz2 $USER@$HST:$DST &>> $TMP
@@ -418,10 +423,8 @@ for i in {1..3};
               if [ $BOO == true ];
                then
                 echo "failed integrity test" &>> $TMP
-                rm -v $BLO.tar $BLO.tar.bz2 &>> $TMP
                 Fail integrity
-                tar="0"
-                compress="0" 
+                IntegrityCleanup "$BLO"
                 continue
               fi
               break
