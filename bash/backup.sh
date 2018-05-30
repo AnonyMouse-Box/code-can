@@ -54,6 +54,12 @@ function CopyLog(){
  PrintBlankLog
 }
 
+function RemoveTemps(){
+ echo "cleaning up temporary files..." &>> $LOG
+ rm -v $BAK.tar $BAK.tar.bz2 $DBK.tbz2 $WBK.tbz2 $MBK.tbz2 $TMP &>> $LOG
+ PrintBlankLog
+}
+
 ARG=$#
 NOW=$(date +%c)
 USR="$2"
@@ -401,10 +407,7 @@ for i in {1..3};
     esac
     
     CopyLog
-    
-    echo "cleaning up temporary files..." &>> $LOG
-    rm -v $BAK.tar $BAK.tar.bz2 $DBK.tbz2 $WBK.tbz2 $MBK.tbz2 $TMP &>> $LOG
-    PrintBlankLog
+    RemoveTemps
     
     echo "backup complete :) $NOW." &>> $LOG
     PrintBlankLog
@@ -415,9 +418,8 @@ done
 echo "failed too many times..." &>> $TMP
 
 CopyLog
+RemoveTemps
 
-echo "removing files..." &>> $LOG
-rm -v $BAK.tar $BAK.tar.bz2 $DBK.tbz2 $WBK.tbz2 $MBK.tbz2 $TMP &>> $LOG
 echo "backup aborted :( $(date +%c)." &>> $LOG
 PrintBlankLog
 PrintBlankLog
