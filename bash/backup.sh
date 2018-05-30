@@ -48,6 +48,23 @@ function ExitNotZero(){
  fi
 }
 
+function Archive(){
+ echo "building archive..." &>> $TMP
+ tar --exclude="$3" -cpvf $2 $1 &>> $TMP
+}
+
+function Compress(){
+ echo "compressing file..." &>> $TMP
+ bzip2 -zvk $1.tar &>> $TMP
+ PrintBlank
+}
+
+function TestIntegrity(){
+ echo "testing integrity..." &>> $TMP
+ bzip2 -vt $1 &>> $TMP
+ PrintBlank
+ }
+ 
 function CopyLog(){
  echo "copying log..." &>>TMP
  cp -v $TMP $LOG &>> $LOG
@@ -59,6 +76,8 @@ function RemoveTemps(){
  rm -v $BAK.tar $BAK.tar.bz2 $DBK.tbz2 $WBK.tbz2 $MBK.tbz2 $TMP &>> $LOG
  PrintBlankLog
 }
+
+
 
 ARG=$#
 NOW=$(date +%c)
@@ -131,8 +150,7 @@ for i in {1..3};
     
     for t in {1..3};
       do
-        echo "building archive..." &>> $TMP
-        tar --exclude="$LOG" -cpvf $BAK.tar $SRC &>> $TMP
+        Archive $SRC $BAK.tar $FOL
         
         EXI="$?"
         ExitNotZero
@@ -159,8 +177,7 @@ for i in {1..3};
       
     for c in {1..3};
       do
-        echo "compressing files..." &>> $TMP
-        bzip2 -zvk $BAK.tar &>> $TMP
+        Compress $BAK.tar
         
         EXI="$?"
         ExitNotZero
@@ -185,8 +202,7 @@ for i in {1..3};
     
     PrintBlank
     
-    echo "testing integrity..." &>> $TMP
-    bzip2 -vt $BAK.tar.bz2 &>> $TMP
+    TestIntegrity $BAK.tar.bz2
   
     EXI="$?"
     ExitNotZero
@@ -318,14 +334,12 @@ for i in {1..3};
              do
               for t in {1..3};
                do
-                echo "archiving logs..." &>> $TMP
-                tar -cpvf $BLO.tar $FOL/*.log &>> $TMP
+                Archive "$FOL/*.log" "$BLO.tar" "$FOL/archive"
                 
                 EXI="$?"
                 ExitNotZero
                 if [ $BOO == true ];
                  then
-                  PrintBlank
                   echo "archive failed" &>> $TMP
                   let "tar += 1"
                   sleep 300
@@ -344,14 +358,12 @@ for i in {1..3};
               
               for c in {1..3};
                do
-                echo "compressing log..." &>> $TMP
-                bzip2 -zvk $BLO.tar &>> $TMP
+                Compress $BLO.tar
                 
                 EXI="$?"
                 ExitNotZero
                 if [ $BOO == true ];
                  then
-                  PrintBlank
                   echo "compress failed" &>> $TMP
                   let "compress += 1"
                   sleep 300
@@ -368,14 +380,12 @@ for i in {1..3};
                 break 2
               fi
               
-              echo "testing integrity..." &>> $TMP
-              bzip2 -vt $BLO.tar.bz2 &>> $TMP
+              TestIntegrity $BLO.tar.bz2
               
               EXI="$?"
               ExitNotZero
               if [ $BOO == true ];
                then
-                PrintBlank
                 echo "failed integrity test" &>> $TMP
                 let "integrity += 1"
                 rm -v $BLO.tar $BLO.tar.bz2 &>> $TMP
