@@ -12,10 +12,14 @@ function DirNotExist(){
  fi
 }
 
+function CreateDir(){
+ mkdir -p $1
+}
+
 DirNotExist tmp
 if [ $BOO == true ];
   then
-    mkdir -p tmp
+   CreateDir tmp
 fi
 
 TMP="/tmp/backup.log"
@@ -77,8 +81,6 @@ function RemoveTemps(){
  PrintBlankLog
 }
 
-
-
 ARG=$#
 NOW=$(date +%c)
 USR="$2"
@@ -124,12 +126,10 @@ done
 DirNotExist $FOL
 if [ $BOO == true ];
   then
-    mkdir -p $FOL &>> $TMP
+    CreateDir $FOL
 fi
 
 LOG="$FOL/backup-$(date +%d).log"
-
-
 BAK="/tmp/backup"
 MBK="/tmp/backup-$(date +%b)"
 WBK="/tmp/backup-$(date +%d)"
