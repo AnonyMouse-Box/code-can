@@ -4,22 +4,22 @@
 cd /
 
 function DirNotExist(){
-if [ ! -d "$1" ];
-then
-BOO="true"
-else
-BOO="false"
-fi
+  if [ ! -d "$1" ];
+    then
+      BOO="true"
+    else
+      BOO="false"
+  fi
 }
 
 function CreateDir(){
-mkdir -p "$1"
+  mkdir -p "$1"
 }
 
 DirNotExist "tmp"
 if [ $BOO == "true" ];
-then
-CreateDir "tmp"
+  then
+    CreateDir "tmp"
 fi
 
 TMP="/tmp/backup.log"
@@ -27,78 +27,78 @@ TMP="/tmp/backup.log"
 echo "preparing system.." &> "$TMP"
 
 function PrintBlank(){
-echo &>> "$TMP"
+  echo &>> "$TMP"
 }
 
 function PrintBlankLog(){
-echo &>> "$LOG"
+  echo &>> "$LOG"
 }
 
 function VarEqualThree(){
-if [ "$1" == "3" ];
-then
-BOO="true"
-else
-BOO="false"
-fi
+  if [ "$1" == "3" ];
+    then
+      BOO="true"
+    else
+      BOO="false"
+  fi
 }
 
 function ExitNotZero(){
-if [ "$EXI" != "0" ];
-then
-BOO="true"
-else
-BOO="false"
-fi
+  if [ "$EXI" != "0" ];
+    then
+      BOO="true"
+    else
+      BOO="false"
+  fi
 }
 
 function Fail(){
-let "$1 += 1"
-sleep 300
-echo "retrying..." &>> "$TMP"
-PrintBlank
+  let "$1 += 1"
+  sleep 300
+  echo "retrying..." &>> "$TMP"
+  PrintBlank
 }
 
 function Archive(){
-echo "building archive..." &>> "$TMP"
-tar --exclude="$3" -cpvf "$2" "$1" &>> "$TMP"
-PrintBlank
+  echo "building archive..." &>> "$TMP"
+  tar --exclude="$3" -cpvf "$2" "$1" &>> "$TMP"
+  PrintBlank
 }
 
 function Compress(){
-echo "compressing file..." &>> "$TMP"
-bzip2 -zvk "$1.tar" &>> "$TMP"
-PrintBlank
+  echo "compressing file..." &>> "$TMP"
+  bzip2 -zvk "$1.tar" &>> "$TMP"
+  PrintBlank
 }
 
 function TestIntegrity(){
-echo "testing integrity..." &>> "$TMP"
-bzip2 -vt "$1" &>> "$TMP"
-PrintBlank
+  echo "testing integrity..." &>> "$TMP"
+  bzip2 -vt "$1" &>> "$TMP"
+  PrintBlank
 }
 
 function IntegrityCleanup(){
-rm -v "$1.tar" "$1.tar.bz2" &>> "$TMP"
-tar="0"
-compress="0"
+  rm -v "$1.tar" "$1.tar.bz2" &>> "$TMP"
+  tar="0"
+  compress="0"
 }
 
 function CopyBackup(){
-echo "finalizing backup..." &>> "$TMP"
-cp -v "$1" "$2" &>> "$TMP"
-PrintBlank
+  echo "finalizing backup..." &>> "$TMP"
+  cp -v "$1" "$2" &>> "$TMP"
+  PrintBlank
 }
 
 function CopyLog(){
-echo "copying log..." &>> "$TMP"
-cp -v "$TMP" "$LOG" &>> "$LOG"
-PrintBlankLog
+  echo "copying log..." &>> "$TMP"
+  cp -v "$TMP" "$LOG" &>> "$LOG"
+  PrintBlankLog
 }
 
 function RemoveTemps(){
-echo "cleaning up temporary files..." &>> "$LOG"
-rm -v "$BAK.tar" "$BAK.tar.bz2" "$DBK.tbz2" "$WBK.tbz2" "$MBK.tbz2" "$TMP" &>> "$LOG"
-PrintBlankLog
+  echo "cleaning up temporary files..." &>> "$LOG"
+  rm -v "$BAK.tar" "$BAK.tar.bz2" "$DBK.tbz2" "$WBK.tbz2" "$MBK.tbz2" "$TMP" &>> "$LOG"
+  PrintBlankLog
 }
 
 ARG="$#"
@@ -110,43 +110,44 @@ DST="$4"
 FOL="$5"
 
 for a in {1..6};
-case "$ARG" in
-"0")
-SRC="/home"
-;;
-"1")
-USR="$USER"
-;;
-"2")
-HST="127.0.0.1"
-;;
-"3")
-DST="/mnt/backup"
-;;
-"4")
-if [ $USER == "root" ];
-then
-USR="admin"
-fi
-FOL="/home/$USR/log"
-;;
-"5")
-;;
-*)
-echo "syntax error, exiting" &>> "$TMP"
-exit 1
-;;
-esac
-if [ "$ARG" != "5" ];
-then
-let "ARG += 1"
-fi
+  do
+    case "$ARG" in
+      "0")
+        SRC="/home"
+      ;;
+      "1")
+        USR="$USER"
+      ;;
+      "2")
+        HST="127.0.0.1"
+      ;;
+      "3")
+        DST="/mnt/backup"
+      ;;
+      "4")
+        if [ $USER == "root" ];
+          then
+            USR="admin"
+        fi
+        FOL="/home/$USR/log"
+      ;;
+      "5")
+      ;;
+      *)
+        echo "syntax error, exiting" &>> "$TMP"
+        exit 1
+      ;;
+    esac
+    if [ "$ARG" != "5" ];
+      then
+        let "ARG += 1"
+    fi
 done
 
 DirNotExist "$FOL"
 if [ "$BOO" == "true" ];
-then
-CreateDir "$FOL"
+  then
+    CreateDir "$FOL"
 fi
 
 LOG="$FOL/backup-$(date +%d).log"
@@ -167,62 +168,62 @@ PrintBlank
 echo "backup process begun $NOW:" &>> "$TMP"
 
 for i in {1..3};
-do
-for t in {1..3};
-do
-Archive "$SRC" "$BAK.tar" "$FOL"
+  do
+    for t in {1..3};
+      do
+        Archive "$SRC" "$BAK.tar" "$FOL"
+        
+        EXI="$?"
+        ExitNotZero
+        if [ "$BOO" == "true" ];
+          then
+            echo "archive failed" &>> "$TMP"
+            Fail "tar"
+            continue
+        fi
+        break
+    done
 
-EXI="$?"
-ExitNotZero
-if [ "$BOO" == "true" ];
-then
-echo "archive failed" &>> "$TMP"
-Fail "tar"
-continue
-fi
-break
-done
-
-VarEqualThree "$tar"
-if [ "$BOO" == "true" ];
-then
-break
-fi
-
-for c in {1..3};
-do
-Compress "$BAK.tar"
-
-EXI="$?"
-ExitNotZero
-if [ "$BOO" == "true" ];
-then
-echo "compress failed" &>> "$TMP"
-Fail "compress" 
-continue
-fi
-break
-done
-
-VarEqualThree "$compress"
-if [ "$BOO" == "true" ];
-then
-break
-fi
-
-TestIntegrity "$BAK.tar.bz2"
-
-EXI="$?"
-ExitNotZero
-if [ "$BOO" == "true" ];
-then
-echo "failed integrity test" &>> "$TMP"
-Fail "integrity"
-IntegrityCleanup "$BAK"
-continue
-fi  
-
-echo "constructing backup schema..." &>> "$TMP"
+    VarEqualThree "$tar"
+    if [ "$BOO" == "true" ];
+      then
+        break
+    fi
+    
+    for c in {1..3};
+      do
+        Compress "$BAK.tar"
+        
+        EXI="$?"
+        ExitNotZero
+        if [ "$BOO" == "true" ];
+          then
+            echo "compress failed" &>> "$TMP"
+            Fail "compress" 
+            continue
+        fi
+        break
+    done
+    
+    VarEqualThree "$compress"
+    if [ "$BOO" == "true" ];
+      then
+        break
+    fi
+    
+    TestIntegrity "$BAK.tar.bz2"
+    
+    EXI="$?"
+    ExitNotZero
+    if [ "$BOO" == "true" ];
+      then
+        echo "failed integrity test" &>> "$TMP"
+        Fail "integrity"
+        IntegrityCleanup "$BAK"
+        continue
+    fi  
+    
+    echo "constructing backup schema..." &>> "$TMP"
 
 for c in {1..3};
 do
