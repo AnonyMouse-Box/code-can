@@ -4,58 +4,105 @@
 cd /
 
 function DirNotExist(){
- if [ ! -d $1 ];
-  then
-   BOO=true
-  else
-   BOO=false
- fi
+  if [ ! -d "$1" ];
+    then
+      BOO="true"
+    else
+      BOO="false"
+  fi
 }
 
-DirNotExist tmp
-if [ $BOO == true ];
+function CreateDir(){
+  mkdir -p "$1"
+}
+
+DirNotExist "tmp"
+if [ $BOO == "true" ];
   then
-    mkdir -p tmp
+    CreateDir "tmp"
 fi
 
 TMP="/tmp/backup.log"
 
-echo "preparing system.." &> $TMP
+echo "preparing system.." &> "$TMP"
 
 function PrintBlank(){
- echo &>> $TMP
+  echo &>> "$TMP"
 }
 
 function PrintBlankLog(){
- echo &>> $LOG
+  echo &>> "$LOG"
 }
 
 function VarEqualThree(){
- if [ $1 == 3 ];
-  then
-   BOO=true
-  else
-   BOO=false
- fi
+  if [ "$1" == "3" ];
+    then
+      BOO="true"
+    else
+      BOO="false"
+  fi
 }
 
 function ExitNotZero(){
- if [ $EXI != "0" ];
-  then
-   BOO=true
-  else
-   BOO=false
- fi
+  if [ "$EXI" != "0" ];
+    then
+      BOO="true"
+    else
+      BOO="false"
+  fi
+}
+
+function Fail(){
+  let "$1 += 1"
+  sleep 300
+  echo "retrying..." &>> "$TMP"
+  PrintBlank
+}
+
+function Archive(){
+  echo "building archive..." &>> "$TMP"
+  tar --exclude="$3" -cpvf "$2" "$1" &>> "$TMP"
+  PrintBlank
+}
+
+function Compress(){
+  echo "compressing file..." &>> "$TMP"
+  bzip2 -zvk "$1.tar" &>> "$TMP"
+  PrintBlank
+}
+
+function TestIntegrity(){
+  echo "testing integrity..." &>> "$TMP"
+  bzip2 -vt "$1" &>> "$TMP"
+  PrintBlank
+}
+
+function IntegrityCleanup(){
+  rm -v "$1.tar" "$1.tar.bz2" &>> "$TMP"
+  tar="0"
+  compress="0"
+}
+
+function CopyBackup(){
+  echo "finalizing backup..." &>> "$TMP"
+  cp -v "$1" "$2" &>> "$TMP"
+  PrintBlank
 }
 
 function CopyLog(){
- echo "copying log..." &>>TMP
- cp -v $TMP $LOG &>> $LOG
- PrintBlankLog
+  echo "copying log..." &>> "$TMP"
+  cp -v "$TMP" "$LOG" &>> "$LOG"
+  PrintBlankLog
 }
 
-ARG=$#
-NOW=$(date +%c)
+function RemoveTemps(){
+  echo "cleaning up temporary files..." &>> "$LOG"
+  rm -v "$BAK.tar" "$BAK.tar.bz2" "$DBK.tbz2" "$WBK.tbz2" "$MBK.tbz2" "$TMP" &>> "$LOG"
+  PrintBlankLog
+}
+
+ARG="$#"
+NOW="$(date +%c)"
 USR="$2"
 HST="$3"
 SRC="$1"
@@ -63,48 +110,47 @@ DST="$4"
 FOL="$5"
 
 for a in {1..6};
- case $ARG in
-  0)
-   SRC="/home"
-   ;;
-  1)
-   USR="$USER"
-  ;;
-  2)
-   HST="127.0.0.1"
-   ;;
-  3)
-   DST="/mnt/backup"
-  ;;
-  4)
-   if [ $USER == "root" ];
-    then
-     USR="admin"
-   fi
-   FOL="/home/$USR/log"
-  ;;
-  5)
-  ;;
-  *)
-   echo "syntax error, exiting" &>> $TMP
-   exit 1
-  ;;
- esac
- if [ $ARG != 5 ];
-  then
-   let "ARG += 1"
- fi
+  do
+    case "$ARG" in
+      "0")
+        SRC="/home"
+      ;;
+      "1")
+        USR="$USER"
+      ;;
+      "2")
+        HST="127.0.0.1"
+      ;;
+      "3")
+        DST="/mnt/backup"
+      ;;
+      "4")
+        if [ $USER == "root" ];
+          then
+            USR="admin"
+        fi
+        FOL="/home/$USR/log"
+      ;;
+      "5")
+      ;;
+      *)
+        echo "syntax error, exiting" &>> "$TMP"
+        exit 1
+      ;;
+    esac
+    if [ "$ARG" != "5" ];
+      then
+        let "ARG += 1"
+    fi
 done
 
-DirNotExist $FOL
-if [ $BOO == true ];
+DirNotExist "$FOL"
+if [ "$BOO" == "true" ];
   then
-    mkdir -p $FOL &>> $TMP
+    CreateDir "$FOL"
 fi
 
 LOG="$FOL/backup-$(date +%d).log"
-
-
 BAK="/tmp/backup"
 MBK="/tmp/backup-$(date +%b)"
 WBK="/tmp/backup-$(date +%d)"
@@ -115,193 +161,212 @@ monthly="0"
 tar="0"
 compress="0"
 copy="0"
+integrity="0"
 
 PrintBlank
 
-echo "backup process begun $NOW:" &>> $TMP
+echo "backup process begun $NOW:" &>> "$TMP"
 
 for i in {1..3};
   do
-    
     for t in {1..3};
       do
-        echo "building archive..." &>> $TMP
-        tar --exclude="$LOG" -cpvf $BAK.tar $SRC &>> $TMP
+        Archive "$SRC" "$BAK.tar" "$FOL"
         
         EXI="$?"
         ExitNotZero
-        if [ $BOO == true ];
+        if [ "$BOO" == "true" ];
           then
-            PrintBlank
-            echo "archive failed" &>> $TMP
-            let "tar += 1"
-            sleep 300
-            echo "retrying..." &>> $TMP
-            PrintBlank  
+            echo "archive failed" &>> "$TMP"
+            Fail "tar"
             continue
         fi
         break
     done
-    
-    VarEqualThree $tar
-    if [ $BOO == true ];
+
+    VarEqualThree "$tar"
+    if [ "$BOO" == "true" ];
       then
         break
     fi
     
-    PrintBlank
-      
     for c in {1..3};
       do
-        echo "compressing files..." &>> $TMP
-        bzip2 -zvk $BAK.tar &>> $TMP
+        Compress "$BAK.tar"
         
         EXI="$?"
         ExitNotZero
-        if [ $BOO == true ];
+        if [ "$BOO" == "true" ];
           then
-            PrintBlank
-            echo "compress failed" &>> $TMP
-            let "compress += 1"
-            sleep 300
-            echo "retrying..." &>> $TMP
-            PrintBlank  
+            echo "compress failed" &>> "$TMP"
+            Fail "compress" 
             continue
         fi
         break
     done
     
-    VarEqualThree $compress
-    if [ $BOO == true ];
+    VarEqualThree "$compress"
+    if [ "$BOO" == "true" ];
       then
         break
     fi
     
-    PrintBlank
+    TestIntegrity "$BAK.tar.bz2"
     
-    echo "testing integrity..." &>> $TMP
-    bzip2 -vt $BAK.tar.bz2 &>> $TMP
-  
     EXI="$?"
     ExitNotZero
-    if [ $BOO == true ];
+    if [ "$BOO" == "true" ];
       then
-        PrintBlank
-        echo "failed integrity test" &>> $TMP
-        rm -v $BAK.tar $BAK.tar.bz2 &>> $TMP
-        sleep 300
-        echo "retrying..." &>> $TMP
-        tar="0"
-        compress="0"
-        PrintBlank  
+        echo "failed integrity test" &>> "$TMP"
+        Fail "integrity"
+        IntegrityCleanup "$BAK"
         continue
-    fi
+    fi  
     
-    PrintBlank  
-    
-    echo "constructing backup schema..." &>> $TMP
-    
-    echo "creating daily backup..." &>> $TMP
-    cp -v $BAK.tar.bz2 $DBK.tbz2 &>> $TMP
-    PrintBlank
-    
-    for d in {1..3};
+    echo "constructing backup schema..." &>> "$TMP"
+
+    for c in {1..3};
       do
-        echo "copying daily to server..." &>> $TMP
-        rsync -htvpEogSm $DBK.tbz2 $USER@$HST:$DST &>> $TMP
+        echo "creating daily backup..." &>> "$TMP"
+        CopyBackup "$BAK.tar.bz2" "$DBK.tbz2"
         
         EXI="$?"
         ExitNotZero
-        if [ $BOO == true ];
+        if [ "$BOO" == "true" ];
           then
-            PrintBlank
-            echo "failed sync" &>> $TMP
-            let "daily += 1"
-            sleep 300
-            echo "retrying..." &>> $TMP
-            PrintBlank  
+            echo "copy failed" &>> "$TMP"
+            Fail "copy"
             continue
         fi
         break
     done
     
-    VarEqualThree $daily
-    if [ $BOO == true ];
+    VarEqualThree "$copy"
+    if [ "$BOO" == "true" ];
+      then
+        break
+    fi
+
+    for d in {1..3};
+      do
+        echo "copying daily to server..." &>> "$TMP"
+        rsync -htvpEogSm "$DBK.tbz2" "$USER@$HST:$DST" &>> "$TMP"
+        PrintBlank
+        
+        EXI="$?"
+        ExitNotZero
+        if [ "$BOO" == "true" ];
+          then
+            echo "failed sync" &>> "$TMP"
+            Fail "daily"
+            continue
+        fi
+        break
+    done
+    
+    VarEqualThree "$daily"
+    if [ "$BOO" == "true" ];
       then
         break
     fi
     
-    echo &>> $TMP
-    
-    case $(date +%d) in
-      01|08|15|22|29)
-        echo "creating weekly backup..." &>> $TMP
-        cp -v $BAK.tar.bz2 $WBK.tbz2 &>> $TMP
-        PrintBlank
-        
-        for w in {1..3};
+    case "$(date +%d)" in
+      "01"|"08"|"15"|"22"|"29")
+        copy="0"
+        for c in {1..3};
           do
-            echo "copying weekly to server..." &>> $TMP
-            rsync -htvpEogSm $WBK.tbz2 $USER@$HST:$DST &>> $TMP
+            echo "creating weekly backup..." &>> "$TMP"
+            CopyBackup "$BAK.tar.bz2" "$WBK.tbz2"
             
             EXI="$?"
             ExitNotZero
-            if [ $BOO == true ];
+            if [ "$BOO" == "true" ];
               then
-                PrintBlank
-                echo "failed sync" &>> $TMP
-                let "weekly += 1"
-                sleep 300
-                echo "retrying..." &>> $TMP
-                PrintBlank  
+                echo "copy failed" &>> "$TMP"
+                Fail "copy"
                 continue
             fi
             break
         done
-    
-        VarEqualThree $weekly
-        if [ $BOO == true ];
-         then
+        
+        VarEqualThree "$copy"
+        if [ "$BOO" == "true" ];
+          then
             break
         fi
-    
-        PrintBlank
         
-        if [ $(date +%d) == "01" ];
-          then
-            echo "creating monthly backup..." &>> $TMP
-            cp -v $BAK.tar.bz2 $MBK.tbz2 &>> $TMP
+        for w in {1..3};
+          do
+            echo "copying weekly to server..." &>> "$TMP"
+            rsync -htvpEogSm "$WBK.tbz2" "$USER@$HST:$DST" &>> "$TMP"
             PrintBlank
             
-            for m in {1..1};
+            EXI="$?"
+            ExitNotZero
+            if [ "$BOO" == "true" ];
+              then
+                echo "failed sync" &>> "$TMP"
+                Fail "weekly"
+                continue
+            fi
+            break
+        done
+        
+        VarEqualThree "$weekly"
+        if [ "$BOO" == "true" ];
+          then
+            break
+        fi
+        
+        if [ "$(date +%d)" == "01" ];
+          then
+            copy="0"
+            for c in {1..3};
               do
-                echo "copying monthly to server..." &>> $TMP
-                rsync -htvpEogSm $MBK.tbz2 $USER@$HST:$DST &>> $TMP
+                echo "creating monthly backup..." &>> "$TMP"
+                CopyBackup "$BAK.tar.bz2" "$MBK.tbz2"
                 
                 EXI="$?"
                 ExitNotZero
-                if [ $BOO == true ];
+                if [ "$BOO" == "true" ];
                   then
-                    PrintBlank
-                    echo "failed sync" &>> $TMP
-                    let "monthly += 1"
-                    sleep 300
-                    echo "retrying..." &>> $TMP
-                    PrintBlank  
+                    echo "copy failed" &>> "$TMP"
+                    Fail "copy"
                     continue
                 fi
                 break
             done
-    
-            VarEqualThree $monthly
-            if [ $BOO == true ];
+            
+            VarEqualThree "$copy"
+            if [ "$BOO" == "true" ];
               then
                 break
             fi
-    
-            PrintBlank
             
-            echo "cleaning up old log files..." &>> $TMP
+            for m in {1..3};
+              do
+                echo "copying monthly to server..." &>> "$TMP"
+                rsync -htvpEogSm "$MBK.tbz2" "$USER@$HST:$DST" &>> "$TMP"
+                PrintBlank
+                
+                EXI="$?"
+                ExitNotZero
+                if [ "$BOO" == "true" ];
+                  then
+                    echo "failed sync" &>> "$TMP"
+                    Fail "monthly"
+                    continue
+                fi
+                break
+            done
+            
+            VarEqualThree "$monthly"
+            if [ "$BOO" == "true" ];
+              then
+                break
+            fi
+            
+            echo "cleaning up old log files..." &>> "$TMP"
             tar="0"
             compress="0"
             integrity="0"
@@ -309,116 +374,116 @@ for i in {1..3};
             ARC="$FOL/archive/log-$(date +%b).tbz2"
             
             for i in {1..3};
-             do
-              for t in {1..3};
-               do
-                echo "archiving logs..." &>> $TMP
-                tar -cpvf $BLO.tar $FOL/*.log &>> $TMP
+              do
+                for t in {1..3};
+                  do
+                    Archive "$FOL/*.log" "$BLO.tar" "$FOL/archive"
+                    
+                    EXI="$?"
+                    ExitNotZero
+                    if [ "$BOO" == "true" ];
+                      then
+                        echo "archive failed" &>> "$TMP"
+                        Fail "tar" 
+                        continue
+                    fi
+                    break
+                done
+                
+                VarEqualThree "$tar"
+                if [ "$BOO" == "true" ];
+                  then
+                    break 2
+                fi
+                
+                for c in {1..3};
+                  do
+                    Compress "$BLO.tar"
+                    
+                    EXI="$?"
+                    ExitNotZero
+                    if [ "$BOO" == "true" ];
+                      then
+                        echo "compress failed" &>> "$TMP"
+                        Fail "compress"
+                        continue
+                    fi
+                    break
+                done
+                
+                VarEqualThree "$compress"
+                if [ "$BOO" == "true" ];
+                  then
+                    break 2
+                fi
+                
+                TestIntegrity "$BLO.tar.bz2"
                 
                 EXI="$?"
                 ExitNotZero
-                if [ $BOO == true ];
-                 then
-                  PrintBlank
-                  echo "archive failed" &>> $TMP
-                  let "tar += 1"
-                  sleep 300
-                  echo "retrying..." &>> $TMP
-                  PrintBlank  
-                  continue
+                if [ "$BOO" == "true" ];
+                  then
+                    echo "failed integrity test" &>> "$TMP"
+                    Fail "integrity"
+                    IntegrityCleanup "$BLO"
+                    continue
                 fi
                 break
-              done
-              
-              VarEqualThree $tar
-              if [ $BOO == true ];
-               then
-                break 2
-              fi
-              
-              for c in {1..3};
-               do
-                echo "compressing log..." &>> $TMP
-                bzip2 -zvk $BLO.tar &>> $TMP
                 
-                EXI="$?"
-                ExitNotZero
-                if [ $BOO == true ];
-                 then
-                  PrintBlank
-                  echo "compress failed" &>> $TMP
-                  let "compress += 1"
-                  sleep 300
-                  echo "retrying..." &>> $TMP
-                  PrintBlank  
-                  continue
+                VarEqualThree "$integrity"
+                if [ "$BOO" == "true" ];
+                  then
+                    break 2
                 fi
-                break
-              done
-              
-              VarEqualThree $compress
-              if [ $BOO == true ];
-               then
-                break 2
-              fi
-              
-              echo "testing integrity..." &>> $TMP
-              bzip2 -vt $BLO.tar.bz2 &>> $TMP
-              
-              EXI="$?"
-              ExitNotZero
-              if [ $BOO == true ];
-               then
-                PrintBlank
-                echo "failed integrity test" &>> $TMP
-                let "integrity += 1"
-                rm -v $BLO.tar $BLO.tar.bz2 &>> $TMP
-                sleep 300
-                echo "retrying..." &>> $TMP
-                tar="0"
-                compress="0"
-                PrintBlank  
-                continue
-              fi
-              break
-              
-              VarEqualThree $integrity
-              if [ $BOO == true ];
-               then
-                break 2
-              fi
             done
-            echo "moving to archive..." &>> $TMP
-            cp -v $BLO.tar.bz2 $ARC &>> $TMP
-            PrintBlank
-            echo "clearing log folder..." &>> $TMP
-            rm -v $BLO.tar $BLO.tar.bz2 $BLO.tbz2 $FOL/*.log &>> $TMP
+            
+            copy="0"
+            for c in {1..3};
+              do
+                echo "moving to archive..." &>> "$TMP"
+                CopyBackup "$BLO.tar.bz2" "$ARC"
+                
+                EXI="$?"
+                ExitNotZero
+                if [ "$BOO" == "true" ];
+                  then
+                    echo "copy failed" &>> "$TMP"
+                    Fail "copy"
+                    continue
+                fi
+                break
+            done
+            
+            VarEqualThree "$copy"
+            if [ "$BOO" == "true" ];
+              then
+                break
+            fi
+            
+            echo "clearing log folder..." &>> "$TMP"
+            rm -v "$BLO.tar" "$BLO.tar.bz2" "$BLO.tbz2" "$FOL/*.log" &>> "$TMP"
             PrintBlank
         fi
-        ;;
+      ;;
       *)
-        ;;
+      ;;
     esac
     
     CopyLog
+    RemoveTemps
     
-    echo "cleaning up temporary files..." &>> $LOG
-    rm -v $BAK.tar $BAK.tar.bz2 $DBK.tbz2 $WBK.tbz2 $MBK.tbz2 $TMP &>> $LOG
-    PrintBlankLog
-    
-    echo "backup complete :) $NOW." &>> $LOG
+    echo "backup complete :) $NOW." &>> "$LOG"
     PrintBlankLog
     PrintBlankLog
     exit 0
 done    
 
-echo "failed too many times..." &>> $TMP
+echo "failed too many times..." &>> "$TMP"
 
 CopyLog
+RemoveTemps
 
-echo "removing files..." &>> $LOG
-rm -v $BAK.tar $BAK.tar.bz2 $DBK.tbz2 $WBK.tbz2 $MBK.tbz2 $TMP &>> $LOG
-echo "backup aborted :( $(date +%c)." &>> $LOG
+echo "backup aborted :( $(date +%c)." &>> "$LOG"
 PrintBlankLog
 PrintBlankLog
 exit 1
