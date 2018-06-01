@@ -225,77 +225,77 @@ for i in {1..3};
     
     echo "constructing backup schema..." &>> "$TMP"
 
-for c in {1..3};
-do
-echo "creating daily backup..." &>> "$TMP"
-CopyBackup "$BAK.tar.bz2" "$DBK.tbz2"
+    for c in {1..3};
+      do
+        echo "creating daily backup..." &>> "$TMP"
+        CopyBackup "$BAK.tar.bz2" "$DBK.tbz2"
+        
+        EXI="$?"
+        ExitNotZero
+        if [ "$BOO" == "true" ];
+          then
+            echo "copy failed" &>> "$TMP"
+            Fail "copy"
+            continue
+        fi
+        break
+    done
+    
+    VarEqualThree "$copy"
+    if [ "$BOO" == "true" ];
+      then
+        break
+    fi
 
-EXI="$?"
-ExitNotZero
-if [ "$BOO" == "true" ];
-then
-echo "copy failed" &>> "$TMP"
-Fail "copy"
-continue
-fi
-break
-done
-
-VarEqualThree "$copy"
-if [ "$BOO" == "true" ];
-then
-break
-fi
-
-for d in {1..3};
-do
-echo "copying daily to server..." &>> "$TMP"
-rsync -htvpEogSm "$DBK.tbz2" "$USER@$HST:$DST" &>> "$TMP"
-PrintBlank
-
-EXI="$?"
-ExitNotZero
-if [ "$BOO" == "true" ];
-then
-echo "failed sync" &>> "$TMP"
-Fail "daily"
-continue
-fi
-break
-done
-
-VarEqualThree "$daily"
-if [ "$BOO" == "true" ];
-then
-break
-fi
-
-case "$(date +%d)" in
-"01"|"08"|"15"|"22"|"29")
-copy="0"
-for c in {1..3};
-do
-echo "creating weekly backup..." &>> "$TMP"
-CopyBackup "$BAK.tar.bz2" "$WBK.tbz2"
-
-EXI="$?"
-ExitNotZero
-if [ "$BOO" == "true" ];
-then
-echo "copy failed" &>> "$TMP"
-Fail "copy"
-continue
-fi
-break
-done
-
-VarEqualThree "$copy"
-if [ "$BOO" == "true" ];
-then
-break
-fi
-
-for w in {1..3};
+    for d in {1..3};
+      do
+        echo "copying daily to server..." &>> "$TMP"
+        rsync -htvpEogSm "$DBK.tbz2" "$USER@$HST:$DST" &>> "$TMP"
+        PrintBlank
+        
+        EXI="$?"
+        ExitNotZero
+        if [ "$BOO" == "true" ];
+          then
+            echo "failed sync" &>> "$TMP"
+            Fail "daily"
+            continue
+        fi
+        break
+    done
+    
+    VarEqualThree "$daily"
+    if [ "$BOO" == "true" ];
+      then
+        break
+    fi
+    
+    case "$(date +%d)" in
+      "01"|"08"|"15"|"22"|"29")
+        copy="0"
+        for c in {1..3};
+          do
+            echo "creating weekly backup..." &>> "$TMP"
+            CopyBackup "$BAK.tar.bz2" "$WBK.tbz2"
+            
+            EXI="$?"
+            ExitNotZero
+            if [ "$BOO" == "true" ];
+              then
+                echo "copy failed" &>> "$TMP"
+                Fail "copy"
+                continue
+            fi
+            break
+        done
+        
+        VarEqualThree "$copy"
+        if [ "$BOO" == "true" ];
+          then
+            break
+        fi
+        
+        for w in {1..3};
 do
 echo "copying weekly to server..." &>> "$TMP"
 rsync -htvpEogSm "$WBK.tbz2" "$USER@$HST:$DST" &>> "$TMP"
