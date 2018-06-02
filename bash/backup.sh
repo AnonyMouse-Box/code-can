@@ -89,6 +89,12 @@ function CopyBackup(){
   PrintBlank
 }
 
+function Rsync(){
+  echo "copying daily to server..." &>> "$TMP"
+  rsync -htvpEogSm "$1" "$USER@$HST:$DST" &>> "$TMP"
+  PrintBlank
+}
+
 function CopyLog(){
   echo "copying log..." &>> "$TMP"
   cp -v "$TMP" "$LOG" &>> "$LOG"
@@ -249,9 +255,7 @@ for i in {1..3};
 
     for d in {1..3};
       do
-        echo "copying daily to server..." &>> "$TMP"
-        rsync -htvpEogSm "$DBK.tbz2" "$USER@$HST:$DST" &>> "$TMP"
-        PrintBlank
+        Rsync "$DBK.tbz2"
         
         EXI="$?"
         ExitNotZero
@@ -297,9 +301,7 @@ for i in {1..3};
         
         for w in {1..3};
           do
-            echo "copying weekly to server..." &>> "$TMP"
-            rsync -htvpEogSm "$WBK.tbz2" "$USER@$HST:$DST" &>> "$TMP"
-            PrintBlank
+            Rsync "$WBK.tbz2"
             
             EXI="$?"
             ExitNotZero
@@ -345,9 +347,7 @@ for i in {1..3};
             
             for m in {1..3};
               do
-                echo "copying monthly to server..." &>> "$TMP"
-                rsync -htvpEogSm "$MBK.tbz2" "$USER@$HST:$DST" &>> "$TMP"
-                PrintBlank
+                Rsync "$MBK.tbz2"
                 
                 EXI="$?"
                 ExitNotZero

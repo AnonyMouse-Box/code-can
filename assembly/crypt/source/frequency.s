@@ -21,9 +21,10 @@ _errchk1:
   B LE _error       @ If false send error
   CMP GT R1, 0x7B   @ If true check not higher than z
   B GE _error       @ If false send error
-  B LT _cipher      @ If true send for ciphering
+  B LT _cipher      @ If true send for decryption
 
 _error:
+/* throw a syntax error, not an alphabetic letter */
 
 _lower:
   LDR R1,=string      @ address of char
@@ -33,6 +34,9 @@ _lower:
 
 _algorithm:
 /* will focus on simply decrypting the most likely and leave dictionary resolving for later */
+/*  1. count the amount of times each letter appears
+    2. pick the most common that hasn't yet been changed
+    3. swap it for the next most common in the list below that hasn't yet been used */
 /* eta oin shr dlu cmf wyp vbg kjq xz */
 
 _write:
