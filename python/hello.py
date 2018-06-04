@@ -1,2 +1,2 @@
-#!env python
+#!env python3
 print("Hello World!")
