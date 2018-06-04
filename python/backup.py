@@ -1,4 +1,4 @@
-#!env python
+#!/usr/bin/env python3
 # backup.sh converted into python
 # backup.sh Files User Remote Folder Log
 import subprocess
