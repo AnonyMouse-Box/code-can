@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+ <head>
+  <title>Test Page</title>
+  <base href="https://github.hogwash.ga" target="_blank"/>
+  <meta charset="UTF-8"/>
+  <meta http-equiv="default-style" content="https://www.w3schools.com/w3css/4/w3.css"/>
+  <meta name="application-name" content="Hogwash Research Tool"/>
+  <meta name="description" content="Research and Development Page"/>
+  <meta name="keywords" content="HTML,CSS,XML,JavaScript,Github,Research,Development"/>
+  <meta name="author" content="Keith Clayton"/>
+  <meta name="generator" content="hand-woven"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link type="text/css" rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+ </head>
+ <body>
+  <nav class="w3-black w3-display-container w3-show-inline-block w3-top" style="width:100%; height:43px;">
+   <span class="w3-tiny">
+    <h5 class=" w3-display-bottomleft" style="margin:0; padding:8px;">Hello World</h5>
+    <div class="w3-panel w3-display-topmiddle w3-show-inline-block" style="margin:0;">
+     <p class="w3-tiny" style="margin:0;"><span class="w3-serif"><i>"A quote for the ages."</i></span> - The Maestro</p>
+    </div> 
+    <a href="#" class="w3-btn w3-hover-blue w3-border-0 w3-display-bottomleft" style="left:109px; padding:6.75px 10px;">
+     <i class="fa fa-home" style="font-size:1.6em;"></i>
+    </a>
+    <a id="x" class="w3-btn w3-hover-red w3-border-0 w3-display-bottomleft w3-hide" onmouseup="myFunctionR()" style="left:144px; padding:6.75px 10px;">
+     <i class="fa fa-close" style="font-size:1.6em;"></i>
+    </a>
+    <input id="y" type="text" class="w3-input w3-display-bottomleft w3-border-black w3-hide" style="height:31.5px; width:200px; left:177px; padding:10px;" placeholder="Search Website">
+    <a id="z" class="w3-btn w3-hover-blue w3-border-0 w3-display-bottomleft" onmouseup="myFunction()" style="left:144px; padding:6.75px 10px;">
+     <i class="fa fa-search" style="font-size:1.6em;"></i>
+    </a>
+   </span>
+   <span class="w3-tag w3-tiny w3-display-bottomright">
+    <div class="w3-black w3-dropdown-hover" style="margin:0;">
+     <a href="#" class="w3-btn w3-hover-blue w3-border-0">Item 1</a>
+     <div class="w3-black w3-dropdown-content w3-bar-block w3-card">
+      <a href="#" class="w3-bar-item w3-btn w3-hover-blue">Link 1</a>
+      <a href="#" class="w3-bar-item w3-btn w3-hover-blue">Link 2</a>
+      <a href="#" class="w3-bar-item w3-btn w3-hover-blue">Link 3</a>
+     </div>
+    </div>
+    <div class="w3-black w3-dropdown-hover" style="margin:0;">
+     <a href="#" class="w3-btn w3-hover-blue w3-border-0">Item 2</a>
+     <div class="w3-black w3-dropdown-content w3-bar-block w3-card">
+      <a href="#" class="w3-bar-item w3-btn w3-hover-blue">Link 4</a>
+      <a href="#" class="w3-bar-item w3-btn w3-hover-blue">Link 5</a>
+      <a href="#" class="w3-bar-item w3-btn w3-hover-blue">Link 6</a>
+     </div>
+    </div>
+    <div class="w3-black w3-dropdown-hover" style="margin:0;">
+     <a href="#" class="w3-btn w3-hover-blue w3-border-0">Item 3</a>
+     <div class="w3-black w3-dropdown-content w3-bar-block w3-card">
+      <a href="#" class="w3-bar-item w3-btn w3-hover-blue">Link 7</a>
+      <a href="#" class="w3-bar-item w3-btn w3-hover-blue">Link 8</a>
+      <a href="#" class="w3-bar-item w3-btn w3-hover-blue">Link 9</a>
+     </div>
+    </div>
+    <div class="w3-black w3-dropdown-hover" style="margin:0;">
+     <a href="#" class="w3-btn w3-hover-blue w3-border-0">Item 4</a>
+     <div class="w3-black w3-dropdown-content w3-bar-block w3-card">
+      <a href="#" class="w3-bar-item w3-btn w3-hover-blue">Link 10</a>
+      <a href="#" class="w3-bar-item w3-btn w3-hover-blue">Link 11</a>
+      <a href="#" class="w3-bar-item w3-btn w3-hover-blue">Link 12</a>
+     </div>
+    </div>
+    <div class="w3-black w3-dropdown-hover" style="margin:0;">
+     <a href="#" class="w3-btn w3-hover-blue w3-border-0">Item 5</a>
+     <div class="w3-black w3-dropdown-content w3-bar-block w3-card" style="right:0;">
+      <a href="#" class="w3-bar-item w3-btn w3-hover-blue">Link 13</a>
+      <a href="#" class="w3-bar-item w3-btn w3-hover-blue">Link 14</a>
+      <a href="#" class="w3-bar-item w3-btn w3-hover-blue">Link 15</a>
+     </div>
+    </div>
+    <div class="w3-black w3-dropdown-hover" style="margin:0;">
+     <a href="#" class="w3-btn w3-hover-blue w3-border-0" style="padding:6.75px 10px;">
+      <i class="fa fa-user-circle-o" style="font-size:1.6em;"></i>
+     </a>
+     <div class="w3-black w3-dropdown-content w3-bar-block w3-card" style="right:0;">
+      <a href="#" class="w3-bar-item w3-btn w3-hover-blue">Account</a>
+      <a href="#" class="w3-bar-item w3-btn w3-hover-blue">Settings</a>
+      <a href="#" class="w3-bar-item w3-btn w3-hover-blue">Logout</a>
+     </div>
+    </div>
+   </span>
+  </nav>
+  <div style="position:absolute; top:43px;">
+   <div class="jumbotron">
+    <h1>this is</h1>
+   </div>
+   <div class="w3-row">
+    <div class="w3-container w3-rest">
+     <p>a webpage</p>
+    </div>
+   </div>
+   <p>[32] Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt, explicabo. Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos, qui ratione voluptatem sequi nesciunt, neque porro quisquam est, qui dolorem ipsum, quia dolor sit amet consectetur adipisci[ng] velit, sed quia non-numquam [do] eius modi tempora inci[di]dunt, ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>
+   <p>[33] At vero eos et accusamus et iusto odio dignissimos ducimus, qui blanditiis praesentium voluptatum deleniti atque corrupti, quos dolores et quas molestias excepturi sint, obcaecati cupiditate non-provident, similique sunt in culpa, qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio, cumque nihil impedit, quo minus id, quod maxime placeat, facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet, ut et voluptates repudiandae sint et molestiae non-recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat…</p>
+   <p>[32] Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt, explicabo. Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos, qui ratione voluptatem sequi nesciunt, neque porro quisquam est, qui dolorem ipsum, quia dolor sit amet consectetur adipisci[ng] velit, sed quia non-numquam [do] eius modi tempora inci[di]dunt, ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>
+   <p>[33] At vero eos et accusamus et iusto odio dignissimos ducimus, qui blanditiis praesentium voluptatum deleniti atque corrupti, quos dolores et quas molestias excepturi sint, obcaecati cupiditate non-provident, similique sunt in culpa, qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio, cumque nihil impedit, quo minus id, quod maxime placeat, facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet, ut et voluptates repudiandae sint et molestiae non-recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat…</p>
+   <p>[32] Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt, explicabo. Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos, qui ratione voluptatem sequi nesciunt, neque porro quisquam est, qui dolorem ipsum, quia dolor sit amet consectetur adipisci[ng] velit, sed quia non-numquam [do] eius modi tempora inci[di]dunt, ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>
+   <p>[33] At vero eos et accusamus et iusto odio dignissimos ducimus, qui blanditiis praesentium voluptatum deleniti atque corrupti, quos dolores et quas molestias excepturi sint, obcaecati cupiditate non-provident, similique sunt in culpa, qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio, cumque nihil impedit, quo minus id, quod maxime placeat, facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet, ut et voluptates repudiandae sint et molestiae non-recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat…</p>
+   <p>[32] Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt, explicabo. Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos, qui ratione voluptatem sequi nesciunt, neque porro quisquam est, qui dolorem ipsum, quia dolor sit amet consectetur adipisci[ng] velit, sed quia non-numquam [do] eius modi tempora inci[di]dunt, ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>
+   <p>[33] At vero eos et accusamus et iusto odio dignissimos ducimus, qui blanditiis praesentium voluptatum deleniti atque corrupti, quos dolores et quas molestias excepturi sint, obcaecati cupiditate non-provident, similique sunt in culpa, qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio, cumque nihil impedit, quo minus id, quod maxime placeat, facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet, ut et voluptates repudiandae sint et molestiae non-recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat…</p>
+   <p>[32] Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt, explicabo. Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos, qui ratione voluptatem sequi nesciunt, neque porro quisquam est, qui dolorem ipsum, quia dolor sit amet consectetur adipisci[ng] velit, sed quia non-numquam [do] eius modi tempora inci[di]dunt, ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>
+   <p>[33] At vero eos et accusamus et iusto odio dignissimos ducimus, qui blanditiis praesentium voluptatum deleniti atque corrupti, quos dolores et quas molestias excepturi sint, obcaecati cupiditate non-provident, similique sunt in culpa, qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio, cumque nihil impedit, quo minus id, quod maxime placeat, facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet, ut et voluptates repudiandae sint et molestiae non-recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat…</p>
+   <p>[32] Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt, explicabo. Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos, qui ratione voluptatem sequi nesciunt, neque porro quisquam est, qui dolorem ipsum, quia dolor sit amet consectetur adipisci[ng] velit, sed quia non-numquam [do] eius modi tempora inci[di]dunt, ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>
+   <p>[33] At vero eos et accusamus et iusto odio dignissimos ducimus, qui blanditiis praesentium voluptatum deleniti atque corrupti, quos dolores et quas molestias excepturi sint, obcaecati cupiditate non-provident, similique sunt in culpa, qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio, cumque nihil impedit, quo minus id, quod maxime placeat, facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet, ut et voluptates repudiandae sint et molestiae non-recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat…</p>
+   <p>[32] Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt, explicabo. Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos, qui ratione voluptatem sequi nesciunt, neque porro quisquam est, qui dolorem ipsum, quia dolor sit amet consectetur adipisci[ng] velit, sed quia non-numquam [do] eius modi tempora inci[di]dunt, ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>
+   <p>[33] At vero eos et accusamus et iusto odio dignissimos ducimus, qui blanditiis praesentium voluptatum deleniti atque corrupti, quos dolores et quas molestias excepturi sint, obcaecati cupiditate non-provident, similique sunt in culpa, qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio, cumque nihil impedit, quo minus id, quod maxime placeat, facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet, ut et voluptates repudiandae sint et molestiae non-recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat…</p>
+  </div>
+<script>
+function myFunction() {
+    var x = document.getElementById("x");
+     x.className = x.className.replace("w3-hide", "w3-show");
+    var y = document.getElementById("y");
+     y.className = y.className.replace("w3-hide", "w3-show");
+    var z = document.getElementById("z");
+     z.style.left = "377px";
+     z.setAttribute("href", "#");
+}
+function myFunctionR() {
+    var x = document.getElementById("x");
+     x.className = x.className.replace ("w3-show", "w3-hide");
+    var y = document.getElementById("y");
+     y.className = y.className.replace("w3-show", "w3-hide");
+    var z = document.getElementById("z");
+     z.style.left = "144px";
+     z.setAttribute("href", "");
+}
+</script>
+ </body>
+</html>
