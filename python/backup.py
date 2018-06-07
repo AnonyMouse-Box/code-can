@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # backup.sh converted into python
-# backup.sh Files User Remote Folder Log
+# backup.py Files User Remote Folder Log
 import subprocess
 import argparse
 parser.add_argument('Source', metavar='Files', nargs='1', default='/home', help='the file or folder to be backed up')
