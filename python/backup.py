@@ -9,11 +9,6 @@ parser.add_argument('Host', metavar='Remote', nargs='1', default='localhost', he
 parser.add_argument('Destination', metavar='Folder', nargs='1', default='/mnt/backup', help='the remote folder to store the backup')
 parser.add_argument('Folder', metavar='Log', nargs='1', default='/home/user/log', help='the location to put the log file')
 
-
-
-subprocess.run(['rsync', '-htvpEogSm', '"Backup"', '"User"@"Host":"Destination"', '&>>', '"$Temporary"'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
-
-
 cd /
 
 function DirNotExist(){
