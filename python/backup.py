@@ -15,6 +15,112 @@ subprocess.run(['bzip2', '-vt', '"Backup".tar.bz2', '&>>', '"$Temporary"'], stde
 subprocess.run(['rsync', '-htvpEogSm', '"Backup"', '"User"@"Host":"Destination"', '&>>', '"$Temporary"'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
 
 
+cd /
+
+function DirNotExist(){
+  if [ ! -d "$1" ];
+    then
+      BOO="true"
+    else
+      BOO="false"
+  fi
+}
+
+function CreateDir(){
+  mkdir -p "$1"
+}
+
+DirNotExist "tmp"
+if [ $BOO == "true" ];
+  then
+    CreateDir "tmp"
+fi
+
+TMP="/tmp/backup.log"
+
+echo "preparing system.." &> "$TMP"
+
+function PrintBlank(){
+  echo &>> "$TMP"
+}
+
+function PrintBlankLog(){
+  echo &>> "$LOG"
+}
+
+function VarEqualThree(){
+  if [ "$1" == "3" ];
+    then
+      BOO="true"
+    else
+      BOO="false"
+  fi
+}
+
+function ExitNotZero(){
+  if [ "$EXI" != "0" ];
+    then
+      BOO="true"
+    else
+      BOO="false"
+  fi
+}
+
+function Fail(){
+  let "$1 += 1"
+  sleep 300
+  echo "retrying..." &>> "$TMP"
+  PrintBlank
+}
+
+function Archive(){
+  echo "building archive..." &>> "$TMP"
+  tar --exclude="$3" -cpvf "$2" "$1" &>> "$TMP"
+  PrintBlank
+}
+
+function Compress(){
+  echo "compressing file..." &>> "$TMP"
+  bzip2 -zvk "$1.tar" &>> "$TMP"
+  PrintBlank
+}
+
+function TestIntegrity(){
+  echo "testing integrity..." &>> "$TMP"
+  bzip2 -vt "$1" &>> "$TMP"
+  PrintBlank
+}
+
+function IntegrityCleanup(){
+  rm -v "$1.tar" "$1.tar.bz2" &>> "$TMP"
+  tar="0"
+  compress="0"
+}
+
+function CopyBackup(){
+  echo "finalizing backup..." &>> "$TMP"
+  cp -v "$1" "$2" &>> "$TMP"
+  PrintBlank
+}
+
+function Rsync(){
+  echo "copying daily to server..." &>> "$TMP"
+  rsync -htvpEogSm "$1" "$USER@$HST:$DST" &>> "$TMP"
+  PrintBlank
+}
+
+function CopyLog(){
+  echo "copying log..." &>> "$TMP"
+  cp -v "$TMP" "$LOG" &>> "$LOG"
+  PrintBlankLog
+}
+
+function RemoveTemps(){
+  echo "cleaning up temporary files..." &>> "$LOG"
+  rm -v "$BAK.tar" "$BAK.tar.bz2" "$DBK.tbz2" "$WBK.tbz2" "$MBK.tbz2" "$TMP" &>> "$LOG"
+  PrintBlankLog
+}
+
 ARG="$#"
 NOW="$(date +%c)"
 USR="$2"
