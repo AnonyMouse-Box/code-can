@@ -69,24 +69,24 @@ function Fail(){
 
 function Archive(){
   echo "building archive..." &>> "$TMP"
-  subprocess.run(['tar', '--exclude="Folder"', '-cpvf', '"Backup".tar', '"Source"', '&>>', '"$Temporary"'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+  subprocess.run(['tar', '--exclude="$3"', '-cpvf', '$2', '$1', '&>>', '$TMP'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
   PrintBlank
 }
 
 function Compress(){
   echo "compressing file..." &>> "$TMP"
-  subprocess.run(['bzip2', '-zvk', '"Backup".tar', '&>>', '"$Temporary"'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+  subprocess.run(['bzip2', '-zvk', '$1.tar', '&>>', '$TMP'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
   PrintBlank
 }
 
 function TestIntegrity(){
   echo "testing integrity..." &>> "$TMP"
-  subprocess.run(['bzip2', '-vt', '"Backup".tar.bz2', '&>>', '"$Temporary"'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+  subprocess.run(['bzip2', '-vt', '$1', '&>>', '$TMP'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
   PrintBlank
 }
 
 function IntegrityCleanup(){
-  rm -v "$1.tar" "$1.tar.bz2" &>> "$TMP"
+  subprocess.run(['rm', '-v', '$1.tar' '$1.tar.bz2', '&>>', '"$Temporary"'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
   tar="0"
   compress="0"
 }
@@ -99,7 +99,7 @@ function CopyBackup(){
 
 function Rsync(){
   echo "copying daily to server..." &>> "$TMP"
-  subprocess.run(['rsync', '-htvpEogSm', '"Backup"', '"User"@"Host":"Destination"', '&>>', '"$Temporary"'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+  subprocess.run(['rsync', '-htvpEogSm', '$1', '$USER@$HST:$DST', '&>>', '"$Temporary"'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
   PrintBlank
 }
 
