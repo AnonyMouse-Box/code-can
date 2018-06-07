@@ -9,9 +9,8 @@ parser.add_argument('Host', metavar='Remote', nargs='1', default='localhost', he
 parser.add_argument('Destination', metavar='Folder', nargs='1', default='/mnt/backup', help='the remote folder to store the backup')
 parser.add_argument('Folder', metavar='Log', nargs='1', default='/home/user/log', help='the location to put the log file')
 
-subprocess.run(['tar', '--exclude="Folder"', '-cpvf', '"Backup".tar', '"Source"', '&>>', '"$Temporary"'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
-subprocess.run(['bzip2', '-zvk', '"Backup".tar', '&>>', '"$Temporary"'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
-subprocess.run(['bzip2', '-vt', '"Backup".tar.bz2', '&>>', '"$Temporary"'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+
+
 subprocess.run(['rsync', '-htvpEogSm', '"Backup"', '"User"@"Host":"Destination"', '&>>', '"$Temporary"'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
 
 
@@ -75,19 +74,19 @@ function Fail(){
 
 function Archive(){
   echo "building archive..." &>> "$TMP"
-  tar --exclude="$3" -cpvf "$2" "$1" &>> "$TMP"
+  subprocess.run(['tar', '--exclude="Folder"', '-cpvf', '"Backup".tar', '"Source"', '&>>', '"$Temporary"'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
   PrintBlank
 }
 
 function Compress(){
   echo "compressing file..." &>> "$TMP"
-  bzip2 -zvk "$1.tar" &>> "$TMP"
+  subprocess.run(['bzip2', '-zvk', '"Backup".tar', '&>>', '"$Temporary"'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
   PrintBlank
 }
 
 function TestIntegrity(){
   echo "testing integrity..." &>> "$TMP"
-  bzip2 -vt "$1" &>> "$TMP"
+  subprocess.run(['bzip2', '-vt', '"Backup".tar.bz2', '&>>', '"$Temporary"'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
   PrintBlank
 }
 
@@ -105,7 +104,7 @@ function CopyBackup(){
 
 function Rsync(){
   echo "copying daily to server..." &>> "$TMP"
-  rsync -htvpEogSm "$1" "$USER@$HST:$DST" &>> "$TMP"
+  subprocess.run(['rsync', '-htvpEogSm', '"Backup"', '"User"@"Host":"Destination"', '&>>', '"$Temporary"'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
   PrintBlank
 }
 
