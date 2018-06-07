@@ -86,13 +86,14 @@ function TestIntegrity(){
 }
 
 function IntegrityCleanup(){
-  subprocess.run(['rm', '-v', '$1.tar' '$1.tar.bz2', '&>>', '"$Temporary"'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+  subprocess.run(['rm', '-v', '$1.tar', '$1.tar.bz2', '&>>', '"$TMP"'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
   tar="0"
   compress="0"
 }
 
 function CopyBackup(){
   echo "finalizing backup..." &>> "$TMP"
+  subprocess.run(['cp', '-v', '$1', '$2', '&>>', '$TMP'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
   cp -v "$1" "$2" &>> "$TMP"
   PrintBlank
 }
@@ -105,13 +106,13 @@ function Rsync(){
 
 function CopyLog(){
   echo "copying log..." &>> "$TMP"
-  cp -v "$TMP" "$LOG" &>> "$LOG"
+  subprocess.run(['cp', '-v', '$TMP', '$LOG', '&>>', '$LOG'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
   PrintBlankLog
 }
 
 function RemoveTemps(){
   echo "cleaning up temporary files..." &>> "$LOG"
-  rm -v "$BAK.tar" "$BAK.tar.bz2" "$DBK.tbz2" "$WBK.tbz2" "$MBK.tbz2" "$TMP" &>> "$LOG"
+  subprocess.run(['rm', '-v', '$BAK.tar', '$BAK.tar.bz2', '$DBK.tbz2', '$WBK.tbz2', '$MBK.tbz2', '&>>', '$LOG'], stderr=subprocess.PIPE, stdout=subprocess.PIPE)
   PrintBlankLog
 }
 
