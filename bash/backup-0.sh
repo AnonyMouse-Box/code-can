@@ -2,13 +2,13 @@
 # backup2.sh [remote IP]
 
 function IsAlive(){
-  ping -c 5 '$1'
+  ping -c 5 '$1' &>> [log file]
   for i in {1..12};
     then
       if [ $? != 0 ];
         then
           sleep 300
-          ping -c 5 '$1'
+          ping -c 5 '$1' &>> [log file]
         else
           exit 0
       done
@@ -35,4 +35,4 @@ case $ERR in
     echo 'critical failure: undesignated error' &>> [log file]
     exit 1
     ;;
-  esac
+esac
