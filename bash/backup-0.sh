@@ -1,6 +1,15 @@
 #!/bin/bash
 # backup-0.sh [remote IP]
 
+function ExitNotZero(){
+  if [ '$1' != '0' ];
+    then
+      BOO='true'
+    else
+      BOO='false'
+  fi
+}
+
 function IsAlive(){
   ping -c 5 '$1'
   for i in {1..12};
@@ -16,9 +25,19 @@ function IsAlive(){
   exit 1
 }
 
+ERR='false'
+
 if [ ! -d "/tmp" ];
   then
     mkdir -p "/tmp"
+   else
+    echo 'initializing'
+fi
+
+ExitNotZero '$?'
+if [ "$BOO" == "true" ];
+  then
+    ERR="2"
 fi
 
 TMP="/tmp/backup.log"
@@ -28,7 +47,6 @@ exec 2<&-
 exec 1<>$TMP
 exec 2>&1
 
-ERR='False'
 ARG='$#'
 NOW='$(date +%c)'
 USR='$2'
@@ -72,7 +90,11 @@ for a in {1..6};
     fi
 done
 
-
+if [ '$ERR' != 'false' ];
+  then
+    echo 'startup error'
+    exit 1
+fi
 
 for i in {1..3};
   then
