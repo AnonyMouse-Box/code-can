@@ -113,6 +113,8 @@ case $ERR in
   '1')
     echo 'could not connect to remote server'
     ;;
+  '2')
+    echo 'could not create folder'
   *)
     echo 'critical failure: undesignated error'
     exit 1
