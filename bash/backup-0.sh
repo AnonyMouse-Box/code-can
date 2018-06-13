@@ -1,5 +1,5 @@
 #!/bin/bash
-# backup-0.sh [remote IP]
+# backup-0.sh [backup source] [user] [remote IP] [destination folder] [log folder]
 
 function ExitNotZero(){
   if [ '$1' != '0' ];
@@ -27,9 +27,9 @@ function IsAlive(){
 
 ERR='false'
 
-if [ ! -d "/tmp" ];
+if [ ! -d '/tmp' ];
   then
-    mkdir -p "/tmp"
+    mkdir -p '/tmp'
    else
     echo 'initializing'
 fi
