@@ -79,7 +79,7 @@ for a in {1..6};
         DST='/mnt/backup'
       ;;
       '4')
-        if [ $USER == 'root' ];
+        if [ '$USER' == 'root' ];
           then
             USR='admin'
         fi
