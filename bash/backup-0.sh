@@ -1,9 +1,5 @@
 #!/bin/bash
 # backup-0.sh [remote IP]
-exec 1<&-
-exec 2<&-
-exec 1<>$TMP
-exec 2>&1
 
 function IsAlive(){
   ping -c 5 '$1'
@@ -15,10 +11,22 @@ function IsAlive(){
           ping -c 5 '$1'
         else
           exit 0
-      done
+      fi
   done
   exit 1
 }
+
+if [ ! -d "/tmp" ];
+  then
+    mkdir -p "/tmp"
+fi
+
+TMP="/tmp/backup.log"
+
+exec 1<&-
+exec 2<&-
+exec 1<>$TMP
+exec 2>&1
 
 ERR='False'
 ARG='$#'
@@ -63,6 +71,8 @@ for a in {1..6};
         let 'ARG += 1'
     fi
 done
+
+
 
 for i in {1..3};
   then
