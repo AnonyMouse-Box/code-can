@@ -1,6 +1,15 @@
 #!/bin/bash
 # backup-0.sh [backup source] [user] [remote IP] [destination folder] [log folder]
 
+function DirNotExist(){
+  if [ ! -d "$1" ];
+    then
+      BOO="true"
+    else
+      BOO="false"
+  fi
+}
+
 function ExitNotZero(){
   if [ '$1' != '0' ];
     then
@@ -19,28 +28,27 @@ function IsAlive(){
           sleep 300
           ping -c 5 '$1'
         else
-          exit 0
+          return 0
       fi
   done
-  exit 1
+  return 1
 }
 
 ERR='false'
 
-if [ ! -d '/tmp' ];
+DirNotExist '/tmp'
+if [ "$BOO" == 'true' ];
   then
-    mkdir -p '/tmp'
-   else
-    echo 'initializing'
+    CreateDir '/tmp'
 fi
 
 ExitNotZero '$?'
-if [ "$BOO" == "true" ];
+if [ '$BOO' == 'true' ];
   then
-    ERR="2"
+    ERR='2'
 fi
 
-TMP="/tmp/backup.log"
+TMP='/tmp/backup.log'
 
 exec 1<&-
 exec 2<&-
