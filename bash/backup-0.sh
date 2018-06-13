@@ -1,14 +1,18 @@
 #!/bin/bash
 # backup-0.sh [remote IP]
+exec 1<&-
+exec 2<&-
+exec 1<>$TMP
+exec 2>&1
 
 function IsAlive(){
-  ping -c 5 '$1' &>> [log file]
+  ping -c 5 '$1'
   for i in {1..12};
     then
       if [ '$?' != '0' ];
         then
           sleep 300
-          ping -c 5 '$1' &>> '$TMP'
+          ping -c 5 '$1'
         else
           exit 0
       done
@@ -72,13 +76,13 @@ done
 
 case $ERR in
   '0')
-    echo 'syntax error, exiting' &>> '$TMP'
+    echo 'syntax error, exiting'
     ;;
   '1')
-    echo 'could not connect to remote server' &>> '$TMP'
+    echo 'could not connect to remote server'
     ;;
   *)
-    echo 'critical failure: undesignated error' &>> '$TMP'
+    echo 'critical failure: undesignated error'
     exit 1
     ;;
 esac
