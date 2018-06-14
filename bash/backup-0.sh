@@ -53,6 +53,7 @@ exec 1<>$TMP
 exec 2>&1
 
 echo 'initializing'
+echo
 
 ARG='$#'
 NOW='$(date +%c)'
@@ -118,8 +119,6 @@ tar='0'
 compress='0'
 copy='0'
 integrity='0'
-
-PrintBlank
 
 echo 'backup process begun $NOW:'
 echo
