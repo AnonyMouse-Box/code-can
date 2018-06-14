@@ -123,6 +123,8 @@ for i in {1..3};
     if [ '$?' != '0' ];
       then
         ERR='1'
+        echo '$NOW'
+        echo 'no response from $HST'
         continue
     fi
 done
