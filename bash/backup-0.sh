@@ -2,12 +2,16 @@
 # backup-0.sh [backup source] [user] [remote IP] [destination folder] [log folder]
 
 function DirExist(){
-  if [ ! -d "$1" ];
+  if [ ! -d '$1' ];
     then
       return 1
     else
       return 0
   fi
+}
+
+function CreateDir(){
+  mkdir -p '$1'
 }
 
 function IsAlive(){
@@ -27,13 +31,13 @@ function IsAlive(){
 
 ERR='false'
 
-DirNotExist '/tmp'
-if [ '$?' == '1' ];
+DirExist '/tmp'
+if [ '$?' != '0' ];
   then
     CreateDir '/tmp'
 fi
 
-if [ '$?' == '1' ];
+if [ '$?' != '0' ];
   then
     ERR='2'
 fi
@@ -44,6 +48,8 @@ exec 1<&-
 exec 2<&-
 exec 1<>$TMP
 exec 2>&1
+
+echo 'initializing'
 
 ARG='$#'
 NOW='$(date +%c)'
@@ -90,14 +96,14 @@ done
 
 if [ '$ERR' != 'false' ];
   then
-    echo 'startup error'
+    echo 'startup error: exiting script'
     exit 1
 fi
 
 for i in {1..3};
   then
     IsAlive '$HST'
-    if [ '$?' == '1' ];
+    if [ '$?' != '0' ];
       then
         ERR='1'
         continue
