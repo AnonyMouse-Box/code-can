@@ -483,7 +483,7 @@ echo "failed too many times..." &>> "$TMP"
 CopyLog
 RemoveTemps
 
-echo "backup aborted :( $(date +%c)." &>> "$LOG"
+echo "backup aborted :( $NOW." &>> "$LOG"
 PrintBlankLog
 PrintBlankLog
 exit 1
