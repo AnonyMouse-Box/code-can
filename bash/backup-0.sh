@@ -132,13 +132,13 @@ case $ERR in
     echo 'syntax error, exiting'
     ;;
   '1')
-    echo 'could not connect to remote server'
+    echo 'could not connect to remote server, exiting'
     ;;
   '2')
-    echo 'could not create folder'
+    echo 'could not create folder, exiting'
     ;;
   *)
-    echo 'critical failure: undesignated error'
+    echo 'critical failure: undesignated error, exiting'
     exit 1
     ;;
 esac
