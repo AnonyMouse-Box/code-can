@@ -96,6 +96,7 @@ done
 
 if [ '$ERR' != 'false' ];
   then
+    echo '$NOW'
     echo 'startup error: exiting script'
     exit 1
 fi
