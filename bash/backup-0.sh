@@ -1,21 +1,12 @@
 #!/bin/bash
 # backup-0.sh [backup source] [user] [remote IP] [destination folder] [log folder]
 
-function DirNotExist(){
+function DirExist(){
   if [ ! -d "$1" ];
     then
-      BOO="true"
+      return 1
     else
-      BOO="false"
-  fi
-}
-
-function ExitNotZero(){
-  if [ '$1' != '0' ];
-    then
-      BOO='true'
-    else
-      BOO='false'
+      return 0
   fi
 }
 
@@ -37,13 +28,12 @@ function IsAlive(){
 ERR='false'
 
 DirNotExist '/tmp'
-if [ "$BOO" == 'true' ];
+if [ '$?' == '1' ];
   then
     CreateDir '/tmp'
 fi
 
-ExitNotZero '$?'
-if [ '$BOO' == 'true' ];
+if [ '$?' == '1' ];
   then
     ERR='2'
 fi
