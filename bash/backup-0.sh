@@ -100,6 +100,23 @@ if [ '$ERR' != 'false' ];
     exit 1
 fi
 
+LOG='$FOL/backup-$(date +%d).log'
+BAK='/tmp/backup'
+MBK='/tmp/backup-$(date +%b)'
+WBK='/tmp/backup-$(date +%d)'
+DBK='/tmp/backup-$(date +%a)'
+daily='0'
+weekly='0'
+monthly='0'
+tar='0'
+compress='0'
+copy='0'
+integrity='0'
+
+PrintBlank
+
+echo 'backup process begun $NOW:'
+
 for i in {1..3};
   then
     IsAlive '$HST'
