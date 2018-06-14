@@ -1,5 +1,6 @@
 #!/bin/bash
 # backup-0.sh [backup source] [user] [remote IP] [destination folder] [log folder]
+# defaults    [/home] [current] [127.0.0.1] [/mnt/backup] [/home/'current user'/log]
 
 function DirExist(){
   if [ ! -d '$1' ];
