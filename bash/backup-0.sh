@@ -12,16 +12,19 @@ function DirExist(){
 
 function CreateDir(){
   mkdir -p '$1'
+  echo
 }
 
 function IsAlive(){
   ping -c 5 '$1'
+  echo
   for i in {1..12};
     then
       if [ '$?' != '0' ];
         then
           sleep 300
           ping -c 5 '$1'
+          echo
         else
           return 0
       fi
@@ -98,6 +101,8 @@ if [ '$ERR' != 'false' ];
   then
     echo '$NOW'
     echo 'startup error: exiting script'
+    echo
+    echo
     exit 1
 fi
 
@@ -117,6 +122,7 @@ integrity='0'
 PrintBlank
 
 echo 'backup process begun $NOW:'
+echo
 
 for i in {1..3};
   then
@@ -126,6 +132,7 @@ for i in {1..3};
         ERR='1'
         echo '$NOW'
         echo 'no response from $HST'
+        echo
         continue
     fi
 done
@@ -133,15 +140,25 @@ done
 case $ERR in
   '0')
     echo 'syntax error, exiting'
+    echo
     ;;
   '1')
     echo 'could not connect to remote server, exiting'
+    echo
     ;;
   '2')
     echo 'could not create folder, exiting'
+    echo
     ;;
   *)
     echo 'critical failure: undesignated error, exiting'
+    echo
+    echo
     exit 1
     ;;
 esac
+
+echo 'backup aborted $NOW.'
+echo
+echo
+exit 1
