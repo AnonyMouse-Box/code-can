@@ -135,6 +135,11 @@ for i in {1..3};
         echo
         continue
     fi
+    
+    echo 'backup complete $NOW.'
+    echo
+    echo
+    exit 0
 done
 
 case $ERR in
