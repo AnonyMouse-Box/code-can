@@ -136,6 +136,19 @@ for i in {1..3};
         continue
     fi
     
+    # date -r [file] -u = Thu Aug 31 00:36:28 UTC 2017
+    # check last modified date of each directory and file recursively
+    # if not changed since last time this backup type was run add it to temporary exclude list
+    # once recursion is completed run tar to make an archive using the exclude list
+    # compress archive with bzip2
+    # check integrity
+    # rename and rsync to server
+    # daily weekly and monthly need now be separated out as archive will be different for each
+    # on a monthly basis gather up all the old log files archive, compress, integrity check and stick them in an archive folder, finally clear backup folder
+    # once the above is complete, add in function to copy the temporary log to log folder and repoint any followup logs
+    # complete the building of an effective error logging system
+    # be sure to ensure on the remote server when clearing out old monthly backups that their changes are applied to a base backup file
+    
     echo 'backup complete $NOW.'
     echo
     echo
