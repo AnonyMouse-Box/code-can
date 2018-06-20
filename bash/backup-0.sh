@@ -136,9 +136,13 @@ for i in {1..3};
         continue
     fi
     
+    # for item in source
     # date -r [file] -u = Thu Aug 31 00:36:28 UTC 2017
     # check last modified date of each directory and file recursively
     # if not changed since last time this backup type was run add it to temporary exclude list
+    # if has changed and a directory add to list of folders to recurse into and repeat process for each of them
+    # done
+    
     # once recursion is completed run tar to make an archive using the exclude list
     # compress archive with bzip2
     # check integrity
