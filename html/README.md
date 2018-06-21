@@ -5,4 +5,4 @@ A folder for testing thoughts and ideas in hypertext markup.
 | Program         | Description                                         |
 |:---------------:|:---------------------------------------------------:|
 | hello.htm       | hypertext equivalent of a hello world script        |
-| index.htm       |                                                     |
+| index.htm       | my current index htm file                           |
