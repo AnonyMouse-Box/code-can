@@ -136,6 +136,8 @@ for i in {1..3};
         continue
     fi
     
+    # use find and exec to reference every file or folder in a location, ls -al may also be useful
+    
     # for item in source
     # date -r [file] -u = Thu Aug 31 00:36:28 UTC 2017
     # check last modified date of each directory and file recursively
