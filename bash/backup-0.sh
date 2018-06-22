@@ -137,6 +137,7 @@ for i in {1..3};
     fi
     
     # use find and exec to reference every file or folder in a location, ls -al may also be useful
+    # investigate grep and sed as they may be useful in pipe strings
     
     # for item in source
     # date -r [file] -u = Thu Aug 31 00:36:28 UTC 2017
