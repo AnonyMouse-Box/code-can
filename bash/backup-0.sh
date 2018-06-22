@@ -140,6 +140,7 @@ for i in {1..3};
     
     # for item in source
     # date -r [file] -u = Thu Aug 31 00:36:28 UTC 2017
+    # if date hasn't changed check the checksum
     # check last modified date of each directory and file recursively
     # if not changed since last time this backup type was run add it to temporary exclude list
     # if has changed and a directory add to list of folders to recurse into and repeat process for each of them
