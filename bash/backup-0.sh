@@ -138,6 +138,9 @@ for i in {1..3};
     
     # use find and exec to reference every file or folder in a location, ls -al may also be useful
     # investigate grep and sed as they may be useful in pipe strings
+    # from source folder
+    # ls -Al | grep -e "^-" will list all ordinary files in a folder in long format
+    # ls -ARl | grep -e "^\." will list recursively all directories in the folder in the format ./path/to/folder
     
     # for item in source
     # date -r [file] -u = Thu Aug 31 00:36:28 UTC 2017
