@@ -109,10 +109,12 @@ if [ '$ERR' != 'false' ];
 fi
 
 LOG='$FOL/backup-$(date +%d).log'
+DIR='/tmp/directory.txt'
 BAK='/tmp/backup'
 MBK='/tmp/backup-$(date +%b)'
 WBK='/tmp/backup-$(date +%d)'
 DBK='/tmp/backup-$(date +%a)'
+LIN='1'
 daily='0'
 weekly='0'
 monthly='0'
@@ -135,6 +137,9 @@ for i in {1..3};
         echo
         continue
     fi
+    
+    ls -ARl $SRC | grep -e '^\.' > $DIR
+    sed -n '$LIN p' $DIR | sed 's_\._$SRC_'
     
     # use find and exec to reference every file or folder in a location, ls -al may also be useful
     # investigate grep and sed as they may be useful in pipe strings
