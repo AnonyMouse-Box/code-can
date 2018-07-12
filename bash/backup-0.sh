@@ -139,7 +139,7 @@ for i in {1..3};
     fi
     
     ls -ARl $SRC | grep -e '^\.' > $DIR
-    sed -n '$LIN p' $DIR | sed 's_\._$SRC_'
+    sed -n '\$LIN p' $DIR | sed 's_\._\$SRC_' | ls -Al | grep -e "^-" > $FIL
     
     # use find and exec to reference every file or folder in a location, ls -al may also be useful
     # investigate grep and sed as they may be useful in pipe strings
