@@ -138,8 +138,8 @@ for i in {1..3};
         continue
     fi
     
-    ls -ARl $SRC | grep -e '^\.' > $DIR
-    sed -ne '\$LINp' -e 's_\._\$SRC_' $DIR | ls -Al | grep -e '^-' | sed 's_^.*\._$SRC/_' > $FIL
+    ls -ARl $SRC | grep -e "^\." > $DIR
+    sed -ne "$LIN p" -e "s/\./$SRC/' $DIR | ls -Al | grep -e "^-" | sed "s_^.* ^.* ^.* ^.* ^.* ^.* ^.* ^.* _$SRC/_" > $FIL
     
     # use find and exec to reference every file or folder in a location, ls -al may also be useful
     # investigate grep and sed as they may be useful in pipe strings
