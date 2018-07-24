@@ -13,4 +13,5 @@ for i in {1..3} ;
   fi
 done
 rm $ID
+echo "duplication error: check config or try again."
 exit 1
