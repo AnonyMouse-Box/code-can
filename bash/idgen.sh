@@ -12,4 +12,5 @@ for i in {1..3} ;
     exit 0
   fi
 done
+rm $ID
 exit 1
