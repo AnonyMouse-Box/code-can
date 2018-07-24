@@ -7,7 +7,7 @@ for i in {1..3} ;
   if [ -z "$(cat $ID | grep $LS )" ] ;
    then
     cat $ID >> $LS
-    echo $ID
+    cat $ID
     rm $ID
     exit 0
   fi
