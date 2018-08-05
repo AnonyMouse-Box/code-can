@@ -22,7 +22,7 @@ let person = {
   set dob(newDoB) {
     if (typeof newDoB === '') {
       this._dob = newDoB;
-      return `${this._name}'s Date of Birth set to {newDoB}.`;
+      return `${this._name}'s Date of Birth set to ${newDoB}.`;
     } else {
       return 'Invalid input.';
     }
