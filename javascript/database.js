@@ -19,10 +19,14 @@ let person = {
       return 'Invalid input.';
     }
   },
-  set dob(newDoB) {
-    if (typeof newDoB === '') {
-      this._dob = newDoB;
-      this._age = Date(day,month,year) - newDoB;
+  set dob(newDay,newMonth,newYear) {
+    if (typeof newDay === 'number' && typeof newMonth === 'number' && typeof newYear === 'number') {
+      this._dob = `${newDay}-${newMonth}-${newYear}`;
+      const date = new Date();
+      const d = newDay - date.getDate();
+      const m = newMonth - (date.getMonth() + 1);
+      const y = newYear - date.getFullYear();
+      this._age = ;
       return `${this._name}'s Date of Birth set to ${newDoB} and age has been updated to ${this._age}.`;
     } else {
       return 'Invalid input.';
