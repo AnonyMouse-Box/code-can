@@ -12,21 +12,28 @@ let person = {
     return this._age;
   },
   set name(newName) {
-    if (typeof newName === 'string') {
+    if(typeof newName === 'string'){
       this._name = newName;
       return `Name was set to ${newName}.`;
     } else {
       return 'Invalid input.';
     }
   },
-  set dob(newDay,newMonth,newYear) {
-    if (typeof newDay === 'number' && typeof newMonth === 'number' && typeof newYear === 'number') {
+  set dob(newDay,newMonth,newYear){
+    if(typeof newDay === 'number' && typeof newMonth === 'number' && typeof newYear === 'number') {
       this._dob = `${newDay}-${newMonth}-${newYear}`;
       const date = new Date();
-      const d = newDay - date.getDate();
-      const m = newMonth - (date.getMonth() + 1);
-      const y = newYear - date.getFullYear();
-      this._age = ;
+      let c = -1;
+      if(newMonth - (date.getMonth() + 1) < 1){
+        if(newMonth - (date.getMonth() + 1) < 0){
+          let c = 0;
+        } else {
+          if(newDay - date.getDate() < 1){
+            let c = 0;
+          }
+        }
+      }
+      this._age = (newYear - date.getFullYear()) + c;
       return `${this._name}'s Date of Birth set to ${newDoB} and age has been updated to ${this._age}.`;
     } else {
       return 'Invalid input.';
