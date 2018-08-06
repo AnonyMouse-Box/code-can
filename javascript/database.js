@@ -20,7 +20,7 @@ let person = {
     }
   },
   set dob(newDay,newMonth,newYear){
-    if(typeof newDay === 'number' && typeof newMonth === 'number' && typeof newYear === 'number') {
+    if(typeof newDay === 'number' && typeof newMonth === 'number' && typeof newYear === 'number' && String(newDay).length === 2 && String(newMonth).length === 2 && String(newYear).length === 4){
       this._dob = `${newDay}-${newMonth}-${newYear}`;
       const date = new Date();
       let c = -1;
