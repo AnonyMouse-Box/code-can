@@ -22,7 +22,8 @@ let person = {
   set dob(newDoB) {
     if (typeof newDoB === '') {
       this._dob = newDoB;
-      return `${this._name}'s Date of Birth set to ${newDoB}.`;
+      this._age = Date(day,month,year) - newDoB;
+      return `${this._name}'s Date of Birth set to ${newDoB} and age has been updated to ${this._age}.`;
     } else {
       return 'Invalid input.';
     }
