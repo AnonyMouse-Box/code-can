@@ -1,7 +1,11 @@
 let person = {
+  _id,
   _name,
   _dob,
   _age,
+  get id() {
+    return this._id;
+  },
   get name() {
     return this._name;
   },
@@ -11,7 +15,22 @@ let person = {
   get age() {
     return this._age;
   },
-  set name(newName) {
+  set id(){
+    let uid = '';
+    const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789£@";
+    for(let k = 0; k < 2; k++){
+      for(let j = 0; j < 4; j++){
+        for(let i = 0; i < 4; i++){
+          uid += possible.charAt(Math.floor(Math.random() * possible.length));
+        }
+        uid += '-'
+      }
+      uid += ' : '
+    }
+    return uid;
+  }
+    
+  set name(newName){
     if(typeof newName === 'string'){
       this._name = newName;
       return `Name was set to ${newName}.`;
