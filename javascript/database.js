@@ -25,7 +25,7 @@ let person = {
         }
         uid += '-';
       }
-      uid += ' : ';
+      uid += ' :: ';
     }
     return uid;
   },
