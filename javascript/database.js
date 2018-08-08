@@ -29,7 +29,7 @@ let person = {
       uid += ' :: ';
     }
     uid = uid.slice(0, (uid.length - 4));
-    return uid;
+    this.id = uid;
   },
     
   set name(newName){
