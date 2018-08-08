@@ -25,8 +25,10 @@ let person = {
         }
         uid += '-';
       }
+      uid = uid.slice(0, (uid.length - 1));
       uid += ' :: ';
     }
+    uid = uid.slice(0, (uid.length - 4));
     return uid;
   },
     
