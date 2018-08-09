@@ -40,8 +40,7 @@ let person = {
   },
   set id(){
     this._id = generateID();
-  },
-    
+  },  
   set name(newName){
     if(typeof newName === 'string'){
       this._name = newName;
