@@ -1,3 +1,26 @@
+function pickRandomCharacterFromString(string){
+  return string.charAt(Math.floor(Math.random() * string.length));
+}
+
+function generateID(){
+  let uid = '';
+  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789£@';
+  for(let iteratorA = 0; iteratorA < 2; iteratorA++){
+    if(iteratorA != 0){
+      uid += ' :: ';
+    }
+    for(let iteratorB = 0; iteratorB < 4; iteratorB++){
+      if(iteratorB != 0){
+        uid += '-';
+      }
+      for(let iteratorC = 0; iteratorC < 4; iteratorC++){
+        uid += pickRandomCharacterFromString(possible);
+      }
+    }
+  }
+  return uid;
+}
+
 let person = {
   _id,
   _name,
@@ -16,22 +39,7 @@ let person = {
     return this._age;
   },
   set id(){
-    let uid = '';
-    const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789£@';
-    for(let iteratorA = 0; iteratorA < 2; iteratorA++){
-      if(iteratorA != 0){
-        uid += ' :: ';
-      }
-      for(let iteratorB = 0; iteratorB < 4; iteratorB++){
-        if(iteratorB != 0){
-          uid += '-';
-        }
-        for(let iteratorC = 0; iteratorC < 4; iteratorC++){
-          uid += possible.charAt(Math.floor(Math.random() * possible.length));
-        }
-      }
-    }
-    this._id = uid;
+    this._id = generateID();
   },
     
   set name(newName){
