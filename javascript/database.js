@@ -21,6 +21,14 @@ function generateID(){
   return uid;
 }
 
+function birthMonth(current, birth){
+  return (birth - (current.getMonth() + 1)) < 1;
+}
+
+function pastBirthMonth(current, birth){
+  return (birth - (current.getMonth() + 1)) < 0;
+}
+
 let person = {
   _id,
   _name,
@@ -53,10 +61,10 @@ let person = {
   set dob(newDay,newMonth,newYear){
     if(typeof newDay === 'number' && typeof newMonth === 'number' && typeof newYear === 'number' && String(newDay).length === 2 && String(newMonth).length === 2 && String(newYear).length === 4){
       this._dob = `${newDay}-${newMonth}-${newYear}`;
-      const date = new Date();
+      let date = new Date();
       let c = -1;
-      if(newMonth - (date.getMonth() + 1) < 1){
-        if(newMonth - (date.getMonth() + 1) < 0){
+      if(birthMonth(date, newMonth)){
+        if(pastBirthMonth(date, newMonth)){
           let c = 0;
         } else {
           if(newDay - date.getDate() < 1){
