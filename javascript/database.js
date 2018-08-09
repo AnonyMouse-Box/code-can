@@ -18,18 +18,20 @@ let person = {
   set id(){
     let uid = '';
     const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789£@';
-    for(let k = 0; k < 2; k++){
-      for(let j = 0; j < 4; j++){
-        for(let i = 0; i < 4; i++){
+    for(let iteratorA = 0; iteratorA < 2; iteratorA++){
+      if(iteratorA != 0){
+        uid += ' :: ';
+      }
+      for(let iteratorB = 0; iteratorB < 4; iteratorB++){
+        if(iteratorB != 0){
+          uid += '-';
+        }
+        for(let iteratorC = 0; iteratorC < 4; iteratorC++){
           uid += possible.charAt(Math.floor(Math.random() * possible.length));
         }
-        uid += '-';
       }
-      uid = uid.slice(0, (uid.length - 1));
-      uid += ' :: ';
     }
-    uid = uid.slice(0, (uid.length - 4));
-    this.id = uid;
+    this._id = uid;
   },
     
   set name(newName){
