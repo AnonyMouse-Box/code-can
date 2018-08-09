@@ -40,6 +40,7 @@ let person = {
   },
   set id(){
     this._id = generateID();
+    return `${this._name}'s ID has been set to ${this._id}`;
   },  
   set name(newName){
     if(typeof newName === 'string'){
@@ -64,7 +65,7 @@ let person = {
         }
       }
       this._age = (newYear - date.getFullYear()) + c;
-      return `${this._name}'s Date of Birth set to ${this._dob} and age has been updated to ${this._age}.`;
+      return `${this._name}'s Date of Birth has been set to ${this._dob} and age has been updated to ${this._age}.`;
     } else {
       return 'Invalid input.';
     }
