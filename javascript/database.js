@@ -64,7 +64,7 @@ let person = {
         }
       }
       this._age = (newYear - date.getFullYear()) + c;
-      return `${this._name}'s Date of Birth set to ${newDoB} and age has been updated to ${this._age}.`;
+      return `${this._name}'s Date of Birth set to ${this._dob} and age has been updated to ${this._age}.`;
     } else {
       return 'Invalid input.';
     }
