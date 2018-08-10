@@ -29,6 +29,21 @@ function pastBirthMonth(current, birth){
   return (birth - (current.getMonth() + 1)) < 0;
 }
 
+function pastBirthDay(current, birth){
+  return (birth - current.getDate()) < 1;
+}
+
+function calcAge(day, month, year){
+  let date = new Date();
+  if(pastBirthMonth(date, month)){
+    return calcAgeBasedOnYear() +1;
+  }
+  if(birthMonth(date, month) && pastBirthDay(date, month)){
+    return calcAgeBasedOnYear() +1;
+  }
+  return calcBasedOnYear();
+}
+
 let person = {
   _id,
   _name,
@@ -58,21 +73,10 @@ let person = {
       return 'Invalid input.';
     }
   },
-  set dob(newDay,newMonth,newYear){
+  set dob(newDay, newMonth, newYear){
     if(typeof newDay === 'number' && typeof newMonth === 'number' && typeof newYear === 'number' && String(newDay).length === 2 && String(newMonth).length === 2 && String(newYear).length === 4){
       this._dob = `${newDay}-${newMonth}-${newYear}`;
-      let date = new Date();
-      let c = -1;
-      if(birthMonth(date, newMonth)){
-        if(pastBirthMonth(date, newMonth)){
-          let c = 0;
-        } else {
-          if(newDay - date.getDate() < 1){
-            let c = 0;
-          }
-        }
-      }
-      this._age = (newYear - date.getFullYear()) + c;
+      this._age = calcAge(newDay, newMonth, newYear);
       return `${this._name}'s Date of Birth has been set to ${this._dob} and age has been updated to ${this._age}.`;
     } else {
       return 'Invalid input.';
