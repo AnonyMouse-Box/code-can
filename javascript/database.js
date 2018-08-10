@@ -33,15 +33,19 @@ function pastBirthDay(current, birth){
   return (birth - current.getDate()) < 1;
 }
 
+function calcAgeBasedOnYear(current, birthyear){
+  return current.getFullYear() - (birthyear + 1);
+}
+
 function calcAge(day, month, year){
   let date = new Date();
   if(pastBirthMonth(date, month)){
-    return calcAgeBasedOnYear() +1;
+    return calcAgeBasedOnYear(date, year) +1;
   }
   if(birthMonth(date, month) && pastBirthDay(date, month)){
-    return calcAgeBasedOnYear() +1;
+    return calcAgeBasedOnYear(date, year) +1;
   }
-  return calcBasedOnYear();
+  return calcAgeBasedOnYear(date, year);
 }
 
 let person = {
