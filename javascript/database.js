@@ -70,43 +70,31 @@ let person = {
     return `${this._name}'s ID has been set to ${this._id}`;
   },  
   set name(newName){
-    if(typeof newName === 'string'){
-      this._name = newName;
-      return `Name was set to ${newName}.`;
-    } else {
-      return 'Invalid input.';
-    }
+    this._name = newName;
+    return `Name was set to ${newName}.`;
   },
   set dob(newDay, newMonth, newYear){
-    if(typeof newDay === 'number' && typeof newMonth === 'number' && typeof newYear === 'number' && String(newDay).length === 2 && String(newMonth).length === 2 && String(newYear).length === 4){
-      this._dob = `${newDay}-${newMonth}-${newYear}`;
-      this._age = calcAge(newDay, newMonth, newYear);
-      return `${this._name}'s Date of Birth has been set to ${this._dob} and age has been updated to ${this._age}.`;
-    } else {
-      return 'Invalid input.';
-    }
+    this._dob = `${newDay}-${newMonth}-${newYear}`;
+    return `${this._name}'s Date of Birth has been set to ${this._dob}`;
+  },
+  set age(newAge){
+    this._age = newAge;
+    return `${this._name}'s age has been updated to ${this._age}.`;
   }
 }
 
-check id(){
-  this._id = generateID();
-  return `${this._name}'s ID has been set to ${this._id}`;
-}
-
-check name(newName){
-  if(typeof newName === 'string'){
-    this._name = newName;
-    return `Name was set to ${newName}.`;
+function changeName(changeNameTo){
+  if(typeof changeNameTo === 'string'){
+    person.name = changeNameTo;
   } else {
     return 'Invalid input.';
   }
 }
 
-check dob(newDay, newMonth, newYear){
-  if(typeof newDay === 'number' && typeof newMonth === 'number' && typeof newYear === 'number' && String(newDay).length === 2 && String(newMonth).length === 2 && String(newYear).length === 4){
-    this._dob = `${newDay}-${newMonth}-${newYear}`;
-    this._age = calcAge(newDay, newMonth, newYear);
-    return `${this._name}'s Date of Birth has been set to ${this._dob} and age has been updated to ${this._age}.`;
+function changeDOB(changeDayTo, changeMonthTo, changeYearTo){
+  if(typeof changeDayTo === 'number' && typeof changeMonthTo === 'number' && typeof changeYearTo === 'number' && String(changeDayTo).length === 2 && String(changeMonthTo).length === 2 && String(changeYearTo).length === 4){
+    person.dob = `${changeDayTo}-${changeMonthTo}-${changeYearTo}`;
+    person.age = calcAge(changeDayTo, changeMonthTo, changeYearTo);
   } else {
     return 'Invalid input.';
   }
