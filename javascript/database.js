@@ -21,7 +21,7 @@ function generateID(){
   return uid;
 }
 
-function birthMonth(current, birth){
+function nowBirthMonth(current, birth){
   return (birth - (current.getMonth() + 1)) < 1;
 }
 
@@ -42,7 +42,7 @@ function calcAge(day, month, year){
   if(pastBirthMonth(date, month)){
     return calcAgeBasedOnYear(date, year) +1;
   }
-  if(birthMonth(date, month) && pastBirthDay(date, month)){
+  if(nowBirthMonth(date, month) && pastBirthDay(date, month)){
     return calcAgeBasedOnYear(date, year) +1;
   }
   return calcAgeBasedOnYear(date, year);
@@ -50,19 +50,41 @@ function calcAge(day, month, year){
 
 let person = {
   _id,
-  _name,
-  _dob,
+  _firstName,
+  _middleNames,
+  _lastName,
+  _birthDate,
+  _birthMonth,
+  _birthYear,
   _age,
-  get id() {
+  get id(){
     return this._id;
   },
-  get name() {
-    return this._name;
+  get firstName(){
+    return this._firstName;
   },
-  get dob() {
-    return this._dob;
+  get middleNames(){
+    return this.middleNames;
   },
-  get age() {
+  get lastName(){
+    return this._lastName;
+  },
+  get fullName(){
+    return `${this._firstName} ${this._lastName}`;
+  },
+  get birthDate(){
+  	return this._birthDate;
+  },
+  get birthMonth(){
+    return this._birthMonth;
+  },
+  get birthYear(){
+    return this._birthYear;
+  },
+  get dob(){
+    return `${this._birthDate} ${this._birthMonth} ${this._birthYear}`;
+  },
+  get age(){
     return this._age;
   },
   set id(){
@@ -73,6 +95,9 @@ let person = {
     this._name = newName;
     return `Name was set to ${newName}.`;
   },
+  set birthDate(newDay){
+    this._birthDate = newDay;
+    return `
   set dob(newDay, newMonth, newYear){
     this._dob = `${newDay}-${newMonth}-${newYear}`;
     return `${this._name}'s Date of Birth has been set to ${this._dob}`;
