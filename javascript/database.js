@@ -69,9 +69,6 @@ let person = {
   get lastName(){
     return this._lastName;
   },
-  get fullName(){
-    return `${this._firstName} ${this._lastName}`;
-  },
   get birthDate(){
   	return this._birthDate;
   },
@@ -81,39 +78,62 @@ let person = {
   get birthYear(){
     return this._birthYear;
   },
-  get dob(){
-    return `${this._birthDate} ${this._birthMonth} ${this._birthYear}`;
-  },
   get age(){
     return this._age;
   },
   set id(){
     this._id = generateID();
-    return `${this._name}'s ID has been set to ${this._id}`;
   },  
-  set name(newName){
-    this._name = newName;
-    return `Name was set to ${newName}.`;
+  set firstName(newFirstName){
+    this._firstName = newFirstName;
+  },
+  set middleNames(newMiddleNames){
+    this._middleNames = newMiddleNames;
+  },
+  set lastName(newLastName){
+    this._lastName = newLastName;
   },
   set birthDate(newDay){
     this._birthDate = newDay;
-    return `
-  set dob(newDay, newMonth, newYear){
-    this._dob = `${newDay}-${newMonth}-${newYear}`;
-    return `${this._name}'s Date of Birth has been set to ${this._dob}`;
+  },
+  set birthMonth(newMonth){
+    this._birthMonth = newMonth;
+  },
+  set birthYear(newYear){
+    this._birthYear = newYear;
   },
   set age(newAge){
     this._age = newAge;
-    return `${this._name}'s age has been updated to ${this._age}.`;
   }
 }
 
-function changeName(changeNameTo){
-  if(typeof changeNameTo === 'string'){
-    person.name = changeNameTo;
+function changeID(){
+}
+
+function changeFirstName(changeFirstNameTo){
+}
+
+function changeMiddleNames(changeMiddleNamesTo){
+}
+
+function changeLastName(changeLastNameTo){
+}
+
+function changeFullName(changeFullNameTo){
+  if(typeof changeFullNameTo === 'string'){
+    person.name = changeFullNameTo;
   } else {
     return 'Invalid input.';
   }
+}
+
+function changeBirthDate(changeBirthDateTo){
+}
+
+function changeBirthMonth(changeBirthMonthTo){
+}
+
+function changeBirthYear(changeBirthYearTo){
 }
 
 function changeDOB(changeDayTo, changeMonthTo, changeYearTo){
