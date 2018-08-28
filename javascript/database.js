@@ -1,3 +1,62 @@
+let person = {
+  _id,
+  _firstName,
+  _middleNames,
+  _lastName,
+  _birthDate,
+  _birthMonth,
+  _birthYear,
+  _age,
+  get id(){
+    return this._id;
+  },
+  get firstName(){
+    return this._firstName;
+  },
+  get middleNames(){
+    return this.middleNames;
+  },
+  get lastName(){
+    return this._lastName;
+  },
+  get birthDate(){
+  	return this._birthDate;
+  },
+  get birthMonth(){
+    return this._birthMonth;
+  },
+  get birthYear(){
+    return this._birthYear;
+  },
+  get age(){
+    return this._age;
+  },
+  set id(newID){
+    this._id = newID;
+  },  
+  set firstName(newFirstName){
+    this._firstName = newFirstName;
+  },
+  set middleNames(newMiddleNames){
+    this._middleNames = newMiddleNames;
+  },
+  set lastName(newLastName){
+    this._lastName = newLastName;
+  },
+  set birthDate(newDay){
+    this._birthDate = newDay;
+  },
+  set birthMonth(newMonth){
+    this._birthMonth = newMonth;
+  },
+  set birthYear(newYear){
+    this._birthYear = newYear;
+  },
+  set age(newAge){
+    this._age = newAge;
+  }
+}
+
 function pickRandomCharacterFromString(string){
   return string.charAt(Math.floor(Math.random() * string.length));
 }
@@ -48,99 +107,47 @@ function calcAge(day, month, year){
   return calcAgeBasedOnYear(date, year);
 }
 
-let person = {
-  _id,
-  _firstName,
-  _middleNames,
-  _lastName,
-  _birthDate,
-  _birthMonth,
-  _birthYear,
-  _age,
-  get id(){
-    return this._id;
-  },
-  get firstName(){
-    return this._firstName;
-  },
-  get middleNames(){
-    return this.middleNames;
-  },
-  get lastName(){
-    return this._lastName;
-  },
-  get birthDate(){
-  	return this._birthDate;
-  },
-  get birthMonth(){
-    return this._birthMonth;
-  },
-  get birthYear(){
-    return this._birthYear;
-  },
-  get age(){
-    return this._age;
-  },
-  set id(){
-    this._id = generateID();
-  },  
-  set firstName(newFirstName){
-    this._firstName = newFirstName;
-  },
-  set middleNames(newMiddleNames){
-    this._middleNames = newMiddleNames;
-  },
-  set lastName(newLastName){
-    this._lastName = newLastName;
-  },
-  set birthDate(newDay){
-    this._birthDate = newDay;
-  },
-  set birthMonth(newMonth){
-    this._birthMonth = newMonth;
-  },
-  set birthYear(newYear){
-    this._birthYear = newYear;
-  },
-  set age(newAge){
-    this._age = newAge;
-  }
-}
-
 function changeID(){
+  person.id = generateID();
 }
 
 function changeFirstName(changeFirstNameTo){
+  person.firstName = changeFirstNameTo;
 }
 
 function changeMiddleNames(changeMiddleNamesTo){
+  person.middleNames = changeMiddleNamesTo;
 }
 
 function changeLastName(changeLastNameTo){
+  person.lastName = changeLastNameTo;
 }
 
 function changeFullName(changeFullNameTo){
-  if(typeof changeFullNameTo === 'string'){
-    person.name = changeFullNameTo;
-  } else {
-    return 'Invalid input.';
-  }
+//  if(typeof changeFullNameTo === 'string'){
+//    person.name = changeFullNameTo;
+//  } else {
+//    return 'Invalid input.';
+//  }
 }
 
 function changeBirthDate(changeBirthDateTo){
+  person.birthDate = changeBirthDateTo;
 }
 
 function changeBirthMonth(changeBirthMonthTo){
+  person.birthMonth = changeBirthMonthTo;
 }
 
 function changeBirthYear(changeBirthYearTo){
+  person.birthYear = changeBirthYearTo;
 }
 
 function changeDOB(changeDayTo, changeMonthTo, changeYearTo){
-  if(typeof changeDayTo === 'number' && typeof changeMonthTo === 'number' && typeof changeYearTo === 'number' && String(changeDayTo).length === 2 && String(changeMonthTo).length === 2 && String(changeYearTo).length === 4){
-    person.dob = `${changeDayTo}-${changeMonthTo}-${changeYearTo}`;
-    person.age = calcAge(changeDayTo, changeMonthTo, changeYearTo);
-  } else {
-    return 'Invalid input.';
-  }
+//  if(typeof changeDayTo === 'number' && typeof changeMonthTo === 'number' && typeof changeYearTo === 'number' && String(changeDayTo).length === 2 && String(changeMonthTo).length === 2 && String(changeYearTo).length === 4){
+//    person.dob = `${changeDayTo}-${changeMonthTo}-${changeYearTo}`;
+//    person.age = calcAge(changeDayTo, changeMonthTo, changeYearTo);
+//  } else {
+//    return 'Invalid input.';
+//  }
 }
