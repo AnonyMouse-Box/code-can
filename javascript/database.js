@@ -142,9 +142,11 @@ function changeFullName(changeFullNameTo){
 //      for(){
 //        changeFirstName(arrayOfNames[0]);
 //        changeLastName(arrayOfNames[arrayOfNames.length() - 1]);
-      }
+//      }
+    } else if(arrayOfNames.length() < 10){
+      return 'Name too long.';
     } else{
-      return 'Name too short.'
+      return 'Name too short.';
     }
   } else{
     return 'Invalid input.';
