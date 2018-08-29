@@ -112,23 +112,43 @@ function changeID(){
 }
 
 function changeFirstName(changeFirstNameTo){
-  person.firstName = changeFirstNameTo;
+  if(typeof changeFirstNameTo === 'string'){
+    person.firstName = changeFirstNameTo;
+  } else{
+    return 'Invalid input.';
+  }
 }
 
 function changeMiddleNames(changeMiddleNamesTo){
-  person.middleNames = changeMiddleNamesTo;
+  if(typeof changeMiddleNamesTo === 'string'){
+    person.middleNames = changeMiddleNamesTo;
+  } else{
+    return 'Invalid input.';
+  }
 }
 
 function changeLastName(changeLastNameTo){
-  person.lastName = changeLastNameTo;
+  if(typeof changeLastNameTo === 'string'){
+    person.lastName = changeLastNameTo;
+  } else{
+    return 'Invalid input.';
+  }
 }
 
 function changeFullName(changeFullNameTo){
-//  if(typeof changeFullNameTo === 'string'){
-//    person.name = changeFullNameTo;
-//  } else {
-//    return 'Invalid input.';
-//  }
+  if(typeof changeFullNameTo === 'string'){
+    let arrayOfNames = changeFullNameTo.split(' ');
+    if(arrayOfNames.length() > 2 && arrayOfNames.length() < 10){
+//      for(){
+//        changeFirstName(arrayOfNames[0]);
+//        changeLastName(arrayOfNames[arrayOfNames.length() - 1]);
+      }
+    } else{
+      return 'Name too short.'
+    }
+  } else{
+    return 'Invalid input.';
+  }
 }
 
 function changeBirthDate(changeBirthDateTo){
