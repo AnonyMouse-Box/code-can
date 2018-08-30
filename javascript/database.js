@@ -120,11 +120,7 @@ function changeFirstName(changeFirstNameTo){
 }
 
 function changeMiddleNames(changeMiddleNamesTo){
-  if(typeof changeMiddleNamesTo === 'string'){
     person.middleNames = changeMiddleNamesTo;
-  } else{
-    return 'Invalid input.';
-  }
 }
 
 function changeLastName(changeLastNameTo){
@@ -135,14 +131,39 @@ function changeLastName(changeLastNameTo){
   }
 }
 
+function nameIsFirstName(value){
+  if(value === 0){
+    return true;
+  } else{
+    return false;
+  }
+}
+
+function nameIsLastName(value){
+  if(value === (arrayOfNames.length() - 1)){
+    return true;
+  } else{
+    return false;
+  }
+}
+
 function changeFullName(changeFullNameTo){
   if(typeof changeFullNameTo === 'string'){
     let arrayOfNames = changeFullNameTo.split(' ');
     if(arrayOfNames.length() > 2 && arrayOfNames.length() < 10){
-//      for(){
-//        changeFirstName(arrayOfNames[0]);
-//        changeLastName(arrayOfNames[arrayOfNames.length() - 1]);
-//      }
+      let arrayOfMiddleNames = []
+      let index = 0;
+      foreach(name in arrayOfNames){
+        if(nameIsFirstName(index)){
+          changeFirstName(name);
+        } else if(nameIsLastName(index)){
+          changeLastName(name);
+        } else{
+        arrayOfMiddleNames.push(name);
+        }
+        index++;
+      }
+      changeMiddleNames(arrayOfMiddleNames);
     } else if(arrayOfNames.length() < 10){
       return 'Name too long.';
     } else{
@@ -154,15 +175,25 @@ function changeFullName(changeFullNameTo){
 }
 
 function changeBirthDate(changeBirthDateTo){
-  person.birthDate = changeBirthDateTo;
+  if(changeBirthDateTo.isInteger() && changeBirthDateTo > 0 && changeBirthDateTo < 32){
+    person.birthDate = changeBirthDateTo;
+  } else{
+    return 'Invalid input.';
 }
 
 function changeBirthMonth(changeBirthMonthTo){
-  person.birthMonth = changeBirthMonthTo;
+  if(changeBirthDateTo.isInteger() && changeBirthDateTo > 0 && changeBirthDateTo < 13){
+    person.birthMonth = changeBirthMonthTo;
+  } else{
+    return 'Invalid input.';
 }
 
 function changeBirthYear(changeBirthYearTo){
-  person.birthYear = changeBirthYearTo;
+  let date = new Date();
+  if(changeBirthDateTo.isInteger() && changeBirthDateTo > 0 && changeBirthDateTo < (date.getFullYear() + 1)){
+    person.birthYear = changeBirthYearTo;
+  } else{
+    return 'Invalid input.';
 }
 
 function changeDOB(changeDayTo, changeMonthTo, changeYearTo){
