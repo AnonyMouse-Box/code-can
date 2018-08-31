@@ -20,7 +20,7 @@ let person = {
     return this._lastName;
   },
   get birthDate(){
-  	return this._birthDate;
+    return this._birthDate;
   },
   get birthMonth(){
     return this._birthMonth;
