@@ -33,27 +33,35 @@ let person = {
   },
   set id(newID){
     this._id = newID;
+    return;
   },  
   set firstName(newFirstName){
     this._firstName = newFirstName;
+    return;
   },
   set middleNames(newMiddleNames){
     this._middleNames = newMiddleNames;
+    return;
   },
   set lastName(newLastName){
     this._lastName = newLastName;
+    return;
   },
   set birthDate(newDay){
     this._birthDate = newDay;
+    return;
   },
   set birthMonth(newMonth){
     this._birthMonth = newMonth;
+    return;
   },
   set birthYear(newYear){
     this._birthYear = newYear;
+    return;
   },
   set age(newAge){
     this._age = newAge;
+    return;
   }
 }
 
@@ -100,32 +108,36 @@ function calcAge(day, month, year){
   let date = new Date();
   if(pastBirthMonth(date, month)){
     return calcAgeBasedOnYear(date, year) +1;
-  }
-  if(nowBirthMonth(date, month) && pastBirthDay(date, month)){
+  } else if(nowBirthMonth(date, month) && pastBirthDay(date, month)){
     return calcAgeBasedOnYear(date, year) +1;
+  } else{
+    return calcAgeBasedOnYear(date, year);
   }
-  return calcAgeBasedOnYear(date, year);
 }
 
 function changeID(){
   person.id = generateID();
+  return;
 }
 
 function changeFirstName(changeFirstNameTo){
   if(typeof changeFirstNameTo === 'string'){
     person.firstName = changeFirstNameTo;
+    return;
   } else{
     return 'Invalid input.';
   }
 }
 
 function changeMiddleNames(changeMiddleNamesTo){
-    person.middleNames = changeMiddleNamesTo;
+  person.middleNames = changeMiddleNamesTo;
+  return;
 }
 
 function changeLastName(changeLastNameTo){
   if(typeof changeLastNameTo === 'string'){
     person.lastName = changeLastNameTo;
+    return;
   } else{
     return 'Invalid input.';
   }
@@ -164,6 +176,7 @@ function changeFullName(changeFullNameTo){
         index++;
       }
       changeMiddleNames(arrayOfMiddleNames);
+      return;
     } else if(arrayOfNames.length() < 10){
       return 'Name too long.';
     } else{
@@ -178,6 +191,7 @@ function changeBirthDate(changeBirthDateTo){
   if(changeBirthDateTo.isInteger() && changeBirthDateTo > 0 && changeBirthDateTo < 32){
     person.birthDate = changeBirthDateTo;
     person.age = calcAge(person.birthDate, person.birthMonth, person.birthYear);
+    return;
   } else{
     return 'Invalid input.';
 }
@@ -186,6 +200,7 @@ function changeBirthMonth(changeBirthMonthTo){
   if(changeBirthDateTo.isInteger() && changeBirthDateTo > 0 && changeBirthDateTo < 13){
     person.birthMonth = changeBirthMonthTo;
     person.age = calcAge(person.birthDate, person.birthMonth, person.birthYear);
+    return;
   } else{
     return 'Invalid input.';
 }
@@ -195,6 +210,7 @@ function changeBirthYear(changeBirthYearTo){
   if(changeBirthDateTo.isInteger() && changeBirthDateTo > 0 && changeBirthDateTo < (date.getFullYear() + 1)){
     person.birthYear = changeBirthYearTo;
     person.age = calcAge(person.birthDate, person.birthMonth, person.birthYear);
+    return;
   } else{
     return 'Invalid input.';
 }
@@ -205,6 +221,7 @@ function changeDOB(changeDOBTo){
     changeBirthDate(dobArray[0]);
     changeBirthMonth(dobArray[1]);
     changeBirthYear(dobArray[2]);
+    return;
   } else {
     return 'Invalid input.';
  }
