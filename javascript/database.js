@@ -177,6 +177,7 @@ function changeFullName(changeFullNameTo){
 function changeBirthDate(changeBirthDateTo){
   if(changeBirthDateTo.isInteger() && changeBirthDateTo > 0 && changeBirthDateTo < 32){
     person.birthDate = changeBirthDateTo;
+    person.age = calcAge(person.birthDate, person.birthMonth, person.birthYear);
   } else{
     return 'Invalid input.';
 }
@@ -184,6 +185,7 @@ function changeBirthDate(changeBirthDateTo){
 function changeBirthMonth(changeBirthMonthTo){
   if(changeBirthDateTo.isInteger() && changeBirthDateTo > 0 && changeBirthDateTo < 13){
     person.birthMonth = changeBirthMonthTo;
+    person.age = calcAge(person.birthDate, person.birthMonth, person.birthYear);
   } else{
     return 'Invalid input.';
 }
@@ -192,15 +194,18 @@ function changeBirthYear(changeBirthYearTo){
   let date = new Date();
   if(changeBirthDateTo.isInteger() && changeBirthDateTo > 0 && changeBirthDateTo < (date.getFullYear() + 1)){
     person.birthYear = changeBirthYearTo;
+    person.age = calcAge(person.birthDate, person.birthMonth, person.birthYear);
   } else{
     return 'Invalid input.';
 }
 
-function changeDOB(changeDayTo, changeMonthTo, changeYearTo){
-//  if(typeof changeDayTo === 'number' && typeof changeMonthTo === 'number' && typeof changeYearTo === 'number' && String(changeDayTo).length === 2 && String(changeMonthTo).length === 2 && String(changeYearTo).length === 4){
-//    person.dob = `${changeDayTo}-${changeMonthTo}-${changeYearTo}`;
-//    person.age = calcAge(changeDayTo, changeMonthTo, changeYearTo);
-//  } else {
-//    return 'Invalid input.';
-//  }
+function changeDOB(changeDOBTo){
+  let dobArray = changeDOBTo.split('/');
+  if(dobArray.length === 3 && String(dobArray[0]).length === 2 && String(dobArray[1]).length === 2 && String(dobArray[2]).length === 4){
+    changeBirthDate(dobArray[0]);
+    changeBirthMonth(dobArray[1]);
+    changeBirthYear(dobArray[2]);
+  } else {
+    return 'Invalid input.';
+ }
 }
