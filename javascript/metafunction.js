@@ -2,7 +2,7 @@ const funcValidator = (func, arg, number) => {
   let validated = true;
   let validationArray = [];
   for each (let i = 0; i < number; i++) {
-    validationArray.push(func(value));
+    validationArray.push(func(arg));
     if (validationArray[0] === validationArray[i]) {
       break
     } else {
