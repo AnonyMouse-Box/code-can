@@ -1,12 +1,17 @@
 const funcValidator = (func, arg, number) => {
+  let validated = true;
   let validationArray = [];
   for each (let i = 0; i < number; i++) {
     validationArray.push(func(value));
-  }
-  for each (let i = 0; i < number; i++) {
     if (validationArray[0] === validationArray[i]) {
+      break
     } else {
-      return `This functions output is variable: $validationArray`
+      validated = false;
+      break
     }
   }
+  if (validated === true) {
+    return validationArray[0];
+  } else {
+    return `This functions output varies: ${validationArray}`;
 }
