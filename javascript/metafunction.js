@@ -21,4 +21,5 @@ const funcTimer = (func, arg) => {
   let start = new Date();
   func(arg);
   let finish = new Date();
+  return `Program took ${(finish.getMilliseconds() - start.getMilliseconds()) / 1000}s.`
 }
