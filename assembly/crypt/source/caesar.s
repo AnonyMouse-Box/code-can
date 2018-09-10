@@ -7,7 +7,7 @@ _read:
   MOV R2, #1        @ read first character
   LDR R1,=string    @ character stored as R1
   SWI 0
-  B _errup			@ move to uppercase check
+  B _errup          @ move to uppercase check
 /* need to store additional value (1-26) as R3 */
 
 _errup:
