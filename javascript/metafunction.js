@@ -13,5 +13,9 @@ const funcValidator = (func, arg, number) => {
   if (validated === true) {
     return validationArray[0];
   } else {
-    return `This functions output varies: ${validationArray}`;
+    return `This function's output varies: ${validationArray}`;
+  }
+}
+
+const funcTimer = (func, arg) => {
 }
