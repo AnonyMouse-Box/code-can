@@ -5,23 +5,24 @@ _read:
   MOV R7, #3        @ Syscall number
   MOV R0, #0        @ Stdin is keyboard
   MOV R2, #1        @ read first character
-  LDR R1,=string    @ string placed at string:
+  LDR R1,=string    @ character stored as R1
   SWI 0
+  B _errup			@ move to uppercase check
 /* need to store additional value (1-26) as R3 */
 
-_errchk0:
-  CMP R1, 0x40      @ Check not lower than A
-  B LE _error       @ If false send error
-  CMP GT R1, 0x5B   @ If true check not higher than Z
-  B GE _errchk1     @ If false send to lowercase check
-  B LT _lower       @ If true send for case lowering
+_errup:
+  CMP R1, 0x40      @ Check against (A-1)
+  B LE _error       @ If lower than 'A' send for error
+  CMP GT R1, 0x5B   @ If greater than (A-1) check against (Z+1)
+  B GE _errlow     @ If greater than 'Z' send to lowercase check
+  B LT _lower       @ If less than (Z+1) send for case lowering
 
-_errchk1:
-  CMP R1, 0x60      @ Check not lower than a
-  B LE _error       @ If false send error
-  CMP GT R1, 0x7B   @ If true check not higher than z
-  B GE _error       @ If false send error
-  B LT _cipher      @ If true send for ciphering
+_errlow:
+  CMP R1, 0x60      @ Check against (a-1)
+  B LE _error       @ If lower than 'a' send for error
+  CMP GT R1, 0x7B   @ If greater than (a-1) check against (z+1)
+  B GE _error       @ If greater than 'z' send for error
+  B LT _cipher      @ If less than (z+1) send for ciphering
 
 _error:
 
