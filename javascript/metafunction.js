@@ -18,4 +18,5 @@ const funcValidator = (func, arg, number) => {
 }
 
 const funcTimer = (func, arg) => {
+  let start = new Date();
 }
