@@ -14,7 +14,7 @@ _errup:
   CMP R1, 0x40      @ Check against (A-1)
   B LE _error       @ If lower than 'A' send for error
   CMP GT R1, 0x5B   @ If greater than (A-1) check against (Z+1)
-  B GE _errlow     @ If greater than 'Z' send to lowercase check
+  B GE _errlow      @ If greater than 'Z' send to lowercase check
   B LT _lower       @ If less than (Z+1) send for case lowering
 
 _errlow:
