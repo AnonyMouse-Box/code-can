@@ -8,7 +8,8 @@ _read:
   LDR R1,=string    @ character stored as R1
   SWI 0
   B _errup          @ move to uppercase check
-/* need to store additional value (1-26) as R3 */
+/* need to store additional value (1-26) as R3 
+   BL and running the rest as a subroutine may be useful for iterating over multiple characters */
 
 _errup:
   CMP R1, 0x40      @ Check against (A-1)
@@ -25,6 +26,8 @@ _errlow:
   B LT _cipher      @ If less than (z+1) send for ciphering
 
 _error:
+  
+/* need to understand and throw an exception here */
 
 _lower:
   LDR R1,=string      @ address of char
