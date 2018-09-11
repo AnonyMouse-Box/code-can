@@ -29,11 +29,13 @@ _error:
   
   MOV R7, #4        @ Syscall number
   MOV R0, #1        @ Stdout is monitor
-  MOV R2, #19       @ string is 19 chars long
-  LDR R1,=string    @ string is located at string:
+  MOV R2, #17       @ string is 17 chars long
+  LDR R1,=error     @ string is located at error:
   SWI 0
   B _exit
-/* need to understand and throw an exception here */
+/* need to understand and throw an exception here
+   a more elegant solution may be to simply return the character or a hash,
+   with some way of denoting that the character has not been encrypted.*/
 
 _lower:
   LDR R1,=string      @ address of char
@@ -64,4 +66,6 @@ _exit:
 
 .data
 string:
-.ascii " "
+  .ascii " "
+error:
+  .ascii "Invalid character"
