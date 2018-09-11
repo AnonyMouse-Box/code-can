@@ -40,12 +40,14 @@ _lower:
   LDR R4, [R1]        @ load it into R4
   ORR R4, R4, 0x20    @ change case
   STR R4, [R1]        @ write char back
+  B _cipher
 
 _cipher:
   ADD R5, R1, R3        @ add cipher shift
   SUB S R6, R5, 0x7A    @ subtract z with flags
   ADD GT R1, R6, 0x60   @ if R6>0 add a-1
   MOV LE R1, R5         @ if R6<=0 store R5
+  B _write
 /* check writing to R1 in this way has intended effect */
 
 _write:
@@ -54,6 +56,7 @@ _write:
   MOV R2, #1        @ string is 1 char long
   LDR R1,=string    @ string is located at string:
   SWI 0
+  B _exit
 
 _exit:
   MOV R7, #1
