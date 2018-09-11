@@ -27,6 +27,12 @@ _errlow:
 
 _error:
   
+  MOV R7, #4        @ Syscall number
+  MOV R0, #1        @ Stdout is monitor
+  MOV R2, #19       @ string is 19 chars long
+  LDR R1,=string    @ string is located at string:
+  SWI 0
+  B _exit
 /* need to understand and throw an exception here */
 
 _lower:
