@@ -1,1 +1,1 @@
-C#
+A folder for testing thoughts and ideas in the C# programming language.
