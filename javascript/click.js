@@ -5,3 +5,7 @@ const progress = (id) => {
     document.getElementById(id).value ++;
   }
 }
+
+const current = (id, output) => {
+  document.getElementById(output).innerHTML(document.getElementById(id).value);
+}
