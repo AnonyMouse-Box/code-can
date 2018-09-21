@@ -3,9 +3,6 @@ const progress = (id) => {
     window.alert('Complete!');
   } else {
     document.getElementById(id).value ++;
+    document.getElementById(id).title = document.getElementById(id).value;
   }
-}
-
-const current = (id, output) => {
-  document.getElementById(output).innerHTML(document.getElementById(id).value);
 }
