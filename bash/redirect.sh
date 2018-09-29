@@ -13,6 +13,7 @@ if [ ${#DIR} == 19 ]; then
   exec 2>${DIR}/$$-err
   
   # remove temporary directory
+  rm ${DIR}/$$-err ${DIR}/$$-out
   rm -R ${DIR}
   exit 0
 fi
