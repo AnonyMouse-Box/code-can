@@ -3,7 +3,7 @@
 # redirect the stdout/stderr to screen AND log file
 LOG="/var/log/usr/update.log"
 DIR=$(mktemp -d)
-if [ ${#DIR} == 14 ]; then
+if [ ${#DIR} == 19 ]; then
   mkfifo ${DIR}/$$-err ${DIR}/$$-out
   # to merge stdout/stderr to log file AND screen
   ( exec tee -a ${LOG} <${DIR}/$$-out ) &
