@@ -2,7 +2,7 @@
 
 function timestamp() {
   while IFS= read -r line; do
-    echo "$(($(date +%s%N)/1000000)) $line"
+    echo "[$(date +%s.%N)s] $line"
   done
 }
 # redirect the stdout/stderr to screen AND log file
