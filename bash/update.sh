@@ -12,8 +12,8 @@ if [ ${#DIR} == 19 ]; then
   exec 2>${DIR}/$$-err
   
   # check network access, ping gateway
-  ping -c 5 '192.168.36.1'
   VAR=0
+  ping -c 5 '192.168.36.1'
   while [ $? != 0 ]; do
     sleep 300
     ping -c 5 '192.168.36.1'
@@ -23,8 +23,8 @@ if [ ${#DIR} == 19 ]; then
     fi
   done
   # ping google to check internet access and dns
-  ping -c 5 'www.google.com'
   NUM=0
+  ping -c 5 'www.google.com'
   while [ $? != 0 ]; do
     sleep 300
     ping -c 5 'www.google.com'
