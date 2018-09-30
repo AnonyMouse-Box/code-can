@@ -1,6 +1,5 @@
 #!/bin/bash
-
-# redirect the stdout/stderr to screen AND log file
+ redirect the stdout/stderr to screen AND log file
 LOG="/var/log/usr/update.log"
 DIR=$(mktemp -d)
 if [ ${#DIR} == 19 ]; then
@@ -11,6 +10,29 @@ if [ ${#DIR} == 19 ]; then
   # redirect stdout/stderr
   exec 1>${DIR}/$$-out
   exec 2>${DIR}/$$-err
+  
+  # check network access, ping gateway
+  ping -c 5 '192.168.36.1'
+  VAR=0
+  while [ $? != 0 ]; do
+    sleep 300
+    ping -c 5 '192.168.36.1'
+    ((VAR++))
+    if [ $VAR == 12 ]; then
+      exit 1
+    fi
+  done
+  # ping google to check internet access and dns
+  ping -c 5 'www.google.com'
+  NUM=0
+  while [ $? != 0 ]; do
+    sleep 300
+    ping -c 5 'www.google.com'
+    ((NUM++))
+    if [ $VAR == 12 ]; then
+      exit 1
+    fi
+  done
   
   # update root DNS server list
   wget -O ${DIR}/root.hints "https://www.internic.net/domain/named.root"
