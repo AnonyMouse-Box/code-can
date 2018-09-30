@@ -11,8 +11,8 @@ DIR=$(mktemp -d)
 if [ ${#DIR} == 19 ]; then
   mkfifo ${DIR}/$$-err ${DIR}/$$-out
   # to merge stdout/stderr to log file AND screen
-  ( exec tee -a ${LOG} <${DIR}/$$-out ) &
-  ( exec tee -a ${LOG} <${DIR}/$$-err >&2 ) &
+  ( exec tee -a ${LOG} < ${DIR}/$$-out ) &
+  ( exec tee -a ${LOG} < ${DIR}/$$-err >&2 ) &
   # redirect stdout/stderr
   exec 1 | timestamp > ${DIR}/$$-out
   exec 2 | timestamp > ${DIR}/$$-err
