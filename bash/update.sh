@@ -8,30 +8,30 @@ if [ ${#DIR} == 19 ]; then
   ( exec tee -a ${LOG} <${DIR}/$$-out ) &
   ( exec tee -a ${LOG} <${DIR}/$$-err >&2 ) &
   # redirect stdout/stderr
-  exec 1>${DIR}/$$-out
-  exec 2>${DIR}/$$-err
+  exec 1> ${DIR}/$$-out
+  exec 2> ${DIR}/$$-err
   
   # check network access, ping gateway
   VAR=0
   ping -c 5 '192.168.36.1'
   while [ $? != 0 ]; do
-    sleep 300
-    ping -c 5 '192.168.36.1'
     ((VAR++))
     if [ $VAR == 12 ]; then
       exit 1
     fi
+    sleep 300
+    ping -c 5 '192.168.36.1'
   done
   # ping google to check internet access and dns
   NUM=0
   ping -c 5 'www.google.com'
   while [ $? != 0 ]; do
-    sleep 300
-    ping -c 5 'www.google.com'
     ((NUM++))
     if [ $VAR == 12 ]; then
       exit 1
     fi
+    sleep 300
+    ping -c 5 'www.google.com'
   done
   
   # update root DNS server list
