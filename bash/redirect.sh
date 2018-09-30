@@ -1,7 +1,9 @@
 #!/bin/bash
 
-timestamp() {
-
+function timestamp() {
+  while IFS= read -r line; do
+    echo "$(date) $line"
+  done
 }
 # redirect the stdout/stderr to screen AND log file
 LOG="/var/log/usr/file.log"
