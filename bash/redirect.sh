@@ -14,8 +14,8 @@ if [ ${#DIR} == 19 ]; then
   ( exec tee -a ${LOG} <${DIR}/$$-out ) &
   ( exec tee -a ${LOG} <${DIR}/$$-err >&2 ) &
   # redirect stdout/stderr
-  exec 1>${DIR}/$$-out
-  exec 2>${DIR}/$$-err
+  exec 1> timestamp > ${DIR}/$$-out
+  exec 2> timestamp > ${DIR}/$$-err
   
   # remove temporary directory
   rm ${DIR}/$$-err ${DIR}/$$-out
