@@ -1,5 +1,8 @@
 #!/bin/bash
 
+timestamp() {
+
+}
 # redirect the stdout/stderr to screen AND log file
 LOG="/var/log/usr/file.log"
 DIR=$(mktemp -d)
