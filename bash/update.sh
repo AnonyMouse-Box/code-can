@@ -1,5 +1,5 @@
 #!/bin/bash
- redirect the stdout/stderr to screen AND log file
+# redirect the stdout/stderr to screen AND log file
 LOG="/var/log/usr/update.log"
 DIR=$(mktemp -d)
 if [ ${#DIR} == 19 ]; then
