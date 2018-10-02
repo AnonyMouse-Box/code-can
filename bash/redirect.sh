@@ -2,7 +2,7 @@
 
 function timestamp() {
   while IFS= read -r line; do
-    echo '[$(date +"%F %T.%N")] $line'
+    echo [$(date +"%F %T.%N")] $line
   done
 }
 # redirect the stdout/stderr to screen AND log file
