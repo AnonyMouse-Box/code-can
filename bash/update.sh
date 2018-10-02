@@ -54,9 +54,9 @@ if [ ${#DIR} == 19 ]; then
   # update repositories, software and clear orphaned packages
   apt-get update
   apt-get upgrade -y
-  apt-get autoclean -y
+  apt-get autoclean
   apt-get autoremove -y
-  deborphan | xargs -0 apt-get -y remove --purge
+  deborphan | xargs apt-get -y remove --purge
   
   # reboot if required
   if [ -f /var/run/reboot-required ]; then
