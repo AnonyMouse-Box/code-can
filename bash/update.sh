@@ -42,7 +42,9 @@ if [ ${#DIR} == 19 ]; then
   
   # update root DNS server list
   wget -O ${DIR}/root.hints "https://www.internic.net/domain/named.root"
-  if [ ! diff ${DIR}/root.hints /var/lib/unbound/root.hints ]; then
+  FILE1=$(openssl dgst ${DIR}/root.hints)
+  FILE2=$(openssl dgst /var/lib/unbound/root.hints)
+  if [ ${FILE1:(-64)} != ${FILE2:(-64)} ]; then
     cp ${DIR}/root.hints /var/lib/unbound/root.hints
   fi
   rm ${DIR}/root.hints
