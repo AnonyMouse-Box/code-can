@@ -6,3 +6,4 @@ A folder for testing thoughts and ideas in hypertext markup.
 |:---------------:|:---------------------------------------------------:|
 | hello.htm       | hypertext equivalent of a hello world script        |
 | index.htm       | my current index htm file                           |
+| progress.htm    | a clickable progress bar                            |
