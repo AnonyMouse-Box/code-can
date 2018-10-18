@@ -17,11 +17,11 @@ if [ ${#DIR} == 19 ]; then
   exec 1> >( timestamp ${DIR}/$$-out > ${DIR}/$$-out )
   exec 2> >( timestamp ${DIR}/$$-err > ${DIR}/$$-err )
   
-  sensors >> ~/sensors.log
+  sensors
   
-  stress-ng --cpu 8 -v -t 70d --aggressive --metrics-brief --perf
+  stress-ng --sequential 8 -v --timeout 20m --aggressive --metrics-brief --perf
   
-  sensors >> ~/sensors.log
+  sensors
   
   # remove temporary directory
   rm ${DIR}/$$-err ${DIR}/$$-out
