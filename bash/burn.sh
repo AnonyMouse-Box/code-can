@@ -18,7 +18,7 @@ if [ ${#DIR} == 19 ]; then
   exec 2> >( timestamp ${DIR}/$$-err > ${DIR}/$$-err )
   
   sensors
-  stress-ng --sequential 8 -v --timeout 20m --aggressive --metrics-brief --perf
+  stress-ng --cpu 8 -v --timeout 24h --aggressive --metrics-brief --perf
   sensors
   
   # remove temporary directory
