@@ -61,7 +61,7 @@ if [ ${#DIR} == 19 ]; then
   time apt-get upgrade -y
   time apt-get autoclean
   time apt-get autoremove -y
-  time deborphan | time xargs apt-get -y remove --purge
+  time deborphan | xargs apt-get -y remove --purge
   
   echo ">>>END OF OUTPUT<<<"
   END=$(date +%s)
