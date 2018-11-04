@@ -53,8 +53,8 @@ if [ ${#DIR} == 19 ]; then
   time rm ${DIR}/root.hints
   
   # update pihole
-  time pihole -g
-  time pihole -up
+  time /usr/bin/local/pihole -g
+  time /usr/bin/local/pihole -up
   
   # update repositories, software and clear orphaned packages
   time apt-get update
