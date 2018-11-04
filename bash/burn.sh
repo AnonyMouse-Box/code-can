@@ -6,7 +6,7 @@ function timestamp() {
   done
 }
 # redirect the stdout/stderr to screen AND log file
-LOG="~/burn.log"
+LOG="/var/log/usr/file.log"
 DIR=$(mktemp -d)
 if [ ${#DIR} == 19 ]; then
   mkfifo ${DIR}/$$-err ${DIR}/$$-out
@@ -17,9 +17,30 @@ if [ ${#DIR} == 19 ]; then
   exec 1> >( timestamp ${DIR}/$$-out > ${DIR}/$$-out )
   exec 2> >( timestamp ${DIR}/$$-err > ${DIR}/$$-err )
   
+  START=$(date +%s)
+  echo ">>>START OF OUTPUT<<<"
+  
   sensors
   stress-ng --cpu 8 -v --timeout 24h --aggressive --metrics-brief --perf
   sensors
+  
+  echo ">>>END OF OUTPUT<<<"
+  END=$(date +%s)
+  
+  # calculate time taken
+  SECONDS=$(echo "$END - $START" | bc)
+  if [ $SECONDS > 3600 ]; then
+    let "hours=SECONDS/3600"
+    let "minutes=(SECONDS%3600)/60"
+    let "seconds=(SECONDS%3600)%60"
+    echo "Completed in $hours hour(s), $minutes minute(s) and $seconds second(s)" 
+  elif [ $SECONDS > 60 ]; then
+    let "minutes=(SECONDS%3600)/60"
+    let "seconds=(SECONDS%3600)%60"
+    echo "Completed in $minutes minute(s) and $seconds second(s)"
+  else
+    echo "Completed in $SECONDS seconds"
+  fi
   
   # remove temporary directory
   rm ${DIR}/$$-err ${DIR}/$$-out
