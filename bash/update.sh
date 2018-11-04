@@ -22,46 +22,46 @@ if [ ${#DIR} == 19 ]; then
   
   # check network access, ping gateway
   VAR=0
-  ping -c 5 '192.168.36.1'
+  time ping -c 5 '192.168.36.1'
   while [ $? != 0 ]; do
     ((VAR++))
     if [ $VAR == 12 ]; then
       exit 1
     fi
-    sleep 300
-    ping -c 5 '192.168.36.1'
+    time sleep 300
+    time ping -c 5 '192.168.36.1'
   done
   # ping google to check internet access and dns
   NUM=0
-  ping -c 5 'www.google.com'
+  time ping -c 5 'www.google.com'
   while [ $? != 0 ]; do
     ((NUM++))
     if [ $VAR == 12 ]; then
       exit 1
     fi
-    sleep 300
-    ping -c 5 'www.google.com'
+    time sleep 300
+    time ping -c 5 'www.google.com'
   done
   
   # update root DNS server list
-  wget -O ${DIR}/root.hints "https://www.internic.net/domain/named.root"
+  time wget -O ${DIR}/root.hints "https://www.internic.net/domain/named.root"
   FILE1=$(openssl dgst ${DIR}/root.hints)
   FILE2=$(openssl dgst /var/lib/unbound/root.hints)
   if [ ${FILE1:(-64)} != ${FILE2:(-64)} ]; then
-    cp ${DIR}/root.hints /var/lib/unbound/root.hints
+    time cp ${DIR}/root.hints /var/lib/unbound/root.hints
   fi
-  rm ${DIR}/root.hints
+  time rm ${DIR}/root.hints
   
   # update pihole
-  pihole -g
-  pihole -up
+  time pihole -g
+  time pihole -up
   
   # update repositories, software and clear orphaned packages
-  apt-get update
-  apt-get upgrade -y
-  apt-get autoclean
-  apt-get autoremove -y
-  deborphan | xargs apt-get -y remove --purge
+  time apt-get update
+  time apt-get upgrade -y
+  time apt-get autoclean
+  time apt-get autoremove -y
+  time deborphan | time xargs apt-get -y remove --purge
   
   echo ">>>END OF OUTPUT<<<"
   END=$(date +%s)
