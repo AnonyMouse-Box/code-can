@@ -1,12 +1,58 @@
 #!/bin/bash
-ID="/tmp/id.txt"
-LS="idlist.txt"
-for i in {1..3}; do
- tr -dc A-Za-z0-9 </dev/urandom | head -c 64 | sed -r "s/(.{8})(.{8})(.{8})(.{8})(.{8})(.{8})(.{8})(.{8})/\1-\2-\3-\4 : \5-\6-\7-\8/" > $ID
- if [ -z "$( cat $ID | grep $LS )" ]; then
-  cat $ID >> $LS ; echo >> $LS ; cat "$ID" ; echo ; rm $ID
+
+function timestamp() {
+  while IFS= read -r line; do
+    echo [$(date +"%F %T.%N")] $line
+  done
+}
+# redirect the stdout/stderr to screen AND log file
+LOG="/var/log/usr/file.log"
+DIR=$(mktemp -d)
+if [ ${#DIR} == 19 ]; then
+  mkfifo ${DIR}/$$-err ${DIR}/$$-out
+  # to merge stdout/stderr to log file AND screen
+  ( exec tee -a ${LOG} < ${DIR}/$$-out ) &
+  ( exec tee -a ${LOG} < ${DIR}/$$-err >&2 ) &
+  # redirect stdout/stderr
+  exec 1> >( timestamp ${DIR}/$$-out > ${DIR}/$$-out )
+  exec 2> >( timestamp ${DIR}/$$-err > ${DIR}/$$-err )
+  
+  START=$(date +%s)
+  echo ">>>START OF OUTPUT<<<"
+  
+  ID="/tmp/id.txt"
+  LS="idlist.txt"
+  for i in {1..3}; do
+    tr -dc A-Za-z0-9 </dev/urandom | head -c 64 | sed -r "s/(.{8})(.{8})(.{8})(.{8})(.{8})(.{8})(.{8})(.{8})/\1-\2-\3-\4 : \5-\6-\7-\8/" > $ID
+    if [ -z "$( cat $ID | grep $LS )" ]; then
+      cat $ID >> $LS ; echo >> $LS ; cat "$ID" ; echo ; rm $ID
+      exit 0
+    fi
+  done
+  rm $ID ; echo "duplication error: check config or try again./n"
+  exit 1
+  
+  echo ">>>END OF OUTPUT<<<"
+  END=$(date +%s)
+  
+  # calculate time taken
+  SECONDS=$(echo "$END - $START" | bc)
+  if [ $SECONDS > 3600 ]; then
+    let "hours=SECONDS/3600"
+    let "minutes=(SECONDS%3600)/60"
+    let "seconds=(SECONDS%3600)%60"
+    echo "Completed in $hours hour(s), $minutes minute(s) and $seconds second(s)" 
+  elif [ $SECONDS > 60 ]; then
+    let "minutes=(SECONDS%3600)/60"
+    let "seconds=(SECONDS%3600)%60"
+    echo "Completed in $minutes minute(s) and $seconds second(s)"
+  else
+    echo "Completed in $SECONDS seconds"
+  fi
+  
+  # remove temporary directory
+  rm ${DIR}/$$-err ${DIR}/$$-out
+  rm -R ${DIR}
   exit 0
- fi
-done
-rm $ID ; echo "duplication error: check config or try again./n"
+fi
 exit 1
