@@ -84,6 +84,11 @@ if [ ${#DIR} == 19 ]; then
   # remove temporary directory
   rm ${DIR}/$$-err ${DIR}/$$-out
   rm -R ${DIR}
+  
+  # reboot if required
+  if [ -f /var/run/reboot-required ]; then
+    reboot
+  fi
   exit 0
 fi
 exit 1
