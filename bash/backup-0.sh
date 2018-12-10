@@ -217,3 +217,28 @@ echo 'backup aborted $NOW.'
 echo
 echo
 exit 1
+
+  echo ">>>END OF OUTPUT<<<"
+  END=$(date +%s)
+  
+  # calculate time taken
+  SECONDS=$(echo "$END - $START" | bc)
+  if [ $SECONDS > 3600 ]; then
+    let "hours=SECONDS/3600"
+    let "minutes=(SECONDS%3600)/60"
+    let "seconds=(SECONDS%3600)%60"
+    echo "Completed in $hours hour(s), $minutes minute(s) and $seconds second(s)" 
+  elif [ $SECONDS > 60 ]; then
+    let "minutes=(SECONDS%3600)/60"
+    let "seconds=(SECONDS%3600)%60"
+    echo "Completed in $minutes minute(s) and $seconds second(s)"
+  else
+    echo "Completed in $SECONDS seconds"
+  fi
+  
+  # remove temporary directory
+  rm ${DIR}/$$-err ${DIR}/$$-out
+  rm -R ${DIR}
+  exit 0
+fi
+exit 1
