@@ -23,7 +23,7 @@ if [ ${#DIR} == 19 ]; then
   # backup-0.sh [backup source] [user] [remote IP] [destination folder]
   # defaults    [/home] [current] [127.0.0.1] [/mnt/backup]
   
-<<COMMENT1
+/*
   function DirExist(){
     if [ ! -d '$1' ];
       then
@@ -204,7 +204,7 @@ if [ ${#DIR} == 19 ]; then
   echo
   echo
   exit 1
-COMMENT1
+*/
   
   echo ">>>END OF OUTPUT<<<"
   END=$(date +%s)
