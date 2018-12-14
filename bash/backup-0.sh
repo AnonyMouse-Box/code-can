@@ -23,7 +23,8 @@ if [ ${#DIR} == 19 ]; then
   # backup-0.sh [backup source] [user] [remote IP] [destination folder]
   # defaults    [/home] [current] [127.0.0.1] [/mnt/backup]
   
-//  function DirExist(){
+<<COMMENT1
+  function DirExist(){
     if [ ! -d '$1' ];
       then
         return 1
@@ -202,7 +203,8 @@ if [ ${#DIR} == 19 ]; then
   echo 'backup aborted $NOW.'
   echo
   echo
-  exit 1//
+  exit 1
+COMMENT1
   
   echo ">>>END OF OUTPUT<<<"
   END=$(date +%s)
