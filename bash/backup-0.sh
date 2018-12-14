@@ -98,4 +98,5 @@ if [ ${#DIR} == 19 ]; then
   rm -R ${DIR}
   exit 0
 fi
+echo "Error establishing temporary filesystem"
 exit 1
