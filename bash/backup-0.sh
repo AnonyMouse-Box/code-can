@@ -20,8 +20,8 @@ if [ ${#DIR} == 19 ]; then
   START=$(date +%s)
   echo ">>>START OF OUTPUT<<<"
 
-  # backup-0.sh [backup source] [user] [remote IP] [destination folder] [log folder]
-  # defaults    [/home] [current] [127.0.0.1] [/mnt/backup] [/home/'user'/log]
+  # backup-0.sh [backup source] [user] [remote IP] [destination folder]
+  # defaults    [/home] [current] [127.0.0.1] [/mnt/backup]
   
   function DirExist(){
     if [ ! -d '$1' ];
@@ -67,12 +67,6 @@ if [ ${#DIR} == 19 ]; then
       ERR='2'
   fi
   
-  TMP='/tmp/backup.log'
-  
-  exec 1<&-
-  exec 2<&-
-  exec 1<>$TMP
-  exec 2>&1
   
   echo 'initializing'
   echo
@@ -83,9 +77,8 @@ if [ ${#DIR} == 19 ]; then
   HST='$3'
   SRC='$1'
   DST='$4'
-  FOL='$5'
   
-  for a in {1..6};
+  for a in {1..5};
     do
       case '$ARG' in
         '0')
@@ -101,20 +94,13 @@ if [ ${#DIR} == 19 ]; then
           DST='/mnt/backup'
         ;;
         '4')
-          if [ '$USER' == 'root' ];
-            then
-              USR='admin'
-          fi
-          FOL='/home/$USR/log'
-        ;;
-        '5')
         ;;
         *)
           ERR='0'
           break
         ;;
       esac
-      if [ '$ARG' != '5' ];
+      if [ '$ARG' != '4' ];
         then
           let 'ARG += 1'
       fi
