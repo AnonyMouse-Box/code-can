@@ -21,7 +21,7 @@ if [ ${#DIR} == 19 ]; then
   echo ">>>START OF OUTPUT<<<"
 
   # backup-0.sh [backup source] [user] 		[remote IP] [destination folder]
-  # defaults    [/home] 		[current] 	[127.0.0.1] [/mnt/backup]
+  # defaults    [/home] 	[current] 	[127.0.0.1] [/mnt/backup]
 
       # use find and exec to reference every file or folder in a location, ls -al may also be useful
       # investigate grep and sed as they may be useful in pipe strings
