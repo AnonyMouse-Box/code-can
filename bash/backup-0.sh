@@ -6,7 +6,7 @@ function timestamp() {
   done
 }
 # redirect the stdout/stderr to screen AND log file
-LOG="/var/log/usr/file.log"
+LOG="/var/log/usr/backup.log"
 DIR=$(mktemp -d)
 if [ ${#DIR} == 19 ]; then
   mkfifo ${DIR}/$$-err ${DIR}/$$-out
@@ -84,13 +84,13 @@ if [ ${#DIR} == 19 ]; then
     let "hours=SECONDS/3600"
     let "minutes=(SECONDS%3600)/60"
     let "seconds=(SECONDS%3600)%60"
-    echo "Completed in $hours hour(s), $minutes minute(s) and $seconds second(s)" 
+    echo "completed in $hours hour(s), $minutes minute(s) and $seconds second(s)" 
   elif [ $SECONDS > 60 ]; then
     let "minutes=(SECONDS%3600)/60"
     let "seconds=(SECONDS%3600)%60"
-    echo "Completed in $minutes minute(s) and $seconds second(s)"
+    echo "completed in $minutes minute(s) and $seconds second(s)"
   else
-    echo "Completed in $SECONDS seconds"
+    echo "completed in $SECONDS seconds"
   fi
   
   # remove temporary directory
@@ -98,5 +98,5 @@ if [ ${#DIR} == 19 ]; then
   rm -R ${DIR}
   exit 0
 fi
-echo "Error establishing temporary filesystem, exiting"
+echo "error establishing temporary filesystem, exiting"
 exit 1
