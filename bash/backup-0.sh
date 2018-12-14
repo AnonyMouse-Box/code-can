@@ -22,6 +22,34 @@ if [ ${#DIR} == 19 ]; then
 
   # backup-0.sh [backup source] [user]    [remote IP] [destination folder]
   # defaults    [/home]         [current] [127.0.0.1] [/mnt/backup]
+  
+  for a in {1..5};
+  do
+    case "$ARG" in
+      "0")
+        SRC="/home"
+      ;;
+      "1")
+        USR="$USER"
+      ;;
+      "2")
+        HST="127.0.0.1"
+      ;;
+      "3")
+        DST="/mnt/backup"
+      ;;
+      "4")
+      ;;
+      *)
+        echo "syntax error, exiting"
+        exit 1
+      ;;
+    esac
+    if [ "$ARG" != "4" ];
+      then
+        let "ARG += 1"
+    fi
+  done
 
       # use find and exec to reference every file or folder in a location, ls -al may also be useful
       # investigate grep and sed as they may be useful in pipe strings
