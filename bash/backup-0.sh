@@ -50,6 +50,13 @@ if [ ${#DIR} == 19 ]; then
         let "ARG += 1"
     fi
   done
+  
+  # check source exists
+    # error out if not
+  # catalogue all file and folders within source recursively
+    # store the list in a temporary file that can be referenced later
+  # check last updated time of every file in the list
+    # if not updated since last run time add to new temporary exclusion file to be referenced later
 
       # use find and exec to reference every file or folder in a location, ls -al may also be useful
       # investigate grep and sed as they may be useful in pipe strings
