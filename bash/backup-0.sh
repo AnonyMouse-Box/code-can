@@ -51,7 +51,17 @@ if [ ${#DIR} == 19 ]; then
     fi
   done
   
-  function exists() {
+  function fileOrDirectory() {
+    if [ -d "$1" ]; then
+      TYPE="DIR"
+    else
+      if [ -e "$1" ]; then
+        TYPE="FIL"
+      else
+        TYPE="NON"
+      fi
+    fi
+    # add in detection for links
   }
   
   # check source exists
