@@ -64,6 +64,8 @@ if [ ${#DIR} == 19 ]; then
     # add in detection for links
   }
   
+  fileOrDirectory $SRC
+  
   # check source exists
     # error out if not
   # catalogue all file and folders within source recursively
