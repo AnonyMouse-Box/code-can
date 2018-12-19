@@ -51,6 +51,9 @@ if [ ${#DIR} == 19 ]; then
     fi
   done
   
+  function exists() {
+  }
+  
   # check source exists
     # error out if not
   # catalogue all file and folders within source recursively
