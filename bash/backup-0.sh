@@ -58,7 +58,7 @@ if [ ${#DIR} == 19 ]; then
       if [ -e "$1" ]; then
         TYPE="FIL"
       else
-        TYPE="NON"
+        echo `$SRC does not exist`
       fi
     fi
     # add in detection for links
