@@ -75,11 +75,23 @@ if [ ${#DIR} == 19 ]; then
     
     fileOrDirectory $SRC
     if [ $TYPE == "none" ];then
-      let "ERR += 1"
-      ERR1="0"
-      continue
+
     fi
     echo `source exists and is a $TYPE`
+    
+    case "$TYPE" in
+      "file")
+      ;;
+      "directory")
+      ;;
+      "none")
+        let "ERR += 1"
+        ERR1="0"
+        continue
+      ;;
+      *)
+      ;;
+    esac
   
     # /check source exists
       # /error out if not
