@@ -61,9 +61,7 @@ if [ ${#DIR} == 19 ]; then
       "4")
       ;;
       *)
-        let "ERR += 1"
-        ERR1="0"
-        echo "unhandled exception"
+        echo "invalid number of arguments"
         exit 1
       ;;
     esac
@@ -74,6 +72,7 @@ if [ ${#DIR} == 19 ]; then
   done
     
   for error in {1..3}; do
+    
     fileOrDirectory $SRC
     if [ $TYPE == "none" ];then
       let "ERR += 1"
@@ -82,8 +81,8 @@ if [ ${#DIR} == 19 ]; then
     fi
     echo `source exists and is a $TYPE`
   
-    # check source exists
-      # error out if not
+    # /check source exists
+      # /error out if not
     # catalogue all file and folders within source recursively
       # store the list in a temporary file that can be referenced later
     # check last updated time of every file in the list
