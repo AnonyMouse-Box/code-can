@@ -74,10 +74,7 @@ if [ ${#DIR} == 19 ]; then
   for error in {1..3}; do
     
     fileOrDirectory $SRC
-    if [ $TYPE == "none" ]; then
-
-    fi
-    echo `source exists and is a $TYPE`
+    echo `source is $TYPE`
     
     case "$TYPE" in
       "file")
