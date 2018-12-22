@@ -89,12 +89,7 @@ if [ ${#DIR} == 19 ]; then
       "link")
         # find source of link and run file or directory test
       ;;
-      "none")
-        let "ERR += 1"
-        ERR1="000"
-        continue
-      ;;
-      *)
+      "none"|*)
         let "ERR += 1"
         ERR1="000"
         continue
@@ -134,7 +129,7 @@ if [ ${#DIR} == 19 ]; then
   
   done
   
-  if [ $ERR > 2 ]; then
+  if [ $ERR -gt 2 ]; then
     echo "errored out too many times..."
     # add in case statement for different errors
     echo "unhandled exception"
