@@ -20,11 +20,19 @@ if [ ${#DIR} == 19 ]; then
   START=$(date +%s)
   echo ">>>START OF OUTPUT<<<"
   
+  ERR=0
+  
   for error in {1..3}; do
     
     # backup-0.sh [backup source] [user]    [remote IP] [destination folder]
     # defaults    [/home]         [current] [127.0.0.1] [/mnt/backup]
     
+    ARG="$#"
+    SRC="$1"
+    USR="$2"
+    HST="$3"
+    DST="$4"
+
     for a in {1..5}; do
       case "$ARG" in
         "0")
@@ -42,6 +50,7 @@ if [ ${#DIR} == 19 ]; then
         "4")
         ;;
         *)
+          let "ERR += 1"
           ERR1="0"
           break 2
         ;;
@@ -60,15 +69,17 @@ if [ ${#DIR} == 19 ]; then
           TYPE="FIL"
         else
           TYPE="NON"
-          echo `$SRC does not exist`
         fi
       fi
       # add in detection for links
     }
     
     fileOrDirectory $SRC
-    ERR1="0"
-    break
+    if [ $TYPE == "NON" ];then
+      let "ERR += 1"
+      ERR1="0"
+      continue
+    fi
   
     # check source exists
       # error out if not
@@ -103,7 +114,10 @@ if [ ${#DIR} == 19 ]; then
   
   done
   
-  echo "errored out too many times..."
+  if [ $ERR > 2 ]; then
+    echo "errored out too many times..."
+    echo "unhandled exception"
+  fi
   
   echo ">>>END OF OUTPUT<<<"
   END=$(date +%s)
