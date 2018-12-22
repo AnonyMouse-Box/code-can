@@ -74,22 +74,30 @@ if [ ${#DIR} == 19 ]; then
   for error in {1..3}; do
     
     fileOrDirectory $SRC
-    if [ $TYPE == "none" ];then
+    if [ $TYPE == "none" ]; then
 
     fi
     echo `source exists and is a $TYPE`
     
     case "$TYPE" in
       "file")
+        # add SRC to list of files to be backed up and jump to backup
       ;;
       "directory")
+        # begin recursive iterations into the folder
+      ;;
+      "link")
+        # find source of link and run file or directory test
       ;;
       "none")
         let "ERR += 1"
-        ERR1="0"
+        ERR1="000"
         continue
       ;;
       *)
+        let "ERR += 1"
+        ERR1="000"
+        continue
       ;;
     esac
   
