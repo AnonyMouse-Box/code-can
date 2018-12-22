@@ -119,6 +119,7 @@ if [ ${#DIR} == 19 ]; then
     echo "errored out too many times..."
     # add in case statement for different errors
     echo "unhandled exception"
+    exit 1
   fi
   
   echo ">>>END OF OUTPUT<<<"
