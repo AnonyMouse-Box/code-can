@@ -64,23 +64,24 @@ if [ ${#DIR} == 19 ]; then
     
     function fileOrDirectory() {
       if [ -d "$1" ]; then
-        TYPE="DIR"
+        TYPE="directory"
       else
         if [ -e "$1" ]; then
-          TYPE="FIL"
+          TYPE="file"
         else
-          TYPE="NON"
+          TYPE="none"
         fi
       fi
       # add in detection for links
     }
     
     fileOrDirectory $SRC
-    if [ $TYPE == "NON" ];then
+    if [ $TYPE == "none" ];then
       let "ERR += 1"
       ERR1="0"
       continue
     fi
+    echo `source exists and is a $TYPE`
   
     # check source exists
       # error out if not
