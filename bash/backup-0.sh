@@ -5,6 +5,20 @@ function timestamp() {
     echo [$(date +"%F %T.%N")] $line
   done
 }
+
+function fileOrDirectory() {
+  if [ -d "$1" ]; then
+    TYPE="directory"
+  else
+    if [ -e "$1" ]; then
+      TYPE="file"
+    else
+      TYPE="none"
+    fi
+ fi
+ # add in detection for links
+}
+
 # redirect the stdout/stderr to screen AND log file
 LOG="/var/log/usr/backup.log"
 DIR=$(mktemp -d)
@@ -20,61 +34,46 @@ if [ ${#DIR} == 19 ]; then
   START=$(date +%s)
   echo ">>>START OF OUTPUT<<<"
   
-  ERR=0
+  # backup-0.sh [backup source] [user]    [remote IP] [destination folder]
+  # defaults    [/home]         [current] [127.0.0.1] [/mnt/backup]
   
+  ERR=0
+  ARG="$#"
+  SRC="$1"
+  USR="$2"
+  HST="$3"
+  DST="$4"
+  
+  for a in {1..5}; do
+    case "$ARG" in
+      "0")
+        SRC="/home"
+      ;;
+      "1")
+        USR="$USER"
+      ;;
+      "2")
+        HST="127.0.0.1"
+      ;;
+      "3")
+        DST="/mnt/backup"
+      ;;
+      "4")
+      ;;
+      *)
+        let "ERR += 1"
+        ERR1="0"
+        echo "unhandled exception"
+        exit 1
+      ;;
+    esac
+    if [ "$ARG" != "4" ];
+      then
+        let "ARG += 1"
+    fi
+  done
+    
   for error in {1..3}; do
-    
-    # backup-0.sh [backup source] [user]    [remote IP] [destination folder]
-    # defaults    [/home]         [current] [127.0.0.1] [/mnt/backup]
-    
-    ARG="$#"
-    SRC="$1"
-    USR="$2"
-    HST="$3"
-    DST="$4"
-
-    for a in {1..5}; do
-      case "$ARG" in
-        "0")
-          SRC="/home"
-        ;;
-        "1")
-          USR="$USER"
-        ;;
-        "2")
-          HST="127.0.0.1"
-        ;;
-        "3")
-          DST="/mnt/backup"
-        ;;
-        "4")
-        ;;
-        *)
-          let "ERR += 1"
-          ERR1="0"
-          echo "unhandled exception"
-          break 2
-        ;;
-      esac
-      if [ "$ARG" != "4" ];
-        then
-          let "ARG += 1"
-      fi
-    done
-    
-    function fileOrDirectory() {
-      if [ -d "$1" ]; then
-        TYPE="directory"
-      else
-        if [ -e "$1" ]; then
-          TYPE="file"
-        else
-          TYPE="none"
-        fi
-      fi
-      # add in detection for links
-    }
-    
     fileOrDirectory $SRC
     if [ $TYPE == "none" ];then
       let "ERR += 1"
