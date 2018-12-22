@@ -52,6 +52,7 @@ if [ ${#DIR} == 19 ]; then
         *)
           let "ERR += 1"
           ERR1="0"
+          echo "unhandled exception"
           break 2
         ;;
       esac
@@ -116,6 +117,7 @@ if [ ${#DIR} == 19 ]; then
   
   if [ $ERR > 2 ]; then
     echo "errored out too many times..."
+    # add in case statement for different errors
     echo "unhandled exception"
   fi
   
