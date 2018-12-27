@@ -16,7 +16,7 @@ function fileType() {
       TYPE="none"
     fi
  fi
- # add in detection for links
+ # add in detection for links -L
 }
 
 # redirect the stdout/stderr to screen AND log file
