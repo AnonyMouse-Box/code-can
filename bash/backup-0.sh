@@ -6,7 +6,7 @@ function timestamp() {
   done
 }
 
-function fileOrDirectory() {
+function fileType() {
   if [ -d "$1" ]; then
     TYPE="directory"
   else
@@ -73,7 +73,7 @@ if [ ${#DIR} == 19 ]; then
     
   for error in {1..3}; do
     
-    fileOrDirectory $SRC
+    fileType $SRC
     echo `source is $TYPE`
     
     case "$TYPE" in
