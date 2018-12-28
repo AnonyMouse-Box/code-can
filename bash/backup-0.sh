@@ -16,7 +16,7 @@ function fileType() {
       if [ -e "$1" ]; then
         TYPE="file"
       else
-        TYPE="none"
+        TYPE="none-existant"
       fi
    fi
  fi
@@ -89,7 +89,7 @@ if [ ${#DIR} == 19 ]; then
       "link")
         # find source of link and run file or directory test
       ;;
-      "none"|*)
+      "none-existant"|*)
         let "ERR += 1"
         ERR1="000"
         continue
