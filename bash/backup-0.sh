@@ -7,16 +7,19 @@ function timestamp() {
 }
 
 function fileType() {
-  if [ -d "$1" ]; then
-    TYPE="directory"
+  if [ -L "$1" ]; then
+    TYPE="link"
   else
-    if [ -e "$1" ]; then
-      TYPE="file"
+    if [ -d "$1" ]; then
+      TYPE="directory"
     else
-      TYPE="none"
-    fi
+      if [ -e "$1" ]; then
+        TYPE="file"
+      else
+        TYPE="none"
+      fi
+   fi
  fi
- # add in detection for links -L
 }
 
 # redirect the stdout/stderr to screen AND log file
