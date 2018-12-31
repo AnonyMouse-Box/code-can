@@ -91,6 +91,8 @@ if [ ${#DIR} == 19 ]; then
       ;;
       "none-existant"|*)
         let "ERR += 1"
+        ERR3=$ERR2
+        ERR2=$ERR1
         ERR1="000"
         continue
       ;;
@@ -131,8 +133,18 @@ if [ ${#DIR} == 19 ]; then
   
   if [ $ERR -gt 2 ]; then
     echo "errored out too many times..."
-    # add in case statement for different errors
-    echo "unhandled exception"
+    case "$ERR3" in
+      *)
+        echo "unhandled exception"
+      ;;
+    case "$ERR2" in
+      *)
+        echo "unhandled exception"
+      ;;
+    case "$ERR1" in
+      *)
+        echo "unhandled exception"
+      ;;
     exit 1
   fi
   
