@@ -137,15 +137,17 @@ if [ ${#DIR} == 19 ]; then
       *)
         echo "unhandled exception"
       ;;
+    esac
     case "$ERR2" in
       *)
         echo "unhandled exception"
       ;;
+    esac
     case "$ERR1" in
       *)
         echo "unhandled exception"
       ;;
-    exit 1
+    esac
   fi
   
   echo ">>>END OF OUTPUT<<<"
@@ -169,6 +171,9 @@ if [ ${#DIR} == 19 ]; then
   # remove temporary directory
   rm ${DIR}/$$-err ${DIR}/$$-out
   rm -R ${DIR}
+  if [ $ERR -gt 2 ]; then
+    exit 1
+  fi
   exit 0
 fi
 echo "error establishing temporary filesystem, exiting"
