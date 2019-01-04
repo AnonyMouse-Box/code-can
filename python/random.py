@@ -16,8 +16,9 @@ def __flipCoin():
   return coin;
 
 def __rollDie(start, stop, step):
+  sides = int((stop - start) / step)
   print("you roll a D{0}".format(sides))
-  die = random.randrange(start, sides + 1, step)
+  die = random.randrange(start, stop, step)
   print("you rolled a {0}".format(die))
   return die;
 
