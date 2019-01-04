@@ -15,7 +15,7 @@ def __flipCoin():
     coin = "lost"
   return coin;
 
-def __flipDoubleHeadedCoin():
+def __flipTrickCoin():
   print("you flip a coin")
   print("it lands on heads")
   coin = "heads"
@@ -30,7 +30,7 @@ def __rollDie(start, stop, step):
 
 def flipCoins(quantity, trick):
   if trick == True:
-    coins = [__flipDoubleHeadedCoin() for a in range(quantity)]
+    coins = [__flipTrickCoin() for a in range(quantity)]
   else:
     coins = [__flipCoin() for a in range(quantity)]
   return coins;
