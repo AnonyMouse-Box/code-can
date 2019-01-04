@@ -28,8 +28,11 @@ def __rollDie(start, stop, step):
   print("you rolled a {0}".format(die))
   return die;
 
-def flipCoins(quantity):
-  coins = [__flipCoin() for a in range(quantity)]
+def flipCoins(quantity, trick):
+  if trick == True:
+    coins = [__flipTrickCoin() for a in range(quantity)]
+  else:
+    coins = [__flipCoin() for a in range(quantity)]
   return coins;
 
 def rollDice(start, stop, step, quantity):
