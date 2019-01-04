@@ -15,9 +15,9 @@ def __flipCoin():
     coin = "lost"
   return coin;
 
-def __rollDie(sides):
+def __rollDie(start, stop, step):
   print("you roll a D{0}".format(sides))
-  die = random.randrange(sides + 1)
+  die = random.randrange(start, sides + 1, step)
   print("you rolled a {0}".format(die))
   return die;
 
@@ -25,6 +25,6 @@ def flipCoins(quantity):
   coins = [__flipCoin() for a in range(quantity)]
   return coins;
 
-def rollDice(sides, quantity):
-  dice = [__rollDie(sides) for a in range(quantity)]
+def rollDice(start, stop, step, quantity):
+  dice = [__rollDie(start, stop, step) for a in range(quantity)]
   return dice;
