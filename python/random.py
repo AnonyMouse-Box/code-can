@@ -3,7 +3,7 @@ import random
 
 def __flipCoin():
   print("you flip a coin")
-  bool = random.randrange(2)
+  bool = random.randrange(0, 2, 1)
   if bool == 1:
     print("it lands on heads")
     coin = "heads"
