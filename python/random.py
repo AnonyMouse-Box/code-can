@@ -15,6 +15,12 @@ def __flipCoin():
     coin = "lost"
   return coin;
 
+def __flipTrickCoin():
+  print("you flip a coin")
+  print("it lands on heads")
+  coin = "heads"
+  return coin;
+
 def __rollDie(start, stop, step):
   sides = int((stop - start) / step)
   print("you roll a D{0}".format(sides))
