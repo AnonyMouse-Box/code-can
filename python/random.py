@@ -1,25 +1,28 @@
 #!/usr/bin/env python3
 import random
 
-def __flipCoin():
-  print("you flip a coin")
-  bool = random.randrange(0, 2, 1)
-  if bool == 1:
-    print("it lands on heads")
-    coin = "heads"
-  elif bool == 0:
-    print("it lands on tails")
-    coin = "tails"
-  else:
-    print("you lost the coin")
-    coin = "lost"
-  return coin;
 
-def __flipTrickCoin():
-  print("you flip a coin")
-  print("it lands on heads")
-  coin = "heads"
-  return coin;
+class coin:
+  def __init__(self, name):
+    self.name = name
+  
+  weightHeads = 1
+  weightTails = 1
+  
+  def __flipCoin():
+    print("you flip a coin")
+    bool = random.randrange(0, 2, 1)
+    if bool == 1:
+      print("it lands on heads")
+      result = "heads"
+    elif bool == 0:
+      print("it lands on tails")
+      result = "tails"
+    else:
+      print("you lost the coin")
+      result = "lost"
+      return result;
+
 
 def __rollDie(start, stop, step):
   sides = int((stop - start) / step)
@@ -29,10 +32,7 @@ def __rollDie(start, stop, step):
   return die;
 
 def flipCoins(quantity, trick):
-  if trick == True:
-    coins = [__flipTrickCoin() for a in range(quantity)]
-  else:
-    coins = [__flipCoin() for a in range(quantity)]
+  coins = [__flipCoin() for a in range(quantity)]
   return coins;
 
 def rollDice(start, stop, step, quantity):
