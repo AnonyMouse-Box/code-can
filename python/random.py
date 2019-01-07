@@ -20,7 +20,7 @@ class coin:
     else:
       print("you lost the coin")
       result = "lost"
-      return result;
+    return result;
 
 class die:
   def __init__(self, name):
