@@ -33,7 +33,6 @@ class die:
     print("you rolled a {0}".format(die))
     return die;
 
-
 def flipCoins(quantity):
   coins = [__flipCoin() for a in range(quantity)]
   return coins;
