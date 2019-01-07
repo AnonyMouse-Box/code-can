@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import random
 
-
 class coin:
   def __init__(self, name):
     self.name = name
@@ -23,13 +22,17 @@ class coin:
       result = "lost"
       return result;
 
+class die:
+  def __init__(self, name):
+    self.name = name    
+    
+  def __rollDie(start, stop, step):
+    sides = int((stop - start) / step)
+    print("you roll a D{0}".format(sides))
+    die = random.randrange(start, stop, step)
+    print("you rolled a {0}".format(die))
+    return die;
 
-def __rollDie(start, stop, step):
-  sides = int((stop - start) / step)
-  print("you roll a D{0}".format(sides))
-  die = random.randrange(start, stop, step)
-  print("you rolled a {0}".format(die))
-  return die;
 
 def flipCoins(quantity):
   coins = [__flipCoin() for a in range(quantity)]
