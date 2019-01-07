@@ -23,15 +23,15 @@ class coin:
     return result;
 
 class die:
-  def __init__(self, name):
-    self.name = name    
+  def __init__(self, faces):
+    self.weights = {a = 1 for a in range(faces)}    
     
   def __rollDie(start, stop, step):
     sides = int((stop - start) / step)
     print("you roll a D{0}".format(sides))
-    die = random.randrange(start, stop, step)
+    result = random.randrange(start, stop, step)
     print("you rolled a {0}".format(die))
-    return die;
+    return result;
 
 def flipCoins(quantity):
   coins = [__flipCoin() for a in range(quantity)]
