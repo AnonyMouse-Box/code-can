@@ -10,7 +10,7 @@ class coin:
   
   def __flipCoin():
     print("you flip a coin")
-    bool = random.randrange(0, 2, 1)
+    bool = random.randrange(self.weightHeads + self.weightTails)
     if bool == 1:
       print("it lands on heads")
       result = "heads"
@@ -21,6 +21,7 @@ class coin:
       print("you lost the coin")
       result = "lost"
     return result;
+  
 
 class die:
   def __init__(self, faces):
