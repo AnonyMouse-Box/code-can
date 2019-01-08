@@ -10,10 +10,10 @@ class coin:
   def __flipCoin(self):
     print("you flip a coin")
     bool = random.randrange(self.weightHeads + self.weightTails)
-    if bool == 1:
+    if bool <= self.weightHeads:
       print("it lands on heads")
       result = "heads"
-    elif bool == 0:
+    elif bool == self.weightHeads + self.weightTails:
       print("it lands on tails")
       result = "tails"
     else:
