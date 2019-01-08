@@ -9,11 +9,11 @@ class coin:
   
   def __flipCoin(self):
     print("you flip a coin")
-    bool = random.randrange(self.weightHeads + self.weightTails)
-    if bool <= self.weightHeads:
+    pseudobool = random.randrange(self.weightHeads + self.weightTails)
+    if pseudobool <= self.weightHeads:
       print("it lands on heads")
       result = "heads"
-    elif bool == self.weightHeads + self.weightTails:
+    elif pseudobool == self.weightHeads + self.weightTails:
       print("it lands on tails")
       result = "tails"
     else:
