@@ -6,10 +6,11 @@ class coin:
     self.name = name
     self.weightHeads = 1
     self.weightTails = 1
+    self.clumsy = 0
   
   def __flipCoin(self):
     print("you flip a coin")
-    pseudobool = random.randrange(self.weightHeads + self.weightTails)
+    pseudobool = random.randrange(self.weightHeads + self.weightTails + self.clumsy)
     if pseudobool <= self.weightHeads:
       print("it lands on heads")
       result = "heads"
