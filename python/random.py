@@ -4,9 +4,8 @@ import random
 class coin:
   def __init__(self, name):
     self.name = name
-  
-  weightHeads = 1
-  weightTails = 1
+    self.weightHeads = 1
+    self.weightTails = 1
   
   def __flipCoin(self):
     print("you flip a coin")
