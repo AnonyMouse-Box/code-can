@@ -7,6 +7,7 @@ class coin:
     self.weightHeads = 1
     self.weightTails = 1
     self.clumsy = 0
+    return;
   
   def __flipCoin(self):
     print("you flip a coin")
@@ -27,6 +28,7 @@ class die:
   def __init__(self, name, faces):
     self.name = name
     self.weights = {a = 1 for a in range(faces)}    
+    return;
     
   def __rollDie(self):
     sides = int((stop - start) / step)
