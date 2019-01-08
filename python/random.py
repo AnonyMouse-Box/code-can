@@ -13,7 +13,7 @@ class coin:
     if pseudobool <= self.weightHeads:
       print("it lands on heads")
       result = "heads"
-    elif pseudobool == self.weightHeads + self.weightTails:
+    elif pseudobool <= self.weightHeads + self.weightTails:
       print("it lands on tails")
       result = "tails"
     else:
