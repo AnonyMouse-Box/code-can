@@ -8,7 +8,7 @@ class coin:
   weightHeads = 1
   weightTails = 1
   
-  def __flipCoin():
+  def __flipCoin(self):
     print("you flip a coin")
     bool = random.randrange(self.weightHeads + self.weightTails)
     if bool == 1:
@@ -34,8 +34,8 @@ class die:
     print("you rolled a {0}".format(die))
     return result;
 
-def flipCoins(quantity):
-  coins = [__flipCoin() for a in range(quantity)]
+def flipCoins(self, quantity):
+  coins = [__flipCoin(self) for a in range(quantity)]
   return coins;
 
 def rollDice(start, stop, step, quantity):
