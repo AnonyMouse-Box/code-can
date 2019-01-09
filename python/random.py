@@ -56,6 +56,8 @@ def flipCoins(name, quantity):
 
 def weightedCoin(name, heads, tails, clumsy):
   __setHeads(name, heads)
+  __setTails(name, tails)
+  __setClumsy(name, clumsy)
   return;
 
 def rollDice(name, quantity):
