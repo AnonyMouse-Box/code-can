@@ -9,15 +9,15 @@ class coin:
     self.clumsy = 0
     return;
   
-  def setHeads(self, weight):
+  def __setHeads(self, weight):
     self.weightHeads = weight
     return;
   
-  def setTails(self, weight):
+  def __setTails(self, weight):
     self.weightTails = weight
     return;
   
-  def setClumsy(self, weight):
+  def __setClumsy(self, weight):
     self.clumsy = weight
     return;
   
@@ -53,6 +53,10 @@ class die:
 def flipCoins(name, quantity):
   coins = [__flipCoin(name) for a in range(quantity)]
   return coins;
+
+def weightedCoin(name, heads, tails, clumsy):
+  __setHeads(name, heads)
+  return;
 
 def rollDice(name, quantity):
   dice = [__rollDie(name) for a in range(quantity)]
