@@ -2,8 +2,7 @@
 import random
 
 class coin:
-  def __init__(self, name):
-    self.name = name
+  def __init__(self):
     self.weightHeads = 1
     self.weightTails = 1
     self.clumsy = 0
@@ -37,8 +36,7 @@ class coin:
   
 
 class die:
-  def __init__(self, name, start, stop, step):
-    self.name = name
+  def __init__(self, start, stop, step):
     self.faces = int((stop - start) / step)
     self.weights = {a = 1 for a in range(start, stop, step)}    
     return;
@@ -62,15 +60,15 @@ class die:
 
 
 def flipCoins(name, quantity):
-  coins = [__flipCoin(name) for a in range(quantity)]
+  coins = [name.__flipCoin() for a in range(quantity)]
   return coins;
 
 def weightedCoin(name, heads, tails, clumsy):
-  __setHeads(name, heads)
-  __setTails(name, tails)
-  __setClumsy(name, clumsy)
+  name.__setHeads(heads)
+  name.__setTails(tails)
+  name.__setClumsy(clumsy)
   return;
 
 def rollDice(name, quantity):
-  dice = [__rollDie(name) for a in range(quantity)]
+  dice = [name.__rollDie() for a in range(quantity)]
   return dice;
