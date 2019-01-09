@@ -73,6 +73,6 @@ def rollDice(self, quantity):
   dice = [self.__rollDie() for a in range(quantity)]
   return dice;
 
-def createSimpleDice(self, sides):
+def createSimpleDie(self, sides):
   self = die(0, sides, 1)
   return;
