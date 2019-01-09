@@ -41,7 +41,7 @@ class die:
     self.weights = {a = 1 for a in range(start, stop, step)}    
     return;
     
-  def __setWeight(self, value, weight):
+  def setWeight(self, value, weight):
     self.weights[value] = weight
     return;
     
