@@ -59,16 +59,16 @@ class die:
     return result;
 
 
-def flipCoins(name, quantity):
-  coins = [name.__flipCoin() for a in range(quantity)]
+def flipCoins(self, quantity):
+  coins = [self.__flipCoin() for a in range(quantity)]
   return coins;
 
-def weightedCoin(name, heads, tails, clumsy):
-  name.__setHeads(heads)
-  name.__setTails(tails)
-  name.__setClumsy(clumsy)
+def weightedCoin(self, heads, tails, clumsy):
+  self.__setHeads(heads)
+  self.__setTails(tails)
+  self.__setClumsy(clumsy)
   return;
 
-def rollDice(name, quantity):
-  dice = [name.__rollDie() for a in range(quantity)]
+def rollDice(self, quantity):
+  dice = [self.__rollDie() for a in range(quantity)]
   return dice;
