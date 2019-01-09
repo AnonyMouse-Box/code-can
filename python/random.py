@@ -72,3 +72,7 @@ def weightedCoin(self, heads, tails, clumsy):
 def rollDice(self, quantity):
   dice = [self.__rollDie() for a in range(quantity)]
   return dice;
+
+def createPlatonicDice(self, sides):
+  self = die(0, sides, 1)
+  return;
