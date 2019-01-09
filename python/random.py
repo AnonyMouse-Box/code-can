@@ -9,6 +9,18 @@ class coin:
     self.clumsy = 0
     return;
   
+  def setHeads(self, weight):
+    self.weightHeads = weight
+    return;
+  
+  def setTails(self, weight):
+    self.weightTails = weight
+    return;
+  
+  def setClumsy(self, weight):
+    self.clumsy = weight
+    return;
+  
   def __flipCoin(self):
     print("you flip a coin")
     pseudobool = random.randrange(self.weightHeads + self.weightTails + self.clumsy)
