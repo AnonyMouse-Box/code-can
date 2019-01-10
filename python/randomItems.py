@@ -61,7 +61,7 @@ class die:
 
 
 def generateString():
-  id = ''.join(random.choices(string.ascii_uppercase + string.digits, k=12))
+  id = ''.join(random.choices(string.ascii_lowercase + string.ascii_uppercase + string.digits, k=12))
   return id;
 
 def flipCoins(self, quantity):
