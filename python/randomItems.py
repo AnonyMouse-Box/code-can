@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import random
+import string
 
 class coin:
   def __init__(self):
@@ -58,6 +59,10 @@ class die:
         break
     return result;
 
+
+def generateString():
+  id = ''.join(random.choices(string.ascii_uppercase + string.digits, k=12))
+  return id;
 
 def flipCoins(self, quantity):
   coins = [self.__flipCoin() for a in range(quantity)]
