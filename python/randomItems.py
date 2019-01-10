@@ -81,3 +81,7 @@ def rollDice(self, quantity):
 def createSimpleDie(self, sides):
   self = die(0, sides, 1)
   return;
+
+def generateCoin():
+  generateString() = coin()  
+  return;
