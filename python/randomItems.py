@@ -3,7 +3,8 @@ import random
 import string
 
 class coin:
-  def __init__(self):
+  def __init__(self, name):
+    self.name = name
     self.weightHeads = 1
     self.weightTails = 1
     self.clumsy = 0
@@ -37,7 +38,8 @@ class coin:
   
 
 class die:
-  def __init__(self, start, stop, step):
+  def __init__(self, name, start, stop, step):
+    self.name = name
     self.faces = int((stop - start) / step)
     self.weights = {a = 1 for a in range(start, stop, step)}    
     return;
@@ -83,5 +85,5 @@ def createSimpleDie(self, sides):
   return;
 
 def generateCoin():
-  generateString() = coin()  
-  return;
+  name = generateString()
+  return coin(name);
