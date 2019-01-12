@@ -62,7 +62,7 @@ class die:
     return result;
 
 
-def generateString():
+def __generateString():
   id = ''.join(random.choices(string.ascii_lowercase + string.ascii_uppercase + string.digits, k=12))
   return id;
 
@@ -80,10 +80,13 @@ def rollDice(self, quantity):
   dice = [self.__rollDie() for a in range(quantity)]
   return dice;
 
-def createSimpleDie(self, sides):
-  self = die(0, sides, 1)
-  return;
-
 def generateCoin():
-  name = generateString()
+  name = __generateString()
   return coin(name);
+
+def generateDie(start, stop, step):
+  name = __generateString()
+  return die(name, start, stop, step);
+
+def generateSimpleDie(sides):
+  return generateDie(0, sides, 1);
