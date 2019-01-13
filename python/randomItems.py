@@ -1,10 +1,25 @@
 #!/usr/bin/env python3
+import uuid
 import random
-import string
+
+def __generateID(type):
+  check = True
+  while check == True
+    id = uuid.uuid4()
+    check = id in type.dict
+  return id;
+
+class item(object):
+  def __init__(self, name):
+    self.name = name
+    item.dict[name] = self
+    return;
+  
 
 class coin:
   def __init__(self, name):
     self.name = name
+    coin.dict[name] = self
     self.weightHeads = 1
     self.weightTails = 1
     self.clumsy = 0
@@ -40,6 +55,7 @@ class coin:
 class die:
   def __init__(self, name, start, stop, step):
     self.name = name
+    die.dict[name] = self
     self.faces = int((stop - start) / step)
     self.weights = {a = 1 for a in range(start, stop, step)}    
     return;
@@ -61,10 +77,16 @@ class die:
         break
     return result;
 
+def createCoin():
+  name = __generateID(coin)
+  return coin(name);
 
-def __generateString():
-  id = ''.join(random.choices(string.ascii_lowercase + string.ascii_uppercase + string.digits, k=12))
-  return id;
+def createDie(start, stop, step):
+  name = __generateID(die)
+  return die(name, start, stop, step);
+
+def createSimpleDie(sides):
+  return createDie(0, sides, 1);
 
 def flipCoins(self, quantity):
   coins = [self.__flipCoin() for a in range(quantity)]
@@ -80,13 +102,5 @@ def rollDice(self, quantity):
   dice = [self.__rollDie() for a in range(quantity)]
   return dice;
 
-def generateCoin():
-  name = __generateString()
-  return coin(name);
-
-def generateDie(start, stop, step):
-  name = __generateString()
-  return die(name, start, stop, step);
-
-def generateSimpleDie(sides):
-  return generateDie(0, sides, 1);
+coin.dict = {}
+die.dict = {}
