@@ -8,11 +8,16 @@ def __generateID(type):
     check = id in type.dict
   return id;
 
-class item(object):
+class superclass(object):
   def __init__(self, name):
     self.name = name
-    item.dict[name] = self
+    superclass.dict[name] = self
     return;
+
+class subclass(superclass):
+  sef __init__(self, name):
+    self.name = name
+    subclass.dict[name] = self
   
 def createObject(type):
   name = __generateID(type)
