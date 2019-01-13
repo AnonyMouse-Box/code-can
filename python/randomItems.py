@@ -9,13 +9,6 @@ def __generateID(type):
     check = id in type.dict
   return id;
 
-class item(object):
-  def __init__(self, name):
-    self.name = name
-    item.dict[name] = self
-    return;
-  
-
 class coin:
   def __init__(self, name):
     self.name = name
@@ -51,7 +44,6 @@ class coin:
       result = "lost"
     return result;
   
-
 class die:
   def __init__(self, name, start, stop, step):
     self.name = name
@@ -92,15 +84,15 @@ def flipCoins(self, quantity):
   coins = [self.__flipCoin() for a in range(quantity)]
   return coins;
 
+def rollDice(self, quantity):
+  dice = [self.__rollDie() for a in range(quantity)]
+  return dice;
+
 def weightedCoin(self, heads, tails, clumsy):
   self.__setHeads(heads)
   self.__setTails(tails)
   self.__setClumsy(clumsy)
   return;
-
-def rollDice(self, quantity):
-  dice = [self.__rollDie() for a in range(quantity)]
-  return dice;
 
 coin.dict = {}
 die.dict = {}
