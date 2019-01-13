@@ -15,7 +15,7 @@ class superclass(object):
     return;
 
 class subclass(superclass):
-  sef __init__(self, name):
+  def __init__(self, name):
     self.name = name
     subclass.dict[name] = self
   
