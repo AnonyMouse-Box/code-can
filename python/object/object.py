@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 import uuid
+from . import super
+from . import sub
 
 def __generateID(type):
   check = True
@@ -7,17 +9,6 @@ def __generateID(type):
     id = uuid.uuid4()
     check = id in type.dict
   return id;
-
-class superclass(object):
-  def __init__(self, name):
-    self.name = name
-    superclass.dict[name] = self
-    return;
-
-class subclass(superclass):
-  def __init__(self, name):
-    self.name = name
-    subclass.dict[name] = self
   
 def createObject(type):
   name = __generateID(type)
