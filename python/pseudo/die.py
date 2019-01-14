@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+import random
+
 class die:
   def __init__(self, name, start, stop, step):
     self.name = name
