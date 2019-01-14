@@ -14,4 +14,5 @@ def createObject(type):
   name = __generateID(type)
   return type(name);
 
-item.dict = {}
+superclass.dict = {}
+subclass.dict = {}
