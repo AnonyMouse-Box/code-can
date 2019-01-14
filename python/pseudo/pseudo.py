@@ -2,6 +2,8 @@
 import uuid
 import random
 
+from . import coin
+
 def __generateID(type):
   check = True
   while check == True
