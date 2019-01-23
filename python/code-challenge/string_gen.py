@@ -7,6 +7,9 @@ def add_range(n, base):
     return new
 
 def start_range(n):
+    if n > 8:
+        print('Error: Too large! This won\'t fit in 16GB of RAM!')
+        return False
     base = ('',)
     for i in range(0,n):
         base = add_range(n, base)
