@@ -2,7 +2,7 @@ def appendDigits(n, base):
   new = []
   for item in base:
     for value in range(n):
-      if value in item:
+      if len(item) > 0 and (value in item or value == item[-1] - 1 or value == item[-1] + 1):
         continue
       new.append(item + [value,])
   return new
