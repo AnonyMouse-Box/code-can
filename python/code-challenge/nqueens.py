@@ -20,6 +20,9 @@ def calculateSetOfSets(n):
 def checkDiagonals(sets):
   return sets
 
+def displaySolutions(sets):
+  return
+
 def queens(n):
   sets = calculateSetOfSets(n)
   sets = checkDiagonals(sets)
