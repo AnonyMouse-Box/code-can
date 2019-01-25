@@ -26,6 +26,6 @@ def queens(n):
   solutions = len(sets)
   print("There are {0} solutions\n".format(solutions))
   response = input("Would you like to see them?")
-  if response in ["y", "Y","yes", "YES"]:
+  if response in ["y", "Y", "yes", "YES"]:
     displaySolutions(sets)
   return
