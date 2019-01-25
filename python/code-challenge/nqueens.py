@@ -17,7 +17,16 @@ def calculateSetOfSets(n):
   except:
     return "An error has occured, try a smaller value"
 
-def checkDiagonals(sets):
+def calculateDiagonalSets(n):
+  new = []
+  construct = []
+  for value in range(n):
+    construct.append(value)
+    new.append(construct.copy())
+  return new
+
+def checkDiagonals(sets, n):
+  calculateDiagonalSets(n)
   return sets
 
 def displaySolutions(sets):
@@ -25,7 +34,7 @@ def displaySolutions(sets):
 
 def queens(n):
   sets = calculateSetOfSets(n)
-  sets = checkDiagonals(sets)
+  sets = checkDiagonals(sets, n)
   solutions = len(sets)
   print("There are {0} solutions\n".format(solutions))
   response = input("Would you like to see them?")
