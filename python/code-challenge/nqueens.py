@@ -48,7 +48,7 @@ def queens(n):
   sets = checkDiagonals(sets, n)
   solutions = len(sets)
   print("There are {0} solutions\n".format(solutions))
-  response = input("Would you like to see them?")
-  if response in ["y", "Y", "yes", "YES"]:
+  response = input("Would you like to see them? ")
+  if response in ["y", "Y", "yes", "Yes", "YES", "yeah", "Yeah", "YEAH"]:
     displaySolutions(sets)
   return
