@@ -20,9 +20,20 @@ def calculateSetOfSets(n):
 def calculateDiagonalSets(n):
   new = []
   construct = []
-  for value in range(n):
+  for value in range(2*n - 1):
     construct.append(value)
     new.append(construct.copy())
+  for value in range(len(new)):
+    if len(new[value]) > n:
+      new[value] = new[value][-n:]
+    elif len(new[value]) < n:
+      while len(new[value]) < n:
+        new[value] = ["x"] + new[value]
+    for item in range(len(new[value])):
+      if isinstance(new[value][item], str):
+        continue
+      elif new[value][item] >= n:
+        new[value][item] = "x"
   return new
 
 def checkDiagonals(sets, n):
