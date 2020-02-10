@@ -4,8 +4,9 @@ try:
     if isinstance(input, str):
       output = []
       for character in input:
-        value = ord(character) #unicode
-        
+        value = ord(character)
+        if value is in range(20,95): # (unicode decimal) make language adjustments here
+          
         output.append(character)
       return output
     else:
