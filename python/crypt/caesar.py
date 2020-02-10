@@ -7,3 +7,5 @@ try:
     return output
 except:
   print("An error has occurred.") 
+else:
+  print("Cipher complete.")
