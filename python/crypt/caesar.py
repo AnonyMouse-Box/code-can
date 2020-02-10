@@ -4,6 +4,8 @@ try:
     if isinstance(input, str):
       output = []
       for character in input:
+        value = ord(character) #unicode
+        
         output.append(character)
       return output
     else:
