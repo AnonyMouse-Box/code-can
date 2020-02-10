@@ -6,11 +6,11 @@ try:
       for character in input:
         value = ord('character')
         if value is in range(48,58): # (unicode decimal) scrambles digits
-          
+          newCharacter = character
         elif value is in range(65,91): # (unicode decimal) make uppercase language adjustments here
-          
+          newCharacter = character
         elif value is in range(97,123): # (unicode decimal) make lowercase language adjustments here
-          
+          newCharacter = character
         else:
           newCharacter = character
         output.append(newCharacter)
