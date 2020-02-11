@@ -12,8 +12,9 @@ try:
   
   def caesar(input):
     if isinstance(input, str):
-      output = ""
-      for character in input:
+      cipher = []
+      text = list(input)
+      for character in text:
         value = ord('character')
         if value is in digits: # scrambles digits
           newCharacter = rotate(character)
@@ -23,7 +24,8 @@ try:
           newCharacter = rotate(character)
         else:
           newCharacter = character
-        output += newCharacter
+        cipher.append(newCharacter)
+        output = ''.join(cipher)
       return output
     else:
       raise ValueError("input must be a string!")
