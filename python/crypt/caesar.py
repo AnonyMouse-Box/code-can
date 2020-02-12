@@ -14,7 +14,7 @@ try:
         cipher = []
         textList = list(text)
         for character in textList:
-          if character is in plainTextUpper or plainTextLower:
+          if character is in plainTextUpper or character is in plainTextLower:
             -
             if character is in plainTextLower:
               -
