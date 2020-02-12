@@ -5,6 +5,9 @@ try:
   cipherText = plainTextUpper
   
   def rotate(cipherTextList, rotation):
+    for value in cipherTextList:
+      newValue = ord('value') + rotation
+      
     return cipherTextList
   
   def caesar(text, rotation):
