@@ -1,32 +1,31 @@
 #!/usr/bin/env python3
 try:
-  numerals = [48,58] # (unicode decimal)
-  big = [65,91] # (unicode decimal) make uppercase language adjustments here
-  little = [97,123] # (unicode decimal) make lowercase language adjustments here
-  digits = range(numerals[0],numerals[1])
-  upper = range(big[0],big[1])
-  lower = range(little[0],little[1])
+  plainTextUpper = [chr(i) for i in range(ord('A'),ord('Z')+1)]
+  plainTextLower = [chr(i) for i in range(ord('a'),ord('z')+1)]
+  cipherText = plainTextUpper
   
-  def rotate(character):
-    return character
+  def rotate(cipherTextList, rotation):
+    return cipherTextList
   
-  def caesar(input):
-    if isinstance(input, str):
-      cipher = []
-      text = list(input)
-      for character in text:
-        value = ord('character')
-        if value is in digits: # scrambles digits
-          newCharacter = rotate(character)
-        elif value is in upper: 
-          newCharacter = rotate(character)
-        elif value is in lower: 
-          newCharacter = rotate(character)
-        else:
-          newCharacter = character
-        cipher.append(newCharacter)
-        output = ''.join(cipher)
-      return output
+  def caesar(text, rotation):
+    if isinstance(text, str):
+      if isinstance(rotation, int):
+        cipherText.rotate(rotation)
+        cipher = []
+        textList = list(text)
+        for character in textList:
+          value = ord('character')
+          if value is in plainTextUpper or plainTextLower:
+            -
+            if value is in plainTextLower:
+              -
+          else:
+            newCharacter = character
+          cipher.append(newCharacter)
+          output = ''.join(cipher)
+        return output
+      else:
+        raise ValueError("rotation must be an integer!")
     else:
       raise ValueError("input must be a string!")
     
