@@ -8,7 +8,7 @@ try:
     for value in cipherTextList:
       newValue = ord('value') + rotation
       cipherTextList[cipherTextList.index(value)] = newValue
-    return cipherTextList
+    return
   
   def caesar(text, rotation):
     if isinstance(text, str):
@@ -18,9 +18,9 @@ try:
         textList = list(text)
         for character in textList:
           if character is in plainTextUpper or character is in plainTextLower:
-            -
+            newCharacter = cipherText[plainTextUpper.index(character.upper())]
             if character is in plainTextLower:
-              -
+              newCharacter = newCharacter.lower()
           else:
             newCharacter = character
           cipher.append(newCharacter)
