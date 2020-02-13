@@ -16,9 +16,9 @@ def caesar(text, rotation):
       cipher = []
       textList = list(text)
       for character in textList:
-        if character is in plainTextUpper or character is in plainTextLower:
+        if character in plainTextUpper or character in plainTextLower:
           newCharacter = cipherText[plainTextUpper.index(character.upper())]
-          if character is in plainTextLower:
+          if character in plainTextLower:
             newCharacter = newCharacter.lower()
         else:
           newCharacter = character
