@@ -7,13 +7,13 @@ try:
   def rotate(cipherTextList, rotation):
     for value in cipherTextList:
       newValue = ord('value') + rotation
-      
+      cipherTextList[cipherTextList.index(value)] = newValue
     return cipherTextList
   
   def caesar(text, rotation):
     if isinstance(text, str):
       if isinstance(rotation, int):
-        cipherText.rotate(rotation)
+        rotate(cipherText, rotation)
         cipher = []
         textList = list(text)
         for character in textList:
