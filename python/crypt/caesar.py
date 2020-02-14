@@ -7,7 +7,8 @@ for value in plainLower:
 def caesar(text, rotation):
   if isinstance(text, str):
     if isinstance(rotation, int):
-      translation = plainUpper[rotation:] + plainUpper[:rotation]
+      offset = rotation % 26
+      translation = plainUpper[offset:] + plainUpper[:offset]
       cipher = []
       textList = list(text)
       for character in textList:
