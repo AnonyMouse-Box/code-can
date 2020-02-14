@@ -8,8 +8,8 @@ def caesar(text, rotation):
   if isinstance(text, str):
     if isinstance(rotation, int):
       while rotation < 0:
-        rotation += length(plainUpper)
-      offset = rotation % length(plainUpper)
+        rotation += len(plainUpper)
+      offset = rotation % len(plainUpper)
       translation = plainUpper[offset:] + plainUpper[:offset]
       cipher = []
       textList = list(text)
