@@ -5,8 +5,10 @@ cipherText = plainTextUpper
 
 def rotate(cipherTextList, rotation):
   for value in cipherTextList:
-    newValue = chr(ord(value) + rotation)
-    cipherTextList[cipherTextList.index(value)] = newValue
+    newValue = ord(value) + rotation
+    if newValue > ord('Z'):
+      newValue = newValue - 26
+    cipherTextList[cipherTextList.index(value)] = chr(newValue)
   return
 
 def caesar(text, rotation):
