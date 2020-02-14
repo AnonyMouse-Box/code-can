@@ -3,7 +3,7 @@ plainTextUpper = [chr(i) for i in range(ord('A'),ord('Z')+1)]
 plainTextLower = [chr(i) for i in range(ord('a'),ord('z')+1)]
 
 def rotate(offset):
-  translationTable = plainTextUpper[offset-1:] + plainTextUpper[:offset]
+  translationTable = plainTextUpper[offset:] + plainTextUpper[:offset]
   return translationTable
 
 def caesar(text, rotation):
