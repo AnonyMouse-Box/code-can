@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-plainUpper = [chr(i) for i in range(ord('A'),ord('Z')+1)]
+plainUpper = [chr(i) for i in range(ord('A'), ord('Z') + 1)]
 plainLower = plainUpper[:]
 for value in plainLower:
   plainLower[plainLower.index(value)] = value.lower()
+digits = [chr(i) for i in range(ord('0'), ord('9') + 1)]
 
 def caesar(text, rotation):
   if isinstance(text, str):
