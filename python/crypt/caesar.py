@@ -1,20 +1,15 @@
 #!/usr/bin/env python3
 plainTextUpper = [chr(i) for i in range(ord('A'),ord('Z')+1)]
 plainTextLower = [chr(i) for i in range(ord('a'),ord('z')+1)]
-cipherText = plainTextUpper
 
-def rotate(cipherTextList, rotation):
-  for value in cipherTextList:
-    newValue = ord(value) + rotation
-    if newValue > ord('Z'):
-      newValue = newValue - ( ord('Z') - ord('A') + 1 )
-    cipherTextList[cipherTextList.index(value)] = chr(newValue)
-  return
+def rotate(offset):
+  translationTable = plainTextUpper[offset-1:] + plainTextUpper[:offset]
+  return translationTable
 
 def caesar(text, rotation):
   if isinstance(text, str):
     if isinstance(rotation, int):
-      rotate(cipherText, rotation)
+      cipherText = rotate(rotation)
       cipher = []
       textList = list(text)
       for character in textList:
