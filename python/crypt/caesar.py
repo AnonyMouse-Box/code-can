@@ -7,7 +7,7 @@ def rotate(cipherTextList, rotation):
   for value in cipherTextList:
     newValue = ord(value) + rotation
     if newValue > ord('Z'):
-      newValue = newValue - 26
+      newValue = newValue - ( ord('Z') - ord('A') + 1 )
     cipherTextList[cipherTextList.index(value)] = chr(newValue)
   return
 
