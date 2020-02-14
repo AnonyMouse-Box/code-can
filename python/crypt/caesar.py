@@ -12,7 +12,6 @@ def rotate(charset, offset):
   translation = charset[offset:] + charset[:offset]
   return translation
 
-
 def caesar(text, rotation):
   if isinstance(text, str):
     if isinstance(rotation, int):
