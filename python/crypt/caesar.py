@@ -5,18 +5,26 @@ for value in plainLower:
   plainLower[plainLower.index(value)] = value.lower()
 digits = [chr(i) for i in range(ord('0'), ord('9') + 1)]
 
+def rotate(charset, offset):
+  while offset < 0:
+    offset += len(charset)
+  offset = offset % len(charset)
+  translation = charset[offset:] + charset[:offset]
+  return translation
+
+
 def caesar(text, rotation):
   if isinstance(text, str):
     if isinstance(rotation, int):
-      while rotation < 0:
-        rotation += len(plainUpper)
-      offset = rotation % len(plainUpper)
-      translation = plainUpper[offset:] + plainUpper[:offset]
+      cipherText = rotate(plainUpper, rotation)
+      cipherDigits = rotate(digits, rotation)
       cipher = []
       textList = list(text)
       for character in textList:
-        if character in plainUpper or character in plainLower:
-          newCharacter = translation[plainUpper.index(character.upper())]
+        if character in digits:
+          newCharacter = cipherDigits[digits.index(character)]
+        elif character in plainUpper or character in plainLower:
+          newCharacter = cipherText[plainUpper.index(character.upper())]
           if character in plainLower:
             newCharacter = newCharacter.lower()
         else:
