@@ -5,7 +5,7 @@ cipherText = plainTextUpper
 
 def rotate(cipherTextList, rotation):
   for value in cipherTextList:
-    newValue = ord('value') + rotation
+    newValue = ord(value) + rotation
     cipherTextList[cipherTextList.index(value)] = newValue
   return
 
