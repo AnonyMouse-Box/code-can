@@ -35,3 +35,7 @@ def caesar(text, rotation):
       raise ValueError("rotation must be an integer!")
   else:
     raise ValueError("input must be a string!")
+
+def uncaesar(text, rotation):
+  decipher = caesar(text, rotation * -1)
+  return decipher
