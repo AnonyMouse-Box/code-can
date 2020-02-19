@@ -5,6 +5,8 @@ class caesar:
   for value in plainLower:
     plainLower[plainLower.index(value)] = value.lower()
   digits = [chr(i) for i in range(ord('0'), ord('9') + 1)]
+  plainText = plainUpper[:]
+  plainText.append(plainLower[:])
   
   def rotate(charset, offset):
     while offset < 0:
@@ -17,20 +19,19 @@ class caesar:
     if isinstance(text, str):
       if isinstance(rotation, int):
         if isinstance(flagDigits, bool):
-          cipherText = rotate(plainUpper, rotation)
-          cipherDigits = rotate(digits, rotation)
+          cipherUpper = rotate(plainUpper, rotation)
+          cipherLower = rotate(plainLower, rotation)
+          cipherTable = cipherUpper[:]
+          cipherTable.append(cipherLower[:])
+          if flagDigits = True:
+            plainText.append(digits[:])
+            cipherDigits = rotate(digits, rotation)
+            cipherTable.append(cipherDigits[:])
           cipher = []
           textList = list(text)
           for character in textList:   
-            if character in digits:
-              if flagDigits == True:
-                newCharacter = cipherDigits[digits.index(character)]
-              else:
-                newCharacter = character
-            elif character in plainUpper or character in plainLower:
-              newCharacter = cipherText[plainUpper.index(character.upper())]
-              if character in plainLower:
-                newCharacter = newCharacter.lower()
+            if character in plainText:
+              newCharacter = 
             else:
               newCharacter = character
             cipher.append(newCharacter)
