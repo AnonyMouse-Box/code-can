@@ -31,7 +31,7 @@ class caesar:
           textList = list(text)
           for character in textList:   
             if character in plainText:
-              newCharacter = 
+              newCharacter = cipherTable[plainText.index(character)]
             else:
               newCharacter = character
             cipher.append(newCharacter)
