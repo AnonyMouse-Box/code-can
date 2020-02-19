@@ -12,30 +12,33 @@ def rotate(charset, offset):
   translation = charset[offset:] + charset[:offset]
   return translation
 
-def caesar(text, rotation):
+def caesar(text, rotation, flag):
   if isinstance(text, str):
     if isinstance(rotation, int):
-      cipherText = rotate(plainUpper, rotation)
-      cipherDigits = rotate(digits, rotation)
-      cipher = []
-      textList = list(text)
-      for character in textList:
-        if character in digits:
-          newCharacter = cipherDigits[digits.index(character)]
-        elif character in plainUpper or character in plainLower:
-          newCharacter = cipherText[plainUpper.index(character.upper())]
-          if character in plainLower:
-            newCharacter = newCharacter.lower()
-        else:
-          newCharacter = character
-        cipher.append(newCharacter)
-        output = ''.join(cipher)
-      return output
+      if isinstance(flag, bool):
+        cipherText = rotate(plainUpper, rotation)
+        cipherDigits = rotate(digits, rotation)
+        cipher = []
+        textList = list(text)
+        for character in textList:
+          if character in digits:
+            newCharacter = cipherDigits[digits.index(character)]
+          elif character in plainUpper or character in plainLower:
+            newCharacter = cipherText[plainUpper.index(character.upper())]
+            if character in plainLower:
+              newCharacter = newCharacter.lower()
+          else:
+            newCharacter = character
+          cipher.append(newCharacter)
+          output = ''.join(cipher)
+        return output
+      else:
+        raise TypeError("flag must be boolean!")
     else:
-      raise ValueError("rotation must be an integer!")
+      raise TypeError("rotation must be an integer!")
   else:
-    raise ValueError("input must be a string!")
+    raise TypeError("input must be a string!")
 
-def uncaesar(text, rotation):
+def uncaesar(text, rotation, flag):
   decipher = caesar(text, rotation * -1)
   return decipher
