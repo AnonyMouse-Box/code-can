@@ -20,9 +20,12 @@ def caesar(text, rotation, flag):
         cipherDigits = rotate(digits, rotation)
         cipher = []
         textList = list(text)
-        for character in textList:
+        for character in textList:   
           if character in digits:
-            newCharacter = cipherDigits[digits.index(character)]
+            if flag == True:
+              newCharacter = cipherDigits[digits.index(character)]
+            else:
+              newCharacter = character
           elif character in plainUpper or character in plainLower:
             newCharacter = cipherText[plainUpper.index(character.upper())]
             if character in plainLower:
