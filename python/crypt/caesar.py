@@ -8,7 +8,7 @@ class caesar:
       self.plainLower[self.plainLower.index(value)] = value.lower()
     self.digits = [chr(i) for i in range(ord('0'), ord('9') + 1)]
     self.plainText = self.plainUpper[:]
-    self.plainText.append(self.plainLower[:])
+    self.plainText += self.plainLower[:]
   
   def rotate(self, charset, offset):
     while offset < 0:
@@ -21,14 +21,14 @@ class caesar:
     if isinstance(text, str):
       if isinstance(rotation, int):
         if isinstance(flagDigits, bool):
-          self.cipherUpper = rotate(self.plainUpper, rotation)
-          self.cipherLower = rotate(self.plainLower, rotation)
+          self.cipherUpper = self.rotate(self.plainUpper, rotation)
+          self.cipherLower = self.rotate(self.plainLower, rotation)
           self.cipherTable = self.cipherUpper[:]
-          self.cipherTable.append(self.cipherLower[:])
+          self.cipherTable += self.cipherLower[:]
           if flagDigits is True:
-            self.plainText.append(self.digits[:])
-            self.cipherDigits = rotate(self.digits, rotation)
-            self.cipherTable.append(self.cipherDigits[:])
+            self.plainText += self.digits[:]
+            self.cipherDigits = self.rotate(self.digits, rotation)
+            self.cipherTable += self.cipherDigits[:]
           cipher = []
           textList = list(text)
           for character in textList:   
@@ -47,5 +47,5 @@ class caesar:
       raise TypeError("input must be a string!")
   
   def uncaesar(self, text, rotation, flagDigits):
-    decipher = caesar(text, rotation * -1, flagDigits)
+    decipher = self.caesar(text, rotation * -1, flagDigits)
     return decipher
