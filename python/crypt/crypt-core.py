@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import uuid
 from . import caesar
-from . import frequency
+#from . import frequency
 
 def __generateID(type):
   check = True
@@ -15,4 +15,4 @@ def createObject(type):
   return type(name);
 
 caesar.dict = {}
-frequency.dict = {}
+#frequency.dict = {}
