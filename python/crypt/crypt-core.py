@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import uuid
-from . import super
-from . import sub
+from . import caesar
+from . import frequency
 
 def __generateID(type):
   check = True
@@ -14,5 +14,5 @@ def createObject(type):
   name = __generateID(type)
   return type(name);
 
-superclass.dict = {}
-subclass.dict = {}
+caesar.dict = {}
+frequency.dict = {}
