@@ -48,3 +48,7 @@ class caesar:
   def uncaesar(self, text, rotation, flagDigits):
     decipher = self.caesar(text, rotation * -1, flagDigits)
     return decipher
+
+def createCaesar():
+  name = __generateID(coin)
+  return caesar(name);
