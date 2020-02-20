@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 class caesar:
-  plainUpper = [chr(i) for i in range(ord('A'), ord('Z') + 1)]
-  plainLower = plainUpper[:]
-  for value in plainLower:
-    plainLower[plainLower.index(value)] = value.lower()
-  digits = [chr(i) for i in range(ord('0'), ord('9') + 1)]
-  plainText = plainUpper[:]
-  plainText.append(plainLower[:])
+  def __init__(self, name):
+    self.name = name
+    plainUpper = [chr(i) for i in range(ord('A'), ord('Z') + 1)]
+    plainLower = plainUpper[:]
+    for value in plainLower:
+      plainLower[plainLower.index(value)] = value.lower()
+    digits = [chr(i) for i in range(ord('0'), ord('9') + 1)]
+    plainText = plainUpper[:]
+    plainText.append(plainLower[:])
   
   def rotate(charset, offset):
     while offset < 0:
