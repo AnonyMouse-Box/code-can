@@ -2,13 +2,13 @@
 class caesar:
   def __init__(self, name):
     self.name = name
-    plainUpper = [chr(i) for i in range(ord('A'), ord('Z') + 1)]
-    plainLower = plainUpper[:]
-    for value in plainLower:
-      plainLower[plainLower.index(value)] = value.lower()
-    digits = [chr(i) for i in range(ord('0'), ord('9') + 1)]
-    plainText = plainUpper[:]
-    plainText.append(plainLower[:])
+    self.plainUpper = [chr(i) for i in range(ord('A'), ord('Z') + 1)]
+    self.plainLower = self.plainUpper[:]
+    for value in self.plainLower:
+      self.plainLower[self.plainLower.index(value)] = value.lower()
+    self.digits = [chr(i) for i in range(ord('0'), ord('9') + 1)]
+    self.plainText = self.plainUpper[:]
+    self.plainText.append(self.plainLower[:])
   
   def rotate(charset, offset):
     while offset < 0:
@@ -21,19 +21,19 @@ class caesar:
     if isinstance(text, str):
       if isinstance(rotation, int):
         if isinstance(flagDigits, bool):
-          cipherUpper = rotate(plainUpper, rotation)
-          cipherLower = rotate(plainLower, rotation)
-          cipherTable = cipherUpper[:]
-          cipherTable.append(cipherLower[:])
+          self.cipherUpper = rotate(self.plainUpper, rotation)
+          self.cipherLower = rotate(self.plainLower, rotation)
+          self.cipherTable = self.cipherUpper[:]
+          self.cipherTable.append(self.cipherLower[:])
           if flagDigits = True:
-            plainText.append(digits[:])
-            cipherDigits = rotate(digits, rotation)
-            cipherTable.append(cipherDigits[:])
+            self.plainText.append(self.digits[:])
+            self.cipherDigits = rotate(self.digits, rotation)
+            self.cipherTable.append(self.cipherDigits[:])
           cipher = []
           textList = list(text)
           for character in textList:   
-            if character in plainText:
-              newCharacter = cipherTable[plainText.index(character)]
+            if character in self.plainText:
+              newCharacter = self.cipherTable[self.plainText.index(character)]
             else:
               newCharacter = character
             cipher.append(newCharacter)
@@ -47,5 +47,5 @@ class caesar:
       raise TypeError("input must be a string!")
   
   def uncaesar(text, rotation, flagDigits):
-    decipher = caesar(text, rotation * -1)
+    decipher = caesar(text, rotation * -1, flagDigits)
     return decipher
