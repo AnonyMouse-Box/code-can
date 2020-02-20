@@ -25,7 +25,7 @@ class caesar:
           self.cipherLower = rotate(self.plainLower, rotation)
           self.cipherTable = self.cipherUpper[:]
           self.cipherTable.append(self.cipherLower[:])
-          if flagDigits = True:
+          if flagDigits is True:
             self.plainText.append(self.digits[:])
             self.cipherDigits = rotate(self.digits, rotation)
             self.cipherTable.append(self.cipherDigits[:])
