@@ -10,14 +10,14 @@ class caesar:
     self.plainText = self.plainUpper[:]
     self.plainText.append(self.plainLower[:])
   
-  def rotate(charset, offset):
+  def rotate(self, charset, offset):
     while offset < 0:
       offset += len(charset)
     offset = offset % len(charset)
     translation = charset[offset:] + charset[:offset]
     return translation
   
-  def caesar(text, rotation, flagDigits):
+  def caesar(self, text, rotation, flagDigits):
     if isinstance(text, str):
       if isinstance(rotation, int):
         if isinstance(flagDigits, bool):
@@ -46,6 +46,6 @@ class caesar:
     else:
       raise TypeError("input must be a string!")
   
-  def uncaesar(text, rotation, flagDigits):
+  def uncaesar(self, text, rotation, flagDigits):
     decipher = caesar(text, rotation * -1, flagDigits)
     return decipher
