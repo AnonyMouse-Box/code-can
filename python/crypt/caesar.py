@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 class caesar:
-  def __init__(self, name):
-    self.name = name
+  def __init__(self):
     self.plainUpper = [chr(i) for i in range(ord('A'), ord('Z') + 1)]
     self.plainLower = self.plainUpper[:]
     for value in self.plainLower:
