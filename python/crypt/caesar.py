@@ -10,13 +10,13 @@ class caesar:
         digits = [chr(i) for i in range(ord('0'), ord('9') + 1)]
         self.plainText = plainUpper[:]
         self.plainText += plainLower[:]
-        cipherUpper = self.rotate(plainUpper, rotation)
-        cipherLower = self.rotate(plainLower, rotation)
+        cipherUpper = self.__rotate(plainUpper, rotation)
+        cipherLower = self.__rotate(plainLower, rotation)
         self.cipherTable = cipherUpper[:]
         self.cipherTable += cipherLower[:]
         if flagDigits is True:
           self.plainText += digits[:]
-          cipherDigits = self.rotate(digits, rotation)
+          cipherDigits = self.__rotate(digits, rotation)
           self.cipherTable += cipherDigits[:]
         return;
       else:
@@ -24,28 +24,32 @@ class caesar:
     else:
       raise TypeError("rotation must be an integer!")
   
-  def rotate(self, charset, offset):
+  def __rotate(self, charset, offset):
     while offset < 0:
       offset += len(charset)
     offset = offset % len(charset)
     translation = charset[offset:] + charset[:offset]
     return translation
   
-  def encrypt(self, text):
+  def __translate(self, text, flagDecrypt):
     if isinstance(text, str):
-      cipher = []
+      translated = []
       textList = list(text)
       for character in textList:   
         if character in self.plainText:
           newCharacter = self.cipherTable[self.plainText.index(character)]
         else:
           newCharacter = character
-        cipher.append(newCharacter)
-        output = ''.join(cipher)
+        translated.append(newCharacter)
+        output = ''.join(translated)
       return output
     else:
       raise TypeError("input must be a string!")
+    
+  def encrypt(self, text):
+    cipher = self.__translate(text, False)
+    return cipher
   
   def decrypt(self, text):
-    decipher = self.encrypt(text, rotation * -1, flagDigits)
+    decipher = self.__translate(text, True)
     return decipher
