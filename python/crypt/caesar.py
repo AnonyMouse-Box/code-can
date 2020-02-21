@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-class caesarCrypt(crypt):
+class caesarCrypt(object):
   def __init__(self, name, rotation, flagDigits):
     if isinstance(rotation, int):
       if isinstance(flagDigits, bool):
