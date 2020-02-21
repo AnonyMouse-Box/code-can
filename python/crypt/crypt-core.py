@@ -3,6 +3,12 @@ import uuid
 from . import caesar
 #from . import frequency
 
+class superclass(object):
+  def __init__(self, name):
+    self.name = name
+    superclass.dict[name] = self
+    return;
+
 def __generateID(type):
   check = True
   while check == True
