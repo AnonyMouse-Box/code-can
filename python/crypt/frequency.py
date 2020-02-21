@@ -5,3 +5,6 @@ class frequencyHack(object):
     self.name = name
     frequency.dict[name] = self
     return;
+
+def frequency(name):
+  return frequency.frequencyHack(name)
