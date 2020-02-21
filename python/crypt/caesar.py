@@ -8,12 +8,10 @@ class caesar:
         for value in plainLower:
           plainLower[plainLower.index(value)] = value.lower()
         digits = [chr(i) for i in range(ord('0'), ord('9') + 1)]
-        self.plainText = plainUpper[:]
-        self.plainText += plainLower[:]
+        self.plainText = plainUpper[:] + plainLower[:]
         cipherUpper = self.__rotate(plainUpper, rotation)
         cipherLower = self.__rotate(plainLower, rotation)
-        self.cipherTable = cipherUpper[:]
-        self.cipherTable += cipherLower[:]
+        self.cipherTable = cipherUpper[:] + cipherLower[:]
         if flagDigits is True:
           self.plainText += digits[:]
           cipherDigits = self.__rotate(digits, rotation)
