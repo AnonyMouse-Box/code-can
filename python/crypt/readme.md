@@ -5,6 +5,6 @@ A project folder for investigation into designing programs that perform ciphers,
 
 | Program         | Description                                                                  |
 |:---------------:|:----------------------------------------------------------------------------:|
-| caesar          | (incomplete) Performs a caesar cipher on string                              |
+| caesar          | Performs a caesar cipher on string                                           |
 | crypt-core      | Core of the crypt library, facilitates naming, storing, and class heirarchy  |
 | frequency       | (incomplete) Performs a frequency analysis attack on an encrypted string     |
