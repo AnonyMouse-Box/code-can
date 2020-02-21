@@ -60,6 +60,15 @@ class caesar(crypt):
     decipher = self.__translate(text, True)
     return decipher
 
-def createCaesar(name):
- 
+def caesar(name):
+  rotation = input('Rotation: ')
+  flagDigits = 'null'
+  while flagDigits is 'null':
+    yesNo = input('Rotate Digits (y or n)? ')
+    if yesNo is 'y':
+      flagDigits = True
+    elif yesNo is 'n':
+      flagDigits = False
+    else:
+      flagDigits = 'null'
   return caesar.caesar(name, rotation, flagDigits)
