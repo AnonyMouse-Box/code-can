@@ -38,7 +38,7 @@ class caesar:
           if character in self.plainText:
             if flagDecrypt is False:
               newCharacter = self.cipherTable[self.plainText.index(character)]
-           else:
+            else:
               newCharacter = self.plainText[self.cipherTable.index(character)]
           else:
             newCharacter = character
