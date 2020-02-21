@@ -18,6 +18,7 @@ class caesar:
           self.plainText += digits[:]
           cipherDigits = self.rotate(digits, rotation)
           self.cipherTable += cipherDigits[:]
+        return;
       else:
         raise TypeError("flag must be boolean!")
     else:
