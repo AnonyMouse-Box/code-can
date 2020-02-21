@@ -3,21 +3,21 @@ class caesar:
   def __init__(self, rotation, flagDigits):
     if isinstance(rotation, int):
       if isinstance(flagDigits, bool):
-        self.plainUpper = [chr(i) for i in range(ord('A'), ord('Z') + 1)]
-        self.plainLower = self.plainUpper[:]
-        for value in self.plainLower:
-          self.plainLower[self.plainLower.index(value)] = value.lower()
-        self.digits = [chr(i) for i in range(ord('0'), ord('9') + 1)]
-        self.plainText = self.plainUpper[:]
-        self.plainText += self.plainLower[:]
-        self.cipherUpper = self.rotate(self.plainUpper, rotation)
-        self.cipherLower = self.rotate(self.plainLower, rotation)
-        self.cipherTable = self.cipherUpper[:]
-        self.cipherTable += self.cipherLower[:]
+        plainUpper = [chr(i) for i in range(ord('A'), ord('Z') + 1)]
+        plainLower = plainUpper[:]
+        for value in plainLower:
+          plainLower[plainLower.index(value)] = value.lower()
+        digits = [chr(i) for i in range(ord('0'), ord('9') + 1)]
+        self.plainText = plainUpper[:]
+        self.plainText += plainLower[:]
+        cipherUpper = self.rotate(plainUpper, rotation)
+        cipherLower = self.rotate(plainLower, rotation)
+        self.cipherTable = cipherUpper[:]
+        self.cipherTable += cipherLower[:]
         if flagDigits is True:
-          self.plainText += self.digits[:]
-          self.cipherDigits = self.rotate(self.digits, rotation)
-          self.cipherTable += self.cipherDigits[:]
+          self.plainText += digits[:]
+          cipherDigits = self.rotate(digits, rotation)
+          self.cipherTable += cipherDigits[:]
       else:
         raise TypeError("flag must be boolean!")
     else:
