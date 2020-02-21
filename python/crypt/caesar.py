@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-class caesar(crypt):
+class caesarCrypt(crypt):
   def __init__(self, name, rotation, flagDigits):
     if isinstance(rotation, int):
       if isinstance(flagDigits, bool):
@@ -71,4 +71,4 @@ def caesar(name):
       flagDigits = False
     else:
       flagDigits = 'null'
-  return caesar.caesar(name, rotation, flagDigits)
+  return caesar.caesarCrypt(name, rotation, flagDigits)
