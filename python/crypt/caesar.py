@@ -59,3 +59,7 @@ class caesar(crypt):
   def decrypt(self, text):
     decipher = self.__translate(text, True)
     return decipher
+
+def createCaesar(name):
+ 
+  return caesar.caesar(name, rotation, flagDigits)
