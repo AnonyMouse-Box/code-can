@@ -33,16 +33,22 @@ class caesar:
   
   def __translate(self, text, flagDecrypt):
     if isinstance(text, str):
-      translated = []
-      textList = list(text)
-      for character in textList:   
-        if character in self.plainText:
-          newCharacter = self.cipherTable[self.plainText.index(character)]
-        else:
-          newCharacter = character
-        translated.append(newCharacter)
-        output = ''.join(translated)
-      return output
+      if isinstance(flagDecrypt, bool):
+        translated = []
+        textList = list(text)
+        for character in textList:   
+          if character in self.plainText:
+            if flagDecrypt is False:
+              newCharacter = self.cipherTable[self.plainText.index(character)]
+           else:
+              newCharacter = self.plainText[self.cipherTable.index(character)]
+          else:
+            newCharacter = character
+          translated.append(newCharacter)
+          output = ''.join(translated)
+        return output
+      else:
+        raise TypeError("flag must be a boolean!")
     else:
       raise TypeError("input must be a string!")
     
