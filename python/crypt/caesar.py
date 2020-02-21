@@ -3,6 +3,7 @@ class caesar:
   def __init__(self, name, rotation, flagDigits):
     if isinstance(rotation, int):
       if isinstance(flagDigits, bool):
+        self.name = name
         subclass.dict[name] = self
         plainUpper = [chr(i) for i in range(ord('A'), ord('Z') + 1)]
         plainLower = plainUpper[:]
