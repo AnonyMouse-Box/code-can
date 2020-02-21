@@ -3,10 +3,10 @@ import uuid
 from . import caesar
 #from . import frequency
 
-__all__ = ["caesar"]
+__all__ = ["caesar", "frequency"]
 
 caesar.dict = {}
-#frequency.dict = {}
+frequency.dict = {}
 
   def __generateID(type):
     check = True
