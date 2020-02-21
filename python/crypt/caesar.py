@@ -30,7 +30,7 @@ class caesar:
     translation = charset[offset:] + charset[:offset]
     return translation
   
-  def caesar(self, text):
+  def encrypt(self, text):
     if isinstance(text, str):
       cipher = []
       textList = list(text)
@@ -45,6 +45,6 @@ class caesar:
     else:
       raise TypeError("input must be a string!")
   
-  def uncaesar(self, text):
+  def decrypt(self, text):
     decipher = self.caesar(text, rotation * -1, flagDigits)
     return decipher
