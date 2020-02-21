@@ -3,13 +3,14 @@ import uuid
 from . import caesar
 #from . import frequency
 
+crypt.dict = {}
 caesar.dict = {}
 #frequency.dict = {}
 
-class superclass(object):
+class crypt(object):
   def __init__(self, name):
     self.name = name
-    superclass.dict[name] = self
+    crypt.dict[name] = self
     return;
 
 def __generateID(type):
