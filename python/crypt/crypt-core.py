@@ -3,6 +3,9 @@ import uuid
 from . import caesar
 #from . import frequency
 
+caesar.dict = {}
+#frequency.dict = {}
+
 class superclass(object):
   def __init__(self, name):
     self.name = name
@@ -19,6 +22,3 @@ def __generateID(type):
 def createObject(type):
   name = __generateID(type)
   return type(name);
-
-caesar.dict = {}
-#frequency.dict = {}
