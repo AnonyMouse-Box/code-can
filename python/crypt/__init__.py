@@ -3,16 +3,11 @@ import uuid
 from . import caesar
 #from . import frequency
 
-crypt.dict = {}
+__all__ = ["caesar"]
+
 caesar.dict = {}
 #frequency.dict = {}
 
-class crypt(object):
-  def __init__(self, name):
-    self.name = name
-    crypt.dict[name] = self
-    return;
-  
   def __generateID(type):
     check = True
     while check == True
