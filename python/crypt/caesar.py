@@ -46,5 +46,5 @@ class caesar:
       raise TypeError("input must be a string!")
   
   def decrypt(self, text):
-    decipher = self.caesar(text, rotation * -1, flagDigits)
+    decipher = self.encrypt(text, rotation * -1, flagDigits)
     return decipher
