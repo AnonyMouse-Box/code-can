@@ -5,7 +5,7 @@ class caesarCrypt(object):
     if isinstance(rotation, int):
       if isinstance(flagDigits, bool):
         self.name = name
-        subclass.dict[name] = self
+        caesar.dict[name] = self
         plainUpper = [chr(i) for i in range(ord('A'), ord('Z') + 1)]
         plainLower = plainUpper[:]
         for value in plainLower:
