@@ -1,2 +1,2 @@
-#Hamming#
+**Hamming**
 
