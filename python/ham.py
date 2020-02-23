@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 import uuid
-from . import super
-from . import sub
 
 def __generateID(type):
   check = True
