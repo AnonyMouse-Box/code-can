@@ -30,16 +30,16 @@ class ham(object):
     return output;
   
   def ham(binary):
-    split = __split(binary)
-    split += __pad(split[-1])
-    parity = __calcParity(split)
-    output = __insert(split, parity)
+    split = self.__split(binary)
+    split += self.__pad(split[-1])
+    parity = self.__calcParity(split)
+    output = self.__insert(split, parity)
     return output;
   
   def deham(array):
     self.bits = len(array[0])
-    valid = __validate(array)
-    corrected = __correct(array, valid)
-    removed = __remove(array)
-    output = __concatenate(removed)
+    valid = self.__validate(array)
+    corrected = self.__correct(array, valid)
+    removed = self.__remove(array)
+    output = self.__concatenate(removed)
     return output;
