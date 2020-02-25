@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
 
 class ham(object):
-  def __init__(self, bits = 31):
+  def __init__(self, bits = self.__calcBits()):
     if isinstance(bits, int):
       self.bits = bits
       self.code = self.__code(bits)
     else:
       raise TypeError('total no. of bits must be an integer')
     return;
+  
+  def __calcBits(): # calculate the most efficient number of bits
+    return output;
   
   def __code(bits): # calculate number of code bits
     return output;
