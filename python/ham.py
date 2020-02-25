@@ -12,15 +12,14 @@ class ham(object):
   def __code(bits): # calculate number of code bits
     return output;
   
-  def __split(binary): # split binary into list of data bit segments
-    data = binary[:]
+  def __split(data): # split binary into list of data bit segments
     output = []
     while data is not "":
       output += data[:(self.bits - self.code)]
       data = data[(self.bits - self.code):]
     return output;
   
-  def __pad(binary): # pad the last data bit segment to correct length
+  def __pad(data): # pad the last data bit segment to correct length
     return output;
   
   def __calcParity(array): # calculate the parity bits required for each segment
@@ -38,10 +37,13 @@ class ham(object):
   def __remove(array): # remove the code bits
     return output;
   
-  def ham(binary): # take in data and turn it into a coded list
-    split = self.__split(binary)
-    split += self.__pad(split[-1])
-    parity = self.__calcParity(split)
+  def __concatenate(array): # concatenate the list into data
+    return output;
+  
+  def ham(data): # take in data and turn it into a coded list
+    split = self.__split(data)
+    padded = split[:-1] + self.__pad(split[-1])
+    parity = self.__calcParity(padded)
     output = self.__insert(split, parity)
     return output;
   
