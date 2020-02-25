@@ -13,8 +13,9 @@ class ham(object):
     return output;
   
   def __split(binary): # split binary into list of data bit segments
+    data = binary[:]
     output = []
-    output += binary[self.bits - self.code]
+    output += data[:(self.bits - self.code)]
     return output;
   
   def __pad(binary): # pad the last data bit segment to correct length
