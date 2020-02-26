@@ -5,6 +5,7 @@ class ham(object):
     if isinstance(bits, int):
       self.bits = bits
       self.code = self.__code(bits)
+      self.data = self.bits - self.code
     else:
       raise TypeError('total no. of bits must be an integer')
     return;
@@ -18,12 +19,14 @@ class ham(object):
   def __split(data): # split binary into list of data bit segments
     output = []
     while data is not "":
-      output += data[:(self.bits - self.code)]
-      data = data[(self.bits - self.code):]
+      output += data[:self.data]
+      data = data[self.data:]
     return output;
   
   def __pad(data): # pad the last data bit segment to correct length
-    return output;
+    while len(data) is not self.data:
+      data += "0"
+    return data;
   
   def __calcParity(array): # calculate the parity bits required for each segment
     return output;
