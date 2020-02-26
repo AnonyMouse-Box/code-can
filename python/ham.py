@@ -3,7 +3,12 @@
 
 class ham(object):
   def __calcBits(raw): # calculate the most efficient number of bits
-    # 2^n - 1 - b
+    perfect = []
+    n = 16
+    while n > 2:
+      perfect += 2^n - 1 - n
+      n -= 1
+    # divide by each perfect in turn to define the most efficient code
     return output;
   
   def __code(bits): # calculate number of code bits
