@@ -13,10 +13,9 @@ class ham(object):
       self.bits = bits
       self.code = self.__code(bits)
       self.data = self.bits - self.code
-      return;
     else:
       raise TypeError("no. of bits must be an integer!")
-      return;
+    return;
   
   def __split(raw): # split binary into list of data bit segments
     output = []
