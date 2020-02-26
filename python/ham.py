@@ -8,8 +8,8 @@ class ham(object):
   def __code(bits): # calculate number of code bits
     i = 0
     x = 1
-    while x < bits:
-      i++
+    while x <= bits:
+      i += 1
       x *= 2
     return i;
   
