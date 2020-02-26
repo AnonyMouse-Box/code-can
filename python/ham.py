@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-class ham(object):
 
+class ham(object):
   def __calcBits(raw): # calculate the most efficient number of bits
     return output;
   
