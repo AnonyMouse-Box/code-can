@@ -2,12 +2,7 @@
 
 class ham(object):
   def __init__(self, bits = self.__calcBits()):
-    if isinstance(bits, int):
-      self.bits = bits
-      self.code = self.__code(bits)
-      self.data = self.bits - self.code
-    else:
-      raise TypeError('total no. of bits must be an integer')
+
     return;
   
   def __calcBits(): # calculate the most efficient number of bits
@@ -43,14 +38,17 @@ class ham(object):
   def __remove(array): # remove the code bits
     return output;
   
-  def __concatenate(array): # concatenate the list into raw data
-    return output;
-  
   def ham(raw): # take in raw data and turn it into a coded list
+    if isinstance(bits, int):
+      self.bits = bits
+      self.code = self.__code(bits)
+      self.data = self.bits - self.code
+    
     split = self.__split(raw)
     padded = split[:-1] + self.__pad(split[-1])
     parity = self.__calcParity(padded)
     output = self.__insert(split, parity)
+    
     return output;
   
   def deham(array): # take in a coded list and turn it into raw data
@@ -58,5 +56,5 @@ class ham(object):
     valid = self.__validate(array)
     corrected = self.__correct(array, valid)
     removed = self.__remove(array)
-    output = self.__concatenate(removed)
+    output = ''.join(removed)
     return output;
