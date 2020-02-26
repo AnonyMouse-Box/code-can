@@ -56,7 +56,7 @@ class ham(object):
     return output;
   
   def ham(raw, bits = None): # take in raw data and turn it into a coded list
-    if bits = None:
+    if bits is None:
       bits = self.__calcBits(raw)
     self.__bits(bits)
     split = self.__split(raw)
