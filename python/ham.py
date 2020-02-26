@@ -17,7 +17,7 @@ class ham(object):
       self.data = self.bits - self.code
       return;
     else:
-      raise TypeError("rotation must be an integer!")
+      raise TypeError("no. of bits must be an integer!")
       return;
   
   def __split(raw): # split binary into list of data bit segments
