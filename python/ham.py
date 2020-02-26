@@ -6,10 +6,10 @@ class ham(object):
     return output;
   
   def __code(bits): # calculate number of code bits
-    i = 0
+    code = []
     x = 1
     while x <= bits:
-      i += 1
+      code += x
       x *= 2
     return i;
   
@@ -17,7 +17,7 @@ class ham(object):
     if isinstance(bits, int):
       self.bits = bits
       self.code = self.__code(bits)
-      self.data = self.bits - self.code
+      self.data = self.bits - len(self.code)
     else:
       raise TypeError("no. of bits must be an integer!")
     return;
