@@ -1,15 +1,24 @@
 #!/usr/bin/env python3
 
 class ham(object):
-  def __init__(self, bits = self.__calcBits()):
-
+  def __init__(self):
     return;
   
-  def __calcBits(): # calculate the most efficient number of bits
+  def __calcBits(raw): # calculate the most efficient number of bits
     return output;
   
   def __code(bits): # calculate number of code bits
     return output;
+  
+  def __bits(bits):
+    if isinstance(bits, int):
+      self.bits = bits
+      self.code = self.__code(bits)
+      self.data = self.bits - self.code
+      return;
+    else:
+      raise TypeError("rotation must be an integer!")
+      return;
   
   def __split(raw): # split binary into list of data bit segments
     output = []
@@ -38,21 +47,16 @@ class ham(object):
   def __remove(array): # remove the code bits
     return output;
   
-  def ham(raw): # take in raw data and turn it into a coded list
-    if isinstance(bits, int):
-      self.bits = bits
-      self.code = self.__code(bits)
-      self.data = self.bits - self.code
-    
+  def ham(raw, bits = self.__calcBits(raw)): # take in raw data and turn it into a coded list
+    self.__bits(bits)
     split = self.__split(raw)
     padded = split[:-1] + self.__pad(split[-1])
     parity = self.__calcParity(padded)
     output = self.__insert(split, parity)
-    
     return output;
   
   def deham(array): # take in a coded list and turn it into raw data
-    self.bits = len(array[0])
+    self.__bits(len(array[0]))
     valid = self.__validate(array)
     corrected = self.__correct(array, valid)
     removed = self.__remove(array)
