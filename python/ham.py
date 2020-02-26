@@ -6,7 +6,12 @@ class ham(object):
     return output;
   
   def __code(bits): # calculate number of code bits
-    return output;
+    i = 0
+    x = 1
+    while x < bits:
+      i++
+      x *= 2
+    return i;
   
   def __bits(bits):
     if isinstance(bits, int):
