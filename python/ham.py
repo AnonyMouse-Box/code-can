@@ -47,7 +47,9 @@ class ham(object):
   def __remove(array): # remove the code bits
     return output;
   
-  def ham(raw, bits = self.__calcBits(raw)): # take in raw data and turn it into a coded list
+  def ham(raw, bits = None): # take in raw data and turn it into a coded list
+    if bits = None:
+      bits = self.__calcBits(raw)
     self.__bits(bits)
     split = self.__split(raw)
     padded = split[:-1] + self.__pad(split[-1])
