@@ -11,7 +11,7 @@ class ham(object):
     while x <= bits:
       code += x
       x *= 2
-    return i;
+    return code;
   
   def __bits(bits):
     if isinstance(bits, int):
