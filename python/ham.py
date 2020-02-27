@@ -4,11 +4,14 @@
 class ham(object):
   def __calcBits(raw): # calculate the most efficient number of bits
     perfect = []
-    n = 16
-    while n > 2:
+    n = 16 # make tunable
+    while n > 2: # make tunable
       perfect.append(2**n - 1 - n)
       n -= 1
-    # divide by each perfect in turn to define the most efficient code
+    remainder = []
+    for value in perfect:
+      remainder.append(raw % perfect)
+    # pull the lowest value, use its index to get the relevant perfect code at identical index
     return output;
   
   def __code(bits): # calculate number of code bits
