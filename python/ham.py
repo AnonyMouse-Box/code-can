@@ -15,7 +15,7 @@ class ham(object):
       closest = 0
     else:
       closest = max(remainder)
-    # use its index to get the relevant perfect code at identical index
+    output = perfect[remainder.index(closest)]
     return output;
   
   def __code(bits): # calculate number of code bits
