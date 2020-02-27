@@ -2,13 +2,17 @@
 
 
 class ham(object):
-  def __calcBits(raw): # calculate the most efficient number of bits
+  def __perfect(): # build a list of perfect codes
     perfect = []
     n = 16 # make tunable
     while n > 2: # make tunable
       perfect.append(2**n - 1 - n)
       n -= 1
-    remainder = []
+    return perfect;
+      
+  def __calcBits(raw): # calculate the most efficient number of bits
+    perfect = self.__perfect()
+        remainder = []
     for value in perfect:
       remainder.append(raw % value)
     if min(remainder) is 0:
@@ -26,7 +30,7 @@ class ham(object):
       x *= 2
     return code;
   
-  def __bits(bits):
+  def __bits(bits): # define the code variables
     if isinstance(bits, int):
       self.bits = bits
       self.code = self.__code(bits)
@@ -48,6 +52,8 @@ class ham(object):
     return raw;
   
   def __calcParity(array): # calculate the parity bits required for each segment
+    for value in self.code:
+      # explode self.code list into a matrix of the values they validate
     return output;
   
   def __insert(array, parity): # combine the code and data bits
