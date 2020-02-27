@@ -10,9 +10,12 @@ class ham(object):
       n -= 1
     remainder = []
     for value in perfect:
-      remainder.append(raw % perfect)
-    # pull the lowest value, use its index to get the relevant perfect code at identical index
-    lowest = min(remainder)
+      remainder.append(raw % value)
+    if min(remainder) is 0:
+      closest = 0
+    else:
+      closest = max(remainder)
+    # use its index to get the relevant perfect code at identical index
     return output;
   
   def __code(bits): # calculate number of code bits
