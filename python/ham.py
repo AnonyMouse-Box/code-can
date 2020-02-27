@@ -26,7 +26,7 @@ class ham(object):
         if i > 0:
           clean[remainder.index(item)] = None
         i += 1
-    output = perfect[remainder.index(closest)]
+    output = perfect[clean.index(closest)]
     return output;
   
   def __code(bits): # calculate number of code bits
