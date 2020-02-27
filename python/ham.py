@@ -19,6 +19,13 @@ class ham(object):
       closest = 0
     else:
       closest = max(remainder)
+    i = 0
+    clean = remainder[:]
+    for item in remainder:
+      if item is closest:
+        if i > 0:
+          clean[remainder.index(item)] = None
+        i += 1
     output = perfect[remainder.index(closest)]
     return output;
   
