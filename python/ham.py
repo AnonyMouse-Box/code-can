@@ -37,10 +37,22 @@ class ham(object):
       x *= 2
     return code;
   
+  def __explode(): # explode code bits list into a matrix of the values they validate
+    for n in range(self.bits + 1):
+      value = n
+      while value > 0:
+        p = 0
+        while 2**p <= value:
+          p + 1
+        p - 1
+        value -= 2**p
+    return output;  
+  
   def __bits(bits): # define the code variables
     if isinstance(bits, int):
       self.bits = bits
       self.code = self.__code(bits)
+      self.parity = self.__explode()
       self.data = self.bits - len(self.code)
     else:
       raise TypeError("no. of bits must be an integer!")
@@ -59,8 +71,6 @@ class ham(object):
     return raw;
   
   def __calcParity(array): # calculate the parity bits required for each segment
-    for value in self.code:
-      # explode self.code list into a matrix of the values they validate
     return output;
   
   def __insert(array, parity): # combine the code and data bits
