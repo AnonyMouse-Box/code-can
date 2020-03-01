@@ -38,6 +38,8 @@ class ham(object):
     return code;
   
   def __explode(): # explode code bits list into a matrix of the values they validate
+    for value in self.code:
+      item = [] # set up list for each codebit consider how to store
     for n in range(self.bits + 1):
       value = n
       while value > 0:
@@ -46,6 +48,7 @@ class ham(object):
           p + 1
         p - 1
         value -= 2**p
+        log = 2**p # log n against 2**p list
     return output;  
   
   def __bits(bits): # define the code variables
