@@ -75,6 +75,12 @@ class ham(object):
     return raw;
   
   def __calcParity(array): # calculate the parity bits required for each segment
+    parity = self.parity.copy()
+    for value in self.code:
+      refer = parity.get(value)
+      bits = []
+      for item in refer:
+        bits.append()
     return output;
   
   def __insert(array, parity): # combine the code and data bits
