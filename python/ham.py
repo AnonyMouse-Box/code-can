@@ -49,7 +49,7 @@ class ham(object):
           p + 1
         p - 1
         value -= 2**p
-        store.setdefault(2**p, []).append(n) # log n against 2**p list
+        store.setdefault(2**p).append(n) # log n against 2**p list
     return store;  
   
   def __bits(bits): # define the code variables
