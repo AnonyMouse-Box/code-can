@@ -80,7 +80,8 @@ class ham(object):
       refer = parity.get(value)
       bits = []
       for item in refer:
-        bits.append()
+        bits.append(to_build[item - 1]) # build list from items in array finding a way to exclude powers of 2
+      # take pairs from bits, XOR them
     return output;
   
   def __insert(array, parity): # combine the code and data bits
