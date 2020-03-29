@@ -3,11 +3,11 @@
 main = do
   putStrLn "Welcome to HasPet!"
   
-  name = "Spike"
-  age = 5
-  weight = 9.5
-  hungry = True
-  photo = "(=^o.o^=)__"
+  let name = "Spike"
+  let age = 5
+  let weight = 9.5
+  let hungry = True
+  let photo = "(=^o.o^=)__"
   
   putStrLn ("Hello " ++ name)
   putStrLn photo
