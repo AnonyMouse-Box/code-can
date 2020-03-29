@@ -7,7 +7,7 @@ main = do
   name <- getLine
   putStr "Enter age: "
   ageStr <- getLine
-  let age = read "ageStr" :: Int
+  let age = read ageStr :: Int
   putStr "Enter weight: "
   weightStr <- getLine
   let weight = read weightStr :: Double
