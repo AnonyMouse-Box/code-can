@@ -3,10 +3,10 @@
 main = do
   putStrLn "Welcome to HasPet!"
   
-  let name = "Spike"
-  let age = 5
-  let weight = 9.5
-  let hungry = True
+  name <- getLine
+  age <- getLine
+  weight <- getLine
+  hungry <- getLine
   let photo = "(=^o.o^=)__"
   
   putStrLn ("Hello " ++ name)
