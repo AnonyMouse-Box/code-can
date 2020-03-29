@@ -1,3 +1,3 @@
 #!/usr/bin/env runhaskell
 
-main = print "Hello World!"
+main = putStrLn "Hello World!"
