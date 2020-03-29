@@ -4,14 +4,20 @@ main = do
   putStrLn "Welcome to HasPet!"
   
   putStr "Enter name: "
-  name <- getLine -- String
+  name <- getLine
   putStr "Enter age: "
-  age <- getLine -- Int
+  ageStr <- getLine
+  let age = read "ageStr" :: Int
   putStr "Enter weight: "
-  weight <- getLine -- Float
+  weightStr <- getLine
+  let weight = read weightStr :: Double
   putStr "Is your pet hungry? "
-  hungry <- getLine -- Bool
+  hungryStr <- getLine
+  let hungry = read hungryStr :: Bool
   let photo = "(=^o.o^=)__" -- Selection
   
   putStrLn $ "Hello " ++ name
+  putStrLn $ show age
+  putStrLn $ show weight
+  putStrLn $ show hungry
   putStrLn photo
