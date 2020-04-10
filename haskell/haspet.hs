@@ -21,7 +21,7 @@ main = do
   let photo = "(=^o.o^=)__" -- Selection
   
   putStrLn $ "Hello " ++ name
-  putStrLn $ show age
-  putStrLn $ show weight
-  putStrLn $ show hungry
+  --putStrLn $ show age
+  --putStrLn $ show weight
+  --putStrLn $ show hungry
   putStrLn photo
