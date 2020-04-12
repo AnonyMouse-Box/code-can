@@ -39,7 +39,7 @@ factorial n = product [1..n]
 
 factorial' :: (Integral a) => a -> a
 factorial' 0 = 1
-factorial' n = n * factorial (n - 1)
+factorial' n = n * factorial' (n - 1)
 
 circumference :: Float -> Float
 circumference r = 2 * pi * r
@@ -51,7 +51,7 @@ lucky :: (Integral a) => a -> String
 lucky 7 = "LUCKY NUMBER 7!"
 lucky _ = "Sorry, you're out of luck, pal!"
 
-sayMe :: (Integral a => a -> String
+sayMe :: (Integral a) => a -> String
 sayMe 1 = "One!"
 sayMe 2 = "Two!"
 sayMe 3 = "Three!"
@@ -67,7 +67,7 @@ charName 'c' = "Cecil"
 addVectors :: (Num a) => (a, a) -> (a, a) -> (a, a)
 addVectors a b = (fst a + fst b, snd a + snd b)
 
-addVectors' :: (Num a => (a, a) -> (a, a) -> (a, a)
+addVectors' :: (Num a) => (a, a) -> (a, a) -> (a, a)
 addVectors' (x1, y1) (x2, y2) = (x1 + x2, y1 + y2)
 
 first :: (a, b, c) -> a
@@ -130,9 +130,9 @@ bmiTell''' weight height
   | bmi <= fat    = "You're fat! Lose some weight, fatty!"
   | otherwise     = "You're a whale, congratulations!"
   where bmi = weight / height ^ 2
-    skinny = 18.5
-    normal = 25.0
-    fat    = 30.0
+        skinny = 18.5
+        normal = 25.0
+        fat    = 30.0
 
 bmiTell'''' :: (RealFloat a) => a -> a -> String
 bmiTell'''' weight height
@@ -141,7 +141,7 @@ bmiTell'''' weight height
   | bmi <= fat    = "You're fat! Lose some weight, fatty!"
   | otherwise     = "You're a whale, congratulations!"
   where bmi = weight / height ^ 2
-    (skinny, normal, fat) = (18.5, 25.0, 30.0)
+        (skinny, normal, fat) = (18.5, 25.0, 30.0)
 
 max' :: (Ord a) => a -> a -> a
 max' a b
@@ -156,8 +156,8 @@ a `myCompare` b
 
 initials :: String -> String -> String
 initials firstname lastname = [f] ++ ". " ++ [l] ++ "."
-  where (f,_) = firstname
-        (l,_) = lastname
+  where [f,_] = firstname
+        [l,_] = lastname
 
 calcBmis :: (RealFloat a) => [(a, a)] -> [a]
 calcBmis xs = [bmi w h | (w, h) <- xs]
@@ -180,8 +180,17 @@ describeList xs = "The list is " ++ case xs of [] -> "empty."
                                                [x] -> "a singleton list."
                                                xs -> "a longer list."
 
-describeList :: [a] -> String
-describeList xs = "The list is " ++ what xs
+describeList' :: [a] -> String
+describeList' xs = "The list is " ++ what xs
   where what [] = "empty."
         what [x] = "a singleton list."
         what xs = "a longer list."
+
+fibonacci :: Integer -> Integer
+fibonacci 0 = 0
+fibonacci 1 = 1
+fibonacci n = fibonacci (n-1) + fibonacci (n-2)
+
+fibonacciUpTo :: Integer -> [Integer]
+fibonacciUpTo n = map fibonacci [0..n]
+
