@@ -83,6 +83,10 @@ head' :: [a] -> a
 head' [] = error "Can't call head on an empty list, dummy!"
 head' (x:_) = x
 
+head'' :: [a] -> a
+head'' xs = case xs of [] -> error "No head for empty lists!"
+                       (x:_) -> x
+
 tell :: (Show a) => [a] -> String
 tell [] = "The list is empty"
 tell (x:[]) = "The list has one element: " ++ show x
@@ -158,3 +162,26 @@ initials firstname lastname = [f] ++ ". " ++ [l] ++ "."
 calcBmis :: (RealFloat a) => [(a, a)] -> [a]
 calcBmis xs = [bmi w h | (w, h) <- xs]
   where bmi weight height = weight / height ^ 2
+
+calcBmis' :: (RealFloat a) => [(a, a)] -> [a]
+calcBmis' xs = [bmi | (w, h) <- xs, let bmi = w / h ^ 2]
+
+calcBmis'' :: (RealFloat a) => [(a, a)] -> [a]
+calcBmis'' xs = [bmi | (w, h) <- xs, let bmi = w / h ^ 2, bmi >= 25.0]
+
+cylinder :: (RealFloat a) => a -> a -> a
+cylinder r h =
+  let sideArea = 2 * pi * r * h
+      topArea = pi * r ^2
+  in sideArea + 2 * topArea
+
+describeList :: [a] -> String
+describeList xs = "The list is " ++ case xs of [] -> "empty."
+                                               [x] -> "a singleton list."
+                                               xs -> "a longer list."
+
+describeList :: [a] -> String
+describeList xs = "The list is " ++ what xs
+  where what [] = "empty."
+        what [x] = "a singleton list."
+        what xs = "a longer list."
