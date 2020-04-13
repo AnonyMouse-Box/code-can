@@ -10,12 +10,9 @@ def appendDigits(n, base):
 
 def calculateSetOfSets(n):
   base = ([],)
-  try:
-    for value in range(n):
-      base = appendDigits(n, base)
-    return base
-  except:
-    return "An error has occured, try a smaller value"
+  for value in range(n):
+    base = appendDigits(n, base)
+  return base
 
 def calculateDiagonalSets(n):
   new = []
@@ -37,18 +34,56 @@ def calculateDiagonalSets(n):
   return new
 
 def checkDiagonals(sets, n):
-  calculateDiagonalSets(n)
+  diag = calculateDiagonalSets(n)
+  for item in sets:
+    for check in diag:
+      double = False
+      for i in range(2):
+        increment = 0
+        for value in range(n):
+          if item[value] == check[value]:
+            increment += 1
+        if increment > 1:
+          sets.pop(sets.index(item))
+          double = True
+          break
+        check.reverse()
+      if double == True:
+        break
   return sets
 
 def displaySolutions(sets):
+  for value in range(len(sets)):
+    item = sets[value]
+    board = []
+    print("[")
+    for index in range(len(item)):
+      line = []
+      for digit in item:
+        if index == digit:
+          line.append(1)
+        else:
+          line.append(0)
+      board.append(line)
+      print(board[index])
+    print("]\n")
   return
 
 def queens(n):
-  sets = calculateSetOfSets(n)
-  sets = checkDiagonals(sets, n)
-  solutions = len(sets)
+  try:
+    sets = calculateSetOfSets(n)
+    sets = checkDiagonals(sets, n)
+    solutions = len(sets)
+  except:
+    print("An error has occured, try a smaller value")
+    raise
   print("There are {0} solutions\n".format(solutions))
-  response = input("Would you like to see them? ")
-  if response in ["y", "Y", "yes", "Yes", "YES", "yeah", "Yeah", "YEAH"]:
-    displaySolutions(sets)
-  return
+  try:
+    response = input("Would you like to see them? ")
+    if response in ["y", "Y", "yes", "Yes", "YES", "yeah", "Yeah", "YEAH", "yea", "Yea", "YEA", "yep", "Yep", "YEP"]:
+      print("\n")
+      displaySolutions(sets)
+    return
+  except:
+    print("Invalid input")
+    raise
