@@ -34,6 +34,12 @@ pythagoreanTriplesUpTo d = [(a,b,c) | c <- [1..d], b <- [1..c], a <- [1..b], a^2
 addThree :: Int -> Int -> Int -> Int
 addThree x y z = x + y + z
 
+addThree' :: (Num a) => a -> a -> a -> a
+addThree' x y z = x + y + z
+
+addThree'' :: (Num a) => a -> a -> a -> a
+addThree'' = \x -> \y -> \z -> x + y + z
+
 factorial :: Integer -> Integer
 factorial n = product [1..n]
 
@@ -87,6 +93,9 @@ head'' :: [a] -> a
 head'' xs = case xs of [] -> error "No head for empty lists!"
                        (x:_) -> x
 
+head''' :: [a] -> a
+head''' = foldr1 (\x _ -> x)
+
 tell :: (Show a) => [a] -> String
 tell [] = "The list is empty"
 tell (x:[]) = "The list has one element: " ++ show x
@@ -96,6 +105,12 @@ tell (x:y:_) = "This list is long. The first two elements are: " ++ show x ++ " 
 sum' :: (Num a) => [a] -> a
 sum' [] = 0
 sum' (x:xs) = x + sum' xs
+
+sum'' :: (Num a) => [a] -> a
+sum'' xs = foldl (\acc x -> acc + x) 0 xs
+
+sum''' :: (Num a) => [a] -> a
+sum''' = foldl (+) 0
 
 capital :: String -> String
 capital "" = "Empty string, whoops!"
@@ -207,6 +222,9 @@ maximum'' [] = error "maximum of empty list"
 maximum'' [x] = x
 maximum'' (x:xs) = max x (maximum'' xs)
 
+maximum''' :: (Ord a) => [a] -> a
+maximum''' = foldr1 (\x acc -> if x> acc then x else acc)
+
 replicate' :: (Num i, Ord i) => i -> a -> [a]
 replicate' n x
   | n <= 0    = []
@@ -220,7 +238,10 @@ take' n (x:xs) = x : take' (n-1) xs
 
 reverse' :: [a] -> [a]
 reverse' []    = []
-reverse (x:xs) = reverse' xs ++ [x]
+reverse' (x:xs) = reverse' xs ++ [x]
+
+reverse'' :: [a] -> [a]
+reverse'' = foldl (\acc x -> x : acc) []
 
 repeat' :: a -> [a]
 repeat' x = x : repeat' x
@@ -235,6 +256,9 @@ elem' a [] = False
 elem' a (x:xs)
   | a == x    = True
   | otherwise = a `elem'` xs 
+
+elem'' :: (Eq a) => a -> [a] -> Bool
+elem'' y ys = foldl (\acc x -> if x == y then True else acc) False ys
 
 quicksort :: (Ord a) => [a] -> [a]
 quicksort [] = []
@@ -280,15 +304,24 @@ flip' f = g
 flip'' :: (a -> b -> c) -> b -> a -> c
 flip'' f y x = f x y
 
+flip''' :: (a -> b -> c) -> b -> a -> c
+flip''' f = \x y -> f y x
+
 map' :: (a -> b) -> [a] -> [b]
 map' _ []    = []
 map' f (x:xs) = f x : map' f xs
+
+map'' :: (a -> b) -> [a] -> [b]
+map'' f xs = foldr (\x acc -> f x : acc) [] xs
 
 filter' :: (a -> Bool) -> [a] -> [a]
 filter' _ [] = []
 filter' p (x:xs)
   | p x       = x : filter' p xs
   | otherwise = filter' p xs
+
+filter'' :: (a -> Bool) -> [a] -> [a]
+filter'' p = foldr (\x acc -> if p x then x : acc else acc) []
 
 largestDivisible :: (Integral a) => a
 largestDivisible = head (filter p [100000, 99999..])
@@ -303,3 +336,15 @@ chain n
 numLongChains :: Int
 numLongChains = length (filter isLong (map chain [1..100]))
   where isLong xs = length xs > 15
+
+numLongChains' :: Int
+numLongChains' = length (filter (\xs -> length xs > 15) (map chain [1..100]))
+
+product' :: (Num a) => [a] -> a
+product' = foldr1 (*)
+
+last' :: [a] -> a
+last' = foldl1 (\_ x -> x)
+
+sqrtSums :: Int
+sqrtSums = length (takeWhile (<1000) (scanl1 (+) (map sqrt [1..]))) + 1
