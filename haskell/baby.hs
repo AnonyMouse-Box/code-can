@@ -1,5 +1,10 @@
 #!/usr/bin/runhaskell
 
+
+import qualified Data.List as DataList (nub, tails)
+import qualified Data.Char (chr, ord)
+import qualified Data.Map (Map, empty, fromListWith, insert)
+
 doubleMe x = x + x
 
 doubleUs x y = 2*x + 2*y
@@ -364,3 +369,41 @@ oddSquareSum'' =
   let oddSquares = filter odd $ map (^2) [1..]
       belowLimit = takeWhile (<10000) oddSquares
   in sum belowLimit
+
+numUniques :: (Eq a) => [a] -> Int
+numUniques = length . DataList.nub
+
+search :: (Eq a) => [a] -> [a] -> Bool
+search needle haystack = 
+  let nlen = length needle
+  in foldl (\acc x -> if take nlen x == needle then True else acc) False (DataList.tails haystack)
+
+encode :: Int -> String -> String
+encode shift msg = 
+  let ords    = map Data.Char.ord msg
+      shifted = map (+ shift) ords
+  in map Data.Char.chr shifted
+
+decode :: Int -> String -> String
+decode shift msg = encode (negate shift) msg
+
+findKey :: (Eq k) => k -> [(k,v)] -> v
+findKey key xs = snd . head . filter (\(k,v) -> key == k) $ xs
+
+findKey' :: (Eq k) => k -> [(k,v)] -> Maybe v
+findKey' key [] = Nothing
+findKey' key ((k,v):xs) = if key == k
+                            then Just v
+                            else findKey' key xs
+
+findKey'' :: (Eq k) => k -> [(k,v)] -> Maybe v
+findKey'' key = foldr (\(k,v) acc -> if key == k then Just v else acc) Nothing
+
+fromList' :: (Ord k) => [(k,v)] -> Data.Map.Map k v
+fromList' = foldr (\(k,v) acc -> Data.Map.insert k v acc) Data.Map.empty
+
+phoneBookToMap :: (Ord k) => [(k, String)] -> Data.Map.Map k String
+phoneBookToMap xs = Data.Map.fromListWith (\number1 number2 -> number1 ++ ", " ++ number2) xs
+
+phoneBookToMap' :: (Ord k) => [(k, a)] -> Data.Map.Map k [a]
+phoneBookToMap' xs = Data.Map.fromListWith (++) $ map (\(k,v) -> (k,[v])) xs
