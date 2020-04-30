@@ -39,3 +39,20 @@ factor 7 a = if elem a [9,8..(-9)]
                else if factor 7 ((foldl (\acc x -> (acc * 10) + x) 0 (init (digitize a))) - (last (digitize a)) * 2)
                       then True
                       else False
+factor 8 a = if elem a [1,2..999]
+               then if elem a [8,16..992]
+                      then True
+                      else False
+               else if factor 8 ((last (init (init (digitize a)))) * 100 + (last (init (digitize a))) * 10 + (last (digitize a))) 
+                      then True
+                      else False
+factor 9 a = if elem a [1..9]
+               then if elem a [9]
+                      then True
+                      else False
+               else if factor 9 (foldr (+) 0 (digitize a))
+                      then True
+                      else False
+factor 10 a = if (last (digitize a)) == 0
+                then True
+                else False
