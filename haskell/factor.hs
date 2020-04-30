@@ -11,14 +11,11 @@ condense a = foldr (+) 0 (digitize a)
 lastDigit :: Integral a => a -> a
 lastDigit a = last (digitize a) 
 
-initDigits :: Integral a => a -> [a]
-initDigits a = init (digitize a)
-
 integerize :: (Foldable t, Num a) => t a -> a
 integerize a = foldl (\acc b -> (acc * 10) + b) 0 a
 
 theRest :: Integral a => a -> a
-theRest a = integerize (initDigits a)
+theRest a = integerize (init (digitize a))
 
 lastDigits :: Integral a => Int -> a -> a
 lastDigits a b = integerize (drop ((length (digitize b)) - a) (digitize b))
