@@ -5,7 +5,16 @@ digitize :: Integral a => a -> [a]
 digitize 0 = []
 digitize a = digitize (a `div` 10) ++ [a `mod` 10]
 
-factor :: Int -> Int -> Bool
+condense :: Integral a => a -> a
+condense a = foldr (+) 0 (digitize a)
+
+lastDigit :: Integral a => a -> a
+lastDigit a = last (digitize a) 
+
+initDigits :: Integral a => a -> [a]
+initDigits a = init (digitize a)
+
+factor :: (Eq a, Num a, Integral b) => a -> b -> Bool
 factor _ 0 = True
 factor 0 _ = False
 factor 1 _ = True
@@ -16,17 +25,17 @@ factor 3 a = if elem a [1..9]
                then if elem a [3,6,9]
                       then True
                       else False
-               else if factor 3 (foldr (+) 0 (digitize a)) 
+               else if factor 3 (condense a) 
                       then True 
                       else False
 factor 4 a = if elem a [1..99]
                then if elem a [4,8..96]
                       then True
                       else False
-               else if factor 4 ((last (init (digitize a))) * 10 + (last (digitize a)))
+               else if factor 4 ((last (initDigits a)) * 10 + (lastDigit a))
                       then True
                       else False
-factor 5 a = if (last (digitize a)) == 0 || (last (digitize a)) == 5
+factor 5 a = if (lastDigit a) == 0 || (lastDigit a) == 5
                then True
                else False
 factor 6 a = if (factor 2 a) && (factor 3 a)
@@ -36,23 +45,23 @@ factor 7 a = if elem a [9,8..(-9)]
                then if elem a [(-7),7]
                       then True
                       else False
-               else if factor 7 ((foldl (\acc x -> (acc * 10) + x) 0 (init (digitize a))) - (last (digitize a)) * 2)
+               else if factor 7 ((foldl (\acc x -> (acc * 10) + x) 0 (initDigits a)) - (lastDigit a) * 2)
                       then True
                       else False
 factor 8 a = if elem a [1,2..999]
                then if elem a [8,16..992]
                       then True
                       else False
-               else if factor 8 ((last (init (init (digitize a)))) * 100 + (last (init (digitize a))) * 10 + (last (digitize a))) 
+               else if factor 8 ((last (init (initDigits a))) * 100 + (last (initDigits a)) * 10 + (lastDigit a)) 
                       then True
                       else False
 factor 9 a = if elem a [1..9]
                then if elem a [9]
                       then True
                       else False
-               else if factor 9 (foldr (+) 0 (digitize a))
+               else if factor 9 (condense a)
                       then True
                       else False
-factor 10 a = if (last (digitize a)) == 0
+factor 10 a = if (lastDigit a) == 0
                 then True
                 else False
