@@ -1,6 +1,21 @@
-void linear_search(list[], item){}
+#include <tools.h>
 
-void binary_search(list[], item){}
+int length(list[]){}
+
+int linear_search(list[], item)
+{
+    len = length(list[]);
+    for (int i = 0; i < len; i++)
+    {
+        if (list[i] == item)
+        {
+            return i;
+        }
+    }
+    return NULL;
+}
+
+int binary_search(list[], item){}
 
 void selection_sort(list[]){}
 
