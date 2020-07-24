@@ -1,5 +1,5 @@
-void linear_search(list[], item);
-void binary_search(list[], item);
+int linear_search(list[], item);
+int binary_search(list[], item);
 void selection_sort(list[]);
 void insertion_sort(list[]);
 void bubble_sort(list[]);
