@@ -73,7 +73,7 @@ void selection_sort(int list[], int length)
             position = i;
         }
     }
-    if (position != 0)
+    if (position != 0 && position != NULL)
     {
         swap(list, 0, position);
     }
