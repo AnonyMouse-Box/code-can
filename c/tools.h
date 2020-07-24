@@ -1,3 +1,4 @@
+int length(list[]);
 int linear_search(list[], item);
 int binary_search(list[], item);
 void selection_sort(list[]);
