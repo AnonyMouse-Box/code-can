@@ -1,5 +1,7 @@
 #include "tools.h"
 
+void swap(int list[], int item_1, int item_2){}
+
 int linear_search(int item, int list[], int length)
 {
     for (int i = 0; i < length; i++)
@@ -60,7 +62,30 @@ int binary_search(int item, int list[], int length)
     return index;
 }
 
-void selection_sort(int list[], int length){}
+void selection_sort(int list[], int length)
+{
+    int select, position = NULL;
+    for (int i = 0; i < length; i++)
+    {
+        if (list[i] < select; || select == NULL)
+        {
+            select = list[i];
+            position = i;
+        }
+    }
+    if (position != 0)
+    {
+        swap(list, 0, position);
+    }
+    int sublist[length - 1];
+    for (int j = 1; j < length; j++)
+    {
+        sublist[j - 1] = list[j];
+    }
+    len = sizeof sublist / sizeof sublist[0];
+    selection_sort(sublist, len);
+    return;
+}
 
 void insertion_sort(int list[], int length){}
 
