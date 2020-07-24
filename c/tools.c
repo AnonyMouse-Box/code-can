@@ -1,6 +1,11 @@
 #include "tools.h"
 
-void swap(int list[], int item_1, int item_2){}
+void swap(int list[], int item_1, int item_2)
+{
+    int store = list[item_1];
+    item_1 = item_2;
+    item_2 = store;
+}
 
 int linear_search(int item, int list[], int length)
 {
