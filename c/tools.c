@@ -22,7 +22,7 @@ int binary_search(list[], int item)
     {
         if (list[0] == item)
         {
-            return len[0];
+            return 0;
         }
         else
         {
@@ -49,7 +49,7 @@ int binary_search(list[], int item)
             sublist[k] = centre[j];
         }
     }
-    return binary_search(sublist);
+    index = binary_search(sublist);
 }
 
 void selection_sort(list[]){}
