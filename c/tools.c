@@ -2,9 +2,9 @@
 
 int length(list[]){}
 
-int linear_search(list[], item)
+int linear_search(list[], int item)
 {
-    len = length(list[]);
+    int len = length(list);
     for (int i = 0; i < len; i++)
     {
         if (list[i] == item)
@@ -15,7 +15,42 @@ int linear_search(list[], item)
     return NULL;
 }
 
-int binary_search(list[], item){}
+int binary_search(list[], int item)
+{
+    int len = length(list);
+    if (len < 2)
+    {
+        if (list[0] == item)
+        {
+            return len[0];
+        }
+        else
+        {
+            return NULL;
+        }
+    }
+    int centre = (len / 2) - 1;
+    int sublist[centre + 1];
+    if (list[centre] == item)
+    {
+        return centre;
+    }
+    else if (list[centre] < item)
+    {
+        for (int i = 0; i < centre; i++)
+        {
+            sublist[i] = centre[i];
+        }
+    }
+    else
+    {
+        for (int j = centre, int k = 0; j < len; j++, k++)
+        {
+            sublist[k] = centre[j];
+        }
+    }
+    return binary_search(sublist);
+}
 
 void selection_sort(list[]){}
 
