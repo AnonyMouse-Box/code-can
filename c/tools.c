@@ -1,4 +1,4 @@
-#include <tools.h>
+#include "tools.h"
 
 int linear_search(int item, int list[], int length)
 {
@@ -47,7 +47,8 @@ int binary_search(int item, int list[], int length)
             sublist[k] = centre[j];
         }
     }
-    index = binary_search(sublist);
+    len = sizeof sublist / sizeof sublist[0];
+    index = binary_search(item, sublist, len);
     if (index == NULL)
     {
         return NULL;
