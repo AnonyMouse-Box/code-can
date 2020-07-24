@@ -31,6 +31,7 @@ int binary_search(list[], int item)
     }
     int centre = (len / 2) - 1;
     int sublist[centre + 1];
+    bool greater = false;
     if (list[centre] == item)
     {
         return centre;
@@ -44,12 +45,22 @@ int binary_search(list[], int item)
     }
     else
     {
-        for (int j = centre, int k = 0; j < len; j++, k++)
+        greater = true;
+        for (int j = centre + 1, int k = 0; j < len; j++, k++)
         {
             sublist[k] = centre[j];
         }
     }
     index = binary_search(sublist);
+    if (index == NULL)
+    {
+        return NULL;
+    }
+    else if (greater == true)
+    {
+        index += centre + 1;
+    }
+    return index;
 }
 
 void selection_sort(list[]){}
