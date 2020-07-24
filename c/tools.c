@@ -25,8 +25,8 @@ int binary_search(int item, int list[], int length)
             return NULL;
         }
     }
-    int centre = (length / 2) - 1;
-    int sublist[centre + 3];
+    int centre = floor(length / 2);
+    int sublist[centre + 1];
     bool greater = false;
     if (list[centre] == item)
     {
