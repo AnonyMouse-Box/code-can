@@ -1,6 +1,9 @@
 #include <tools.h>
 
-int length(list[]){}
+int length(list[])
+{
+    sizeof *list / sizeof *list[0];
+}
 
 int linear_search(list[], int item)
 {
