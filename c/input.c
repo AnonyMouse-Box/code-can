@@ -8,7 +8,6 @@
 bool quit = false; //trigger to quit program
 
 void if_char_null(char *ptr);
-void if_int_null(int *ptr);
 void if_bool_null(bool *ptr);
 char* take_input(void);
 void process(char* value);
@@ -56,14 +55,6 @@ void if_char_null(char *ptr) //null pointer checker for char
     return;
 }
 
-void if_int_null(int *ptr) //null pointer checker for int
-{
-    if (!ptr)
-    {
-       exit(1);
-    }
-    return;
-}
 
 void if_bool_null(bool *ptr) //null pointer checker for bool
 {
