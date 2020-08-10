@@ -1,5 +1,5 @@
 //I've tested and there is no in function way to calculate the length of an array, just run sizeof before running these functions
-//These functions are currently configured for lists of ints, reconfigure i/o as appropriate
+//These functions are currently configured for lists of chars, reconfigure i/o as appropriate
 
 #include <stdbool.h>
 
