@@ -3,12 +3,12 @@
 
 #include <stdbool.h>
 
-int linear_search(char item, char list[]);
-int binary_search(char item, char list[]);
+unsigned int linear_search(const unsigned char item, const unsigned char list[], const unsigned int length);
+unsigned int binary_search(const unsigned char item, const unsigned char list[], const unsigned int length);
 
-bool selection_sort(char list[], int length);
-bool insertion_sort(char list[], int length);
-bool bubble_sort(char list[], int length);
-bool merge_sort(char list[], int length);
-bool quick_sort(char list[], int length);
-bool heap_sort(char list[], int length);
+bool selection_sort(unsigned char list[], const unsigned int length);
+bool insertion_sort(unsigned char list[], const unsigned int length);
+bool bubble_sort(unsigned char list[], const unsigned int length);
+bool merge_sort(unsigned char list[], const unsigned int length);
+bool quick_sort(unsigned char list[], const unsigned int length);
+bool heap_sort(unsigned char list[], const unsigned int length);
