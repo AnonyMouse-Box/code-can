@@ -3,8 +3,8 @@
 
 #include <stdbool.h>
 
-unsigned int linear_search(const unsigned char item, const unsigned char list[], const unsigned int length);
-unsigned int binary_search(const unsigned char item, const unsigned char list[], const unsigned int length);
+bool linear_search(const unsigned char item, const unsigned char list[], const unsigned int length, unsigned int *result);
+bool binary_search(const unsigned char item, const unsigned char list[], const unsigned int length, unsigned int *result);
 
 bool selection_sort(unsigned char list[], const unsigned int length);
 bool insertion_sort(unsigned char list[], const unsigned int length);
