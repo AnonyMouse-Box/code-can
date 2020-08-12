@@ -2,8 +2,7 @@
 
 bool linear_search(const unsigned char item, const unsigned char list[], const unsigned int length, unsigned int *result)
 {
-    int index = 0;
-    for (; index < length; index++)
+    for (int index = 0; index < length; index++)
     {
         if (list[index] == item)
         {
