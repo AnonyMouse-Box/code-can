@@ -2,6 +2,8 @@
 
 A repository for all those thoughts, random ideas, bits, bobs, and pieces of code that don't really have a home. Think bitbucket, for code.
 
+This page is powered by Jekyll and the GitHub repository, it allows me to add useful links and multiple test pages to assist in web development.
+
 ##### Web Development Environments
 * [Hello](https://github.enim.ga/code-can/html/hello)
 * [Index](https://github.enim.ga/code-can/html/index)
