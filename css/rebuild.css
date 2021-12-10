@@ -1,0 +1,159 @@
+/* Include padding and border in total */
+* {
+  box-sizing: border-box;
+}
+
+/* Remove default margin */
+body {
+  margin: 0rem;
+}
+
+/* Remove iframe border */
+iframe {
+  border: none;
+}
+
+.visually-hidden {
+    position: absolute;
+    left: -100vw;
+}
+
+.grid {
+  position: fixed;
+  width: 100%;
+  display: grid;
+  grid-template-rows: max-content max-content auto max-content;
+  grid-template-columns: max-content auto max-content;
+}
+
+/* Style the header */
+.header {
+  color: #f2f2f2;
+  background-color: #333;
+  text-align: center;
+  grid-row-start: 1;
+  grid-column: 1 / span 3;
+  height: 0rem;
+  padding: 0rem;
+  transition: height 2s ease-in-out 0.1s, padding 2s ease-in-out 0.1s;
+}
+
+/* Style the top navigation bar */
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+  grid-row-start: 2;
+  grid-column: 1 / span 3;
+}
+
+/* Style the topnav links */
+.topnav a, .topnav label {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 0.875rem 1rem;
+  text-decoration: none;
+}
+
+/* Change color on hover */
+.topnav a:hover, .topnav label:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+a.align-right, label.align-right {
+  float: right;
+}
+
+/* Side panels */
+.side {
+  color: #f2f2f2;
+  background-color: #333;
+}
+
+.left {
+  grid-row-start: 3;
+  grid-column-start: 1;
+  width: 0rem;
+  padding: 0rem;
+  transition: width 2s ease-in-out 0.1s, padding 2s ease-in-out 0.1s;
+}
+
+.middle {
+  grid-row-start: 3;
+  grid-column-start: 2;
+}
+
+/* Configure the central frame */
+.site {
+  width: 100%;
+  height: 100%;
+}
+
+.right {
+  grid-row-start: 3;
+  grid-column-start: 3;
+  width: 0rem;
+  padding: 0rem;
+  transition: width 2s ease-in-out 0.1s, padding 2s ease-in-out 0.1s;
+}
+
+/* Style the footer */
+.footer {
+  color: #f2f2f2;
+  background-color: #333;
+  text-align: center;
+  grid-row-start: 4;
+  grid-column: 1 / span 3;
+  height: 0rem;
+  padding: 0rem;
+  transition: height 2s ease-in-out 0.1s, padding 2s ease-in-out 0.1s;
+}
+
+.header h1, .footer h1, .left h2, .right h2, .left p, .right p {
+  visibility: hidden;
+  opacity: 0;
+  margin: 0rem;
+  transition: opacity 1.25s ease-in-out 0.8s, margin 2s ease-in-out 0.1s, visibility 0.1s ease-in-out 0s;
+}
+
+#top-toggle:checked ~ .header, #bottom-toggle:checked ~ .footer {
+  height: calc(7.6166875rem);
+  padding: 1.25rem;
+}
+
+#left-toggle:checked ~ .left {
+  width: calc(7.6166875rem + 2.9375rem);
+  padding: 0.625rem;
+}
+
+#right-toggle:checked ~ .right {
+  width: calc(7.6166875rem + 2.9375rem - 1rem);
+  padding: 0.625rem;
+}
+
+#top-toggle:checked ~ .header h1, #bottom-toggle:checked ~ .footer h1 {
+  visibility: visible;
+  opacity: 1;
+  margin: 1.34rem 0rem;
+}
+
+#left-toggle:checked ~ .left h2, #right-toggle:checked ~ .right h2 {
+  visibility: visible;
+  opacity: 1;
+  margin: calc(1.245rem) 0rem;
+}
+
+#left-toggle:checked ~ .left p, #right-toggle:checked ~ .right p {
+  visibility: visible;
+  opacity: 1;
+  margin: 1rem 0rem;
+}
+
+/* Clear floats after the columns */
+.grid:after {
+  content: "";
+  display: table;
+  clear: both;
+}
