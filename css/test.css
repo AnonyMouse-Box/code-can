@@ -1,0 +1,140 @@
+#background {
+    background: url("../misc/DSC_0095.JPG") fixed;
+    background-size: 100%;
+    opacity: 0.4;
+    z-index: -1;
+}
+
+#collapse-side {
+    width: 0rem;
+}
+
+#collapse-top {
+    height: 0rem;
+}
+
+#disappear {
+    z-index: -2;
+    opacity: 0;
+}
+
+#last {
+    padding: 0.7rem 0.8rem;
+}
+
+#item_1:hover #dropdown_1, #item_2:hover #dropdown_2 {
+    display: table;
+}
+
+.button {
+    z-index: 99;
+}
+
+.bottom {
+    bottom: 0rem;
+}
+
+.content {
+    top: 5.4rem;
+    left: 6.4rem;
+    right: 1rem;
+    z-index: 0;
+    position: absolute;
+}
+
+.hide-side {
+    left: 1rem;
+}
+
+.label {
+    text-decoration: none;
+    display: block;
+}
+
+.menu {
+    top: 1.8rem;
+    list-style-type: none;
+}
+
+.quote {
+    left: calc(50% - 12.33rem);
+    font-size: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.right {
+    right: 0rem;
+}
+
+.title {
+    margin: 0.7rem;
+    top: 1rem;
+}
+
+.dropdown, #hide {
+    display: none;
+}
+
+.button, .item, .label {
+    padding: 0.7rem;
+    cursor: pointer;
+}
+
+.button:hover, .item:hover, .label:hover {
+    background-color: #007FFF;
+}
+
+.menu, .quote {
+    display: inline-flex;
+    position: inherit;
+}
+
+aside {
+    width: 5.4rem;
+    z-index: 1;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+nav {
+    height: 5.4rem;
+    z-index: 2;
+}
+
+aside, #background {
+    height: 100%;
+}
+
+nav, #background {
+    width: 100%;
+}
+
+aside, nav {
+    overflow: auto;
+}
+
+aside, nav, .button, .content {
+    transition: 0.5s;
+}
+
+aside, nav, .button, .dropdown {
+    background-color: #0d0d0d;
+}
+
+aside, nav, .button, .label {
+    color: #f2f2e2;
+}
+
+aside, nav, .button, .title, #background {
+    position: fixed;
+}
+
+aside, nav, .hide-top, .quote, .top-unhide, #background {
+    top: 0rem;
+}
+
+aside, nav, .left, #background {
+    left: 0rem;
+}
