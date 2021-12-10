@@ -2,3 +2,5 @@ A repository for all those thoughts, random ideas, bits, bobs, and pieces of cod
 
 ##### Web Development Environments
 * [Hello](https://github.enim.ga/code-can/html/hello)
+* [Index](https://github.enim.ga/code-can/html/index)
+* [Progress](https://github.enim.ga/code-can/html/progress)
