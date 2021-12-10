@@ -7,3 +7,4 @@ A repository for all those thoughts, random ideas, bits, bobs, and pieces of cod
 * [Index](https://github.enim.ga/code-can/html/index)
 * [Progress](https://github.enim.ga/code-can/html/progress)
 * [Bootstrap](https://github.enim.ga/code-can/html/bootstrap)
+* [Javascript](https://github.enim.ga/code-can/html/javascript)
