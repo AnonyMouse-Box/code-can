@@ -1,0 +1,5 @@
+theme: jekyll-theme-slate
+title: Code-Can
+description: a dumping ground for miscellaneous code
+permalink: pretty
+show_downloads: false
