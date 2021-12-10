@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Clicktopia!</title>
+    <link type="text/css" rel="stylesheet" href="../css/javascript.css">
+  </head>
+  <body>
+    <div id="background"></div>
+    <p align="center">Downloading progress: <progress id="demo" title="0" value="0" max="100"></progress> <button type="button" onclick="progress('demo')">Click Me!</button></p>
+    <svg class="circle" width="100" height="100"><circle cx="50" cy="50" r="40" fill="yellow" />
+      Sorry, your browser does not support inline SVG.
+    </svg>
+    <br /><br />
+    <form action="../javascript/click.js">
+      <input type="text" id="fname" name="fname"><br /><br />
+      <input type="submit" value="Submit">
+    </form>
+    <script src="../javascript/click.js"></script>
+  </body>
+</html>
