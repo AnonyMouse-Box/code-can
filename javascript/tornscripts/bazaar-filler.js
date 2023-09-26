@@ -13,7 +13,7 @@
 // @grant        GM_registerMenuCommand 
 // ==/UserScript==
 // This is a modified version of the script to allow more accessible functionality of the price management.
-// Modifications written and tested by V1rul3nt_Sm0g [2861188] and the modified script can be found here 
+// Modifications written and tested by V1rul3nt_Sm0g [2861188] and the modified script can be found here https://github.com/AnonyMouse-Box/code-can/blob/main/javascript/tornscripts/bazaar-filler.js
 
 (function() {
     'use strict';
