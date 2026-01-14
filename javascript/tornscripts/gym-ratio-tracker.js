@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Gym Ratio Tracker
-// @version      3.0.1
+// @version      3.0.2
 // @description  Monitors battle stat ratios and provides warnings if they approach levels that would preclude access to special gyms
 // @author       V1rul3nt_Sm0g [2861188]
 // @include      *.torn.com/gym.php*
@@ -55,29 +55,18 @@ function loadGym() {
             };
 
             const getStats = function ($doc) {
-                // August 25, 2024: Fix provided by Bennie [2668825] for change in gym page HTML.
-                const stats = {};
+                const ReplaceStatValueAndReturnCleanNumber = function (query) {
+                    const $statTotalElement = $doc.find(query);
+                    if ($statTotalElement.size() === 0) throw 'No element found with id "' + elementId + '".';
+                    return cleanNumber($statTotalElement.text());
+                };
                 $doc = $($doc || document);
-
-                $doc
-                    .find(
-                        'h3:contains("Strength"), h3:contains("Defense"), h3:contains("Speed"), h3:contains("Dexterity")'
-                    )
-                    .each(function () {
-                        const statName = $(this).text().toLowerCase();
-                        const statValue = cleanNumber($(this).siblings("span").first().text());
-
-                        if (
-                            statName === "strength" ||
-                            statName === "defense" ||
-                            statName === "speed" ||
-                            statName === "dexterity"
-                        ) {
-                            stats[statName] = statValue;
-                        }
-                    });
-
-                return stats;
+                return {
+                    strength: ReplaceStatValueAndReturnCleanNumber("[class*=gymContent__] [class*=strength__] [class*=propertyValue__]"),
+                    defense: ReplaceStatValueAndReturnCleanNumber("[class*=gymContent__] [class*=defense__] [class*=propertyValue__]"),
+                    speed: ReplaceStatValueAndReturnCleanNumber("[class*=gymContent__] [class*=speed__] [class*=propertyValue__]"),
+                    dexterity: ReplaceStatValueAndReturnCleanNumber("[class*=gymContent__] [class*=dexterity__] [class*=propertyValue__]"),
+                };
             };
 
             const noBuildKeyValue = {value: "none", text: "No specialty gyms"};
