@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Gym Ratio Tracker
-// @version      3.0
+// @version      3.0-00000
 // @description  Monitors battle stat ratios and provides warnings if they approach levels that would preclude access to special gyms
 // @author       V1rul3nt_Sm0g [2861188]
 // @include      *.torn.com/gym.php*
