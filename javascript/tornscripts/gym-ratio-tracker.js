@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Gym Ratio Tracker
-// @version      3.0-00000
+// @version      3.0-00001
 // @description  Monitors battle stat ratios and provides warnings if they approach levels that would preclude access to special gyms
 // @author       V1rul3nt_Sm0g [2861188]
 // @include      *.torn.com/gym.php*
@@ -15,21 +15,21 @@ function loadGym() {
     if (statSafeDistance === null) {
         statSafeDistance = 1000000;
     }
-    
+
     // A second method, "Baldr's Ratio", is in this code, but the ability to select it has been
     // deliberately excluded for public release. This has been done for clarity, as there is
     // no accompanying information about what this ratio is. Those who would like to use it,
     // which unlocks a specialty gym that is one of the same stats as a combo gym
     // (e.g.: Frontline Fitness (str/spd) and Gym 3000 (str), can uncomment the lines of code
     // adding those options to $specialistGymBuild.
-    
+
     jQuery
         .noConflict(true)(document)
         $(function ($) {
             const cleanNumber = function (a) {
                 return Number(a.replace(/[$,]/g, "").trim());
             };
-    
+
             /**
              * Formats a number into an abbreviated string with an appropriate trailing descriptive unit
              * up to 't' for trillion.
@@ -44,21 +44,21 @@ function loadGym() {
                 abbreviations[2] = "M";
                 abbreviations[3] = "B";
                 abbreviations[4] = "T";
-    
+
                 let outputNumber = number;
                 let abbreviationIndex = 0;
                 for (; outputNumber >= 1000 && abbreviationIndex < abbreviations.length; ++abbreviationIndex) {
                     outputNumber = outputNumber / 1000;
                 }
-    
+
                 return (outputNumber.toLocaleString("EN", {maximumFractionDigits: maxFractionDigits,}) + abbreviations[abbreviationIndex]);
             };
-    
+
             const getStats = function ($doc) {
                 // August 25, 2024: Fix provided by Bennie [2668825] for change in gym page HTML.
                 const stats = {};
                 $doc = $($doc || document);
-    
+
                 $doc
                     .find(
                         'h3:contains("Strength"), h3:contains("Defense"), h3:contains("Speed"), h3:contains("Dexterity")'
@@ -66,7 +66,7 @@ function loadGym() {
                     .each(function () {
                         const statName = $(this).text().toLowerCase();
                         const statValue = cleanNumber($(this).siblings("span").first().text());
-    
+
                         if (
                             statName === "strength" ||
                             statName === "defense" ||
@@ -76,10 +76,10 @@ function loadGym() {
                             stats[statName] = statValue;
                         }
                     });
-    
+
                 return stats;
             };
-    
+
             const noBuildKeyValue = {value: "none", text: "No specialty gyms"};
             const defenseDexterityGymKeyValue = {
                 value: "balboas", text: "Defense and dexterity specialist",
@@ -125,7 +125,7 @@ function loadGym() {
                 value: "elites", text: "Dexterity specialist (Hank's Ratio)",
                 stat: "dexterity", combogym: strengthSpeedGymKeyValue,
             };
-    
+
             function GetStoredGymKeyValuePair() {
                 if (localStorage.specialistGymType === defenseDexterityGymKeyValue.value) return defenseDexterityGymKeyValue;
                 if (localStorage.specialistGymType === strengthSpeedGymKeyValue.value) return strengthSpeedGymKeyValue;
@@ -140,20 +140,25 @@ function loadGym() {
                 if (localStorage.specialistGymType === dexterityGymKeyValue.value) return dexterityGymKeyValue;
                 return noBuildKeyValue;
             }
-    
-            const $hanksRatioDiv = $("<div></div>");
+
+            // Get rid of box before re-adding, which is an issue for iOS
+            for (let box of document.querySelectorAll('.hank-box')) {
+                box.remove();
+            }
+
+            const $hanksRatioDiv = $('<div></div>', {'class': 'hank-box'});
             const $titleDiv = $("<div>", {
-                class: "title-black top-round",
+                "class": "title-black top-round",
                 "aria-level": "5",
-                text: "Gym Ratios",
+                "text": "Gym Ratios",
             }).css("margin-top", "10px");
             $hanksRatioDiv.append($titleDiv);
             const $bottomDiv = $('<div class="bottom-round gym-box cont-gray p10"></div>');
             $bottomDiv.append($('<p class="sub-title">Select desired specialist build:</p>'));
-            const $specialistGymBuild = $("<select>", {class: "vinkuun-enemeyDifficulty",
-            }).css("margin-top", "10px").on("change", function () {
+            const $specialistGymBuild = $("<select>", {"class": "vinkuun-enemeyDifficulty",}).css("margin-top", "10px").on("change", function () {
                 localStorage.specialistGymType = $specialistGymBuild.val();
             });
+
             $specialistGymBuild.append($("<option>", noBuildKeyValue));
             $specialistGymBuild.append($("<option>", customDefenseBuildKeyValue));
             $specialistGymBuild.append($("<option>", defenseDexterityGymKeyValue));
@@ -175,7 +180,7 @@ function loadGym() {
             $bottomDiv.append($specialistGymBuild);
             $hanksRatioDiv.append($bottomDiv);
             $("#gymroot").append($hanksRatioDiv);
-    
+
             let oldTotal = 0;
             let oldBuild = "";
             setInterval(function () {
@@ -189,13 +194,13 @@ function loadGym() {
                     }
                 }
                 const currentBuild = $specialistGymBuild.val();
-    
+
                 if (oldTotal === total && oldBuild === currentBuild && $(".gymstatus").size() !== 0) {
                     return;
                 }
-    
+
                 const $statContainers = $('[class^="gymContent__"], [class*=" gymContent__"]').find("li");
-    
+
                 if (currentBuild === noBuildKeyValue.value) {
                     // Clear the training info in case it exists.
                     $statContainers.each(function (index, element) {
@@ -205,26 +210,26 @@ function loadGym() {
                     });
                     return;
                 }
-    
-                const isComboGymOnlyRatio =
+
+                const isComboGymOnlyRatio = (
                     localStorage.specialistGymType === defenseDexterityGymKeyValue.value ||
-                    localStorage.specialistGymType === strengthSpeedGymKeyValue.value;
-                const isComboGymCombinedRatio =
+                    localStorage.specialistGymType === strengthSpeedGymKeyValue.value);
+                const isComboGymCombinedRatio = (
                     localStorage.specialistGymType === strengthComboGymKeyValue.value ||
                     localStorage.specialistGymType === defenseComboGymKeyValue.value ||
                     localStorage.specialistGymType === speedComboGymKeyValue.value ||
-                    localStorage.specialistGymType === dexterityComboGymKeyValue.value;
-                const isSingleGymRatio =
+                    localStorage.specialistGymType === dexterityComboGymKeyValue.value);
+                const isSingleGymRatio = (
                     localStorage.specialistGymType === strengthGymKeyValue.value ||
                     localStorage.specialistGymType === defenseGymKeyValue.value ||
                     localStorage.specialistGymType === speedGymKeyValue.value ||
-                    localStorage.specialistGymType === dexterityGymKeyValue.value;
-                const isCustomDefenseRatio =
-                    localStorage.specialistGymType === customDefenseBuildKeyValue.value;
-    
+                    localStorage.specialistGymType === dexterityGymKeyValue.value);
+                const isCustomDefenseRatio = (
+                    localStorage.specialistGymType === customDefenseBuildKeyValue.value);
+
                 // The combined total of the primary stats must be 25% higher than the total of the secondary stats.
-                let minPrimaryComboSum = 0; // The minimum amount the combined primary stats must be to unlock the gym based on the secondary stat sum.
-                let maxSecondaryComboSum = 0; // The maximum amount the combined secondary stats must be to unlock the gym based on the primary stat sum.
+                let minPrimaryComboSum = 0;    // The minimum amount the combined primary stats must be to unlock the gym based on the secondary stat sum.
+                let maxSecondaryComboSum = 0;  // The maximum amount the combined secondary stats must be to unlock the gym based on the primary stat sum.
                 // The primary stat needs to be 25% higher than the second-highest stat.
                 let minPrimaryStat = 0;
                 let maxSecondaryStat = 0;
@@ -249,16 +254,24 @@ function loadGym() {
                 }
                 minPrimaryComboSum = (stats[comboGymKeyValuePair.secondarystat1] + stats[comboGymKeyValuePair.secondarystat2]) * 1.25;
                 maxSecondaryComboSum = (stats[comboGymKeyValuePair.stat1] + stats[comboGymKeyValuePair.stat2]) / 1.25;
-    
+
                 const distanceFromComboGymMin = minPrimaryComboSum - stats[comboGymKeyValuePair.stat1] - stats[comboGymKeyValuePair.stat2];
                 const distanceToComboGymMax = maxSecondaryComboSum - stats[comboGymKeyValuePair.secondarystat1] - stats[comboGymKeyValuePair.secondarystat2];
-    
-                $statContainers.each(function (index, element) {
+
+                $statContainers.each(function (_, element) {
                     const $element = $(element);
                     const title = $element.find('[class^="title__"], [class*=" title__"]');
                     let stat = $element.attr("zStat");
+
                     if (!stat) {
                         stat = title.text().toLowerCase();
+
+                        // Change stat for mobile stat names (Torn PDA)
+                        if (stat === "str") stat = "strength";
+                        if (stat === "dex") stat = "dexterity";
+                        if (stat === "spd") stat = "speed";
+                        if (stat === "def") stat = "defense";
+
                         $element.attr("zStat", stat);
                     }
                     if (stats[stat]) {
@@ -289,7 +302,7 @@ function loadGym() {
                         } else {
                             const distanceFromSpecialistGymMin = minPrimaryStat - stats[stat];
                             const distanceToSpecialistGymMax = maxSecondaryStat - stats[stat];
-    
+
                             let distanceToMax = 0;
                             statIdentifierString = stat.capitalizeFirstLetter();
                             if (stat === primaryGymKeyValuePair.stat) {
@@ -318,7 +331,7 @@ function loadGym() {
                                         " + " + GetStatAbbreviation(comboGymKeyValuePair.secondarystat2);
                                 }
                             }
-    
+
                             if (stat === primaryGymKeyValuePair.stat) {
                                 console.debug(stat + " distanceFromSpecialistGymMin: " + distanceFromSpecialistGymMin);
                                 console.debug(stat + " distanceToComboGymMax: " + distanceToComboGymMax);
@@ -330,7 +343,7 @@ function loadGym() {
                                 console.debug(stat + " distanceToComboGymMax: " + distanceToComboGymMax);
                             }
                             console.debug(stat + " distanceToMax: " + distanceToMax);
-    
+
                             if (stat === primaryGymKeyValuePair.stat && distanceFromSpecialistGymMin > 0) {
                                 if (isCustomDefenseRatio) {
                                     gymStatus = '<span class="gymstatus t-red bold">' + statIdentifierString + " is " + FormatAbbreviatedNumber(distanceFromSpecialistGymMin, 1) + " too low for Mr. Isoyamas! Train Defense!</span>";
@@ -353,7 +366,7 @@ function loadGym() {
                                 gymStatus = '<span class="gymstatus t-green">' + statIdentifierString + " is " + FormatAbbreviatedNumber(distanceToMax, 1) + " below the limit.</span>";
                             }
                         }
-    
+
                         const $statInfoDiv = $element.find('[class^="description__"], [class*=" description__"]');
                         const $insertedElement = $statInfoDiv.find(".gymstatus");
                         $insertedElement.remove();
@@ -365,11 +378,11 @@ function loadGym() {
                 console.debug("Stat spread updated!");
             }, 400);
         });
-    
+
     String.prototype.capitalizeFirstLetter = function () {
         return this.charAt(0).toUpperCase() + this.slice(1);
     };
-    
+
     function GetStatAbbreviation(statString) {
         if (statString === "strength") {
             return "str";
