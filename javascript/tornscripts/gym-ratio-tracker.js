@@ -9,7 +9,6 @@
 // ==/UserScript==
 
 // Based off Custom Gym Ratios by RGiskard [1953860], assistance by Xiphias [187717] - Torn PDA adaptation v1 [Manuito] https://github.com/Manuito83/torn-pda/raw/master/userscripts/Custom%20Gym%20Ratios%20(Torn%20PDA).js
-// Which was in turn based off Custom Gym Ratios by ingine [3255609] https://greasyfork.org/en/scripts/544362-custom-gym-ratios
 // Which was in turn based off Torn Gym Pony by Zanoab (http://puu.sh/jFtro/1af393771e.user.js).
 
 function loadGym() {
