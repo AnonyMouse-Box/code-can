@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Gym Ratio Tracker
-// @version      3.0.3
+// @version      3.1.0
 // @description  Monitors battle stat ratios and provides warnings if they approach levels that would preclude access to special gyms
 // @author       V1rul3nt_Sm0g [2861188]
 // @include      *.torn.com/gym.php*
@@ -8,19 +8,178 @@
 // @license      GNU
 // ==/UserScript==
 
+// Based off Custom Gym Ratios by RGiskard [1953860], assistance by Xiphias [187717] - Torn PDA adaptation v1 [Manuito] https://github.com/Manuito83/torn-pda/raw/master/userscripts/Custom%20Gym%20Ratios%20(Torn%20PDA).js
+// Which was in turn based off Custom Gym Ratios by ingine [3255609] https://greasyfork.org/en/scripts/544362-custom-gym-ratios
+// Which was in turn based off Torn Gym Pony by Zanoab (http://puu.sh/jFtro/1af393771e.user.js).
+
 function loadGym() {
-    // Maximum amount below the stat limit another stat can be before we start warning the player.
-    let statSafeDistance = localStorage.statSafeDistance;
-    if (statSafeDistance === null) {
-        statSafeDistance = 1000000;
+    let statSafeDistance = localStorage.statSafeDistance || 1000000;
+
+    let customRatios = JSON.parse(localStorage.getItem('customGymRatios')) || {
+        strength: 25, defense: 25, speed: 25, dexterity: 25
+    };
+
+    String.prototype.capitalizeFirstLetter = function () {
+        return this.charAt(0).toUpperCase() + this.slice(1);
+    };
+
+    function refreshGymStatus() {
+        const stats = getStats();
+        let total = 0;
+        for (const stat in stats) { total += stats[stat]; }
+
+        const $statContainers = $('[class^="gymContent__"], [class*=" gymContent__"]').find("li");
+        const totalRatio = customRatios.strength + customRatios.defense + customRatios.speed + customRatios.dexterity;
+
+        // Specialty Gym Threshold Math
+        const primarySum = stats.strength + stats.speed;
+        const secondarySum = stats.defense + stats.dexterity;
+        const sortedStats = Object.values(stats).sort((a, b) => b - a);
+        const secondHighest = sortedStats[1];
+
+        $statContainers.each(function (_, element) {
+            const $element = $(element);
+            let stat = $element.attr("zStat") || $element.find('[class^="title__"]').text().toLowerCase();
+
+            if (stat === "str") stat = "strength";
+            if (stat === "def") stat = "defense";
+            if (stat === "spd") stat = "speed";
+            if (stat === "dex") stat = "dexterity";
+
+            const targetValue = total * (customRatios[stat] / (totalRatio || 1));
+            const diff = stats[stat] - targetValue;
+            const absDiff = Math.abs(diff);
+            const warningThreshold = stats[stat] * 0.01; // 1% of the stat itself
+
+            let gymStatus = "";
+            const formattedDiff = FormatAbbreviatedNumber(absDiff, 1);
+            const statName = stat.capitalizeFirstLetter();
+
+            // 1. Ratio Targeting Logic (Always Visible)
+            if (absDiff <= warningThreshold) {
+                gymStatus = `<div class="gymstatus t-green bold">🎯 ${statName} is at target ratio! (±${formattedDiff})</div>`;
+            } else if (diff < 0) {
+                gymStatus = `<div class="gymstatus t-red bold">${statName} is ${formattedDiff} below target</div>`;
+            } else {
+                gymStatus = `<div class="gymstatus t-orange bold">${statName} is ${formattedDiff} over target</div>`;
+            }
+
+            // 2. Specialty Gym Access Logic (Only visible if within 1% of the threshold)
+            let gymNotifiers = [];
+
+            // Specialist Gyms (Gym 3000, Isoyamas, etc.)
+            const specialistThreshold = secondHighest * 1.25;
+            const distToSpecialist = stats[stat] - specialistThreshold;
+
+            if (Math.abs(distToSpecialist) <= warningThreshold) {
+                const gymName = stat === "strength" ? "Gym 3000" : stat === "defense" ? "Mr. Isoyamas" : stat === "speed" ? "Total Rebound" : "Elites";
+                const color = distToSpecialist >= 0 ? "t-green" : "t-red";
+                const statusText = distToSpecialist >= 0 ? `Access Active: ${gymName}` : `LOCKED: ${gymName}`;
+                gymNotifiers.push(`<span class="${color}">${statusText}</span>`);
+            }
+
+            // Combo Gyms (Frontline / Balboas)
+            if (stat === "strength" || stat === "speed") {
+                const distToFrontline = primarySum - (secondarySum * 1.25);
+                if (Math.abs(distToFrontline) <= (primarySum * 0.01)) {
+                    const color = distToFrontline >= 0 ? "t-green" : "t-red";
+                    const text = distToFrontline >= 0 ? "Frontline: OK" : "Frontline: LOCKED";
+                    gymNotifiers.push(`<span class="${color}">${text}</span>`);
+                }
+            } else if (stat === "defense" || stat === "dexterity") {
+                const distToBalboas = secondarySum - (primarySum * 1.25);
+                if (Math.abs(distToBalboas) <= (secondarySum * 0.01)) {
+                    const color = distToBalboas >= 0 ? "t-green" : "t-red";
+                    const text = distToBalboas >= 0 ? "Balboas: OK" : "Balboas: LOCKED";
+                    gymNotifiers.push(`<span class="${color}">${text}</span>`);
+                }
+            }
+
+            // 3. Append Gym Info only if we are in the 1% range
+            gymNotifiers.forEach(warn => {
+                gymStatus += `<div class="gymstatus bold" style="font-size: 11px; margin-top: 2px; border-top: 1px solid #444; padding-top: 2px;">⚠️ ${warn}</div>`;
+            });
+
+            const $info = $element.find('[class^="description__"], [class*=" description__"]');
+            $info.find(".gymstatus").remove();
+            $info.append(gymStatus);
+        });
     }
 
-    // A second method, "Baldr's Ratio", is in this code, but the ability to select it has been
-    // deliberately excluded for public release. This has been done for clarity, as there is
-    // no accompanying information about what this ratio is. Those who would like to use it,
-    // which unlocks a specialty gym that is one of the same stats as a combo gym
-    // (e.g.: Frontline Fitness (str/spd) and Gym 3000 (str), can uncomment the lines of code
-    // adding those options to $specialistGymBuild.
+    function updateAndBalanceRatios(activeStat, newValue) {
+        const stats = ['strength', 'defense', 'speed', 'dexterity'];
+        const oldValue = customRatios[activeStat];
+        const diff = newValue - oldValue;
+        customRatios[activeStat] = newValue;
+
+        const otherStats = stats.filter(s => s !== activeStat);
+        const sumOthers = otherStats.reduce((sum, s) => sum + customRatios[s], 0);
+
+        if (sumOthers > 0) {
+            otherStats.forEach(s => {
+                const share = customRatios[s] / sumOthers;
+                customRatios[s] = Math.max(0, customRatios[s] - (diff * share));
+            });
+        } else {
+            otherStats.forEach(s => {
+                customRatios[s] = Math.max(0, (100 - newValue) / 3);
+            });
+        }
+
+        const finalSum = stats.reduce((sum, s) => sum + customRatios[s], 0);
+        const correction = (100 - finalSum) / 4;
+        stats.forEach(s => {
+            customRatios[s] = Math.max(0, customRatios[s] + correction);
+            $(`#slider-${s}`).val(customRatios[s]);
+            $(`#val-${s}`).text(Math.round(customRatios[s]) + "%");
+        });
+        localStorage.setItem('customGymRatios', JSON.stringify(customRatios));
+        refreshGymStatus();
+    }
+
+    function createSliderUI($container) {
+        const stats = ['strength', 'defense', 'speed', 'dexterity'];
+        const $sliderBox = $('<div id="custom-sliders" style="margin-top: 10px; border-top: 1px solid #333; padding-top: 10px;"></div>');
+
+        stats.forEach(stat => {
+            const $wrapper = $('<div style="margin: 5px 0;"></div>');
+            const $label = $(`<label style="display:flex; justify-content: space-between; font-size: 12px;">
+            <span>${stat.capitalizeFirstLetter()}:</span>
+            <b id="val-${stat}">${Math.round(customRatios[stat])}%</b>
+        </label>`);
+
+            const $slider = $("<input>", {
+                type: "range",
+                id: `slider-${stat}`,
+                min: 0,
+                max: 100,
+                step: 1,
+                value: customRatios[stat],
+                style: "width: 100%; cursor: pointer;"
+            }).on("input", function() {
+                updateAndBalanceRatios(stat, parseInt($(this).val()));
+            });
+
+            $wrapper.append($label).append($slider);
+            $sliderBox.append($wrapper);
+        });
+
+        // Add Reset Button
+        const $resetBtn = $("<button>", {
+            text: "Reset to 25%",
+            style: "width: 100%; margin-top: 10px; cursor: pointer; padding: 5px; background: #444; color: #fff; border: 1px solid #666; border-radius: 3px;"
+        }).on("click", function() {
+            stats.forEach(s => {
+                customRatios[s] = 25;
+                $(`#slider-${s}`).val(25);
+                $(`#val-${s}`).text("25%");
+            });
+            localStorage.setItem('customGymRatios', JSON.stringify(customRatios));
+        });
+
+        $sliderBox.append($resetBtn);
+        $container.append($sliderBox);
+    }
 
         const cleanNumber = function (a) {
             return Number(a.replace(/[$,]/g, "").trim());
@@ -75,7 +234,7 @@ function loadGym() {
             stat1: "strength", stat2: "speed", secondarystat1: "defense", secondarystat2: "dexterity",
         };
         const customDefenseBuildKeyValue = {
-            value: "customdefense", text: "Custom Defense Build (Def > Str > Spd > Dex)",
+            value: "customdefense", text: "Custom Ratios",
             stat: "defense", secondarystat: "strength", combogym: strengthSpeedGymKeyValue,
         };
         const strengthComboGymKeyValue = {
@@ -163,38 +322,44 @@ function loadGym() {
         localStorage.specialistGymType = GetStoredGymKeyValuePair().value; // In case there is bad data, replace it.
         $specialistGymBuild.val(GetStoredGymKeyValuePair().value);
         $bottomDiv.append($specialistGymBuild);
+        createSliderUI($bottomDiv);
         $hanksRatioDiv.append($bottomDiv);
         $("#gymroot").append($hanksRatioDiv);
 
-        let oldTotal = 0;
-        let oldBuild = "";
-        setInterval(function () {
-            const stats = getStats();
-            let total = 0;
-            let highestSecondaryStat = 0;
-            for (const stat in stats) {
-                total += stats[stat];
-                if (GetStoredGymKeyValuePair().stat && GetStoredGymKeyValuePair().stat !== stat && stats[stat] > highestSecondaryStat) {
-                    highestSecondaryStat = stats[stat];
-                }
-            }
-            const currentBuild = $specialistGymBuild.val();
+    let oldTotal = 0;
+    let oldBuild = "";
 
-            if (oldTotal === total && oldBuild === currentBuild && $(".gymstatus").size() !== 0) {
-                return;
-            }
+    setInterval(function () {
+        const stats = getStats();
+        let total = 0;
+        for (const stat in stats) { total += stats[stat]; }
 
-            const $statContainers = $('[class^="gymContent__"], [class*=" gymContent__"]').find("li");
+        const currentBuild = $specialistGymBuild.val();
 
-            if (currentBuild === noBuildKeyValue.value) {
-                // Clear the training info in case it exists.
-                $statContainers.each(function (index, element) {
-                    const $statInfoDiv = $(element).find('[class^="description__"], [class*=" description__"]');
-                    const $insertedElement = $statInfoDiv.find(".gymstatus");
-                    $insertedElement.remove();
-                });
-                return;
+        // Toggle Slider Visibility
+        if (currentBuild === "customdefense") { $('#custom-sliders').show(); }
+        else { $('#custom-sliders').hide(); }
+
+        if (oldTotal === total && oldBuild === currentBuild && $(".gymstatus").length !== 0) return;
+
+        const $statContainers = $('[class^="gymContent__"], [class*=" gymContent__"]').find("li");
+
+        // 1. CUSTOM LOGIC
+        if (currentBuild === "customdefense") {
+            refreshGymStatus();
+            oldTotal = total;
+            oldBuild = currentBuild;
+            return;
+        }
+
+        // 2. LEGACY LOGIC (Only runs if not custom)
+        const activeBuild = GetStoredGymKeyValuePair();
+        let highestSecondaryStat = 0;
+        for (const stat in stats) {
+            if (activeBuild.stat && activeBuild.stat !== stat && stats[stat] > highestSecondaryStat) {
+                highestSecondaryStat = stats[stat];
             }
+        }
 
             const isComboGymOnlyRatio = (
                 localStorage.specialistGymType === defenseDexterityGymKeyValue.value ||
@@ -209,8 +374,6 @@ function loadGym() {
                 localStorage.specialistGymType === defenseGymKeyValue.value ||
                 localStorage.specialistGymType === speedGymKeyValue.value ||
                 localStorage.specialistGymType === dexterityGymKeyValue.value);
-            const isCustomDefenseRatio = (
-                localStorage.specialistGymType === customDefenseBuildKeyValue.value);
 
             // The combined total of the primary stats must be 25% higher than the total of the secondary stats.
             let minPrimaryComboSum = 0;    // The minimum amount the combined primary stats must be to unlock the gym based on the secondary stat sum.
@@ -226,12 +389,6 @@ function loadGym() {
                 primaryGymKeyValuePair = GetStoredGymKeyValuePair();
                 comboGymKeyValuePair = primaryGymKeyValuePair.combogym;
                 minPrimaryStat = highestSecondaryStat * 1.25;
-                maxSecondaryStat = stats[primaryGymKeyValuePair.stat] / 1.25;
-            } else if (isCustomDefenseRatio) {
-                primaryGymKeyValuePair = GetStoredGymKeyValuePair();
-                comboGymKeyValuePair = primaryGymKeyValuePair.combogym;
-                // For custom defense build, we want defense to be 25% higher than strength (second highest)
-                minPrimaryStat = stats[primaryGymKeyValuePair.secondarystat] * 1.25;
                 maxSecondaryStat = stats[primaryGymKeyValuePair.stat] / 1.25;
             } else {
                 console.debug("Somehow attempted to calculate stat requirements for invalid gym: " + GetStoredGymKeyValuePair());
@@ -292,7 +449,7 @@ function loadGym() {
                         statIdentifierString = stat.capitalizeFirstLetter();
                         if (stat === primaryGymKeyValuePair.stat) {
                             if (distanceFromSpecialistGymMin <= 0) {
-                                if (isSingleGymRatio || isCustomDefenseRatio) {
+                                if (isSingleGymRatio) {
                                     // Specialist stat for Hank's Gym Ratio is never one of the primary combo stats.
                                     // Only set the identifier if we don't already know this stat is too low to unlock its own specific gym.
                                     distanceToMax = distanceToComboGymMax;
@@ -330,20 +487,12 @@ function loadGym() {
                         console.debug(stat + " distanceToMax: " + distanceToMax);
 
                         if (stat === primaryGymKeyValuePair.stat && distanceFromSpecialistGymMin > 0) {
-                            if (isCustomDefenseRatio) {
-                                gymStatus = '<span class="gymstatus t-red bold">' + statIdentifierString + " is " + FormatAbbreviatedNumber(distanceFromSpecialistGymMin, 1) + " too low for Mr. Isoyamas! Train Defense!</span>";
-                            } else {
-                                gymStatus = '<span class="gymstatus t-red bold">' + statIdentifierString + " is " + FormatAbbreviatedNumber(distanceFromSpecialistGymMin, 1) + " too low!</span>";
-                            }
+                            gymStatus = '<span class="gymstatus t-red bold">' + statIdentifierString + " is " + FormatAbbreviatedNumber(distanceFromSpecialistGymMin, 1) + " too low!</span>";
                         } else if (distanceToMax < 0) {
-                            if (stat === primaryGymKeyValuePair.stat && (isComboGymCombinedRatio || isCustomDefenseRatio)) {
+                            if (stat === primaryGymKeyValuePair.stat && (isComboGymCombinedRatio)) {
                                 gymStatus = '<span class="gymstatus t-green">' + statIdentifierString + " is " + FormatAbbreviatedNumber(-distanceToMax, 1) + " above the limit.</span>";
                             } else {
-                                if (isCustomDefenseRatio && stat === primaryGymKeyValuePair.secondarystat) {
-                                    gymStatus = '<span class="gymstatus t-red bold">' + statIdentifierString + " is " + FormatAbbreviatedNumber(-distanceToMax, 1) + " too high! Will lock you out of Mr. Isoyamas!</span>";
-                                } else {
-                                    gymStatus = '<span class="gymstatus t-red bold">' + statIdentifierString + " is " + FormatAbbreviatedNumber(-distanceToMax, 1) + " too high!</span>";
-                                }
+                                gymStatus = '<span class="gymstatus t-red bold">' + statIdentifierString + " is " + FormatAbbreviatedNumber(-distanceToMax, 1) + " too high!</span>";
                             }
                         } else if (distanceToMax < statSafeDistance) {
                             gymStatus = '<span class="gymstatus t-red bold">' + statIdentifierString + " is " + FormatAbbreviatedNumber(distanceToMax, 1) + " below the limit.</span>";
@@ -358,14 +507,9 @@ function loadGym() {
                     $statInfoDiv.append(gymStatus);
                 }
             });
-            oldTotal = total;
-            oldBuild = currentBuild;
+            oldTotal = total; oldBuild = currentBuild;
             console.debug("Stat spread updated!");
         }, 400);
-
-    String.prototype.capitalizeFirstLetter = function () {
-        return this.charAt(0).toUpperCase() + this.slice(1);
-    };
 
     function GetStatAbbreviation(statString) {
         if (statString === "strength") {
