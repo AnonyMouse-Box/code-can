@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Gym Ratio Tracker
-// @version      3.1.0
+// @version      3.1.1
 // @description  Monitors battle stat ratios and provides warnings if they approach levels that would preclude access to special gyms
 // @author       V1rul3nt_Sm0g [2861188]
 // @include      *.torn.com/gym.php*
@@ -110,6 +110,7 @@ function loadGym() {
         const stats = ['strength', 'defense', 'speed', 'dexterity'];
         const oldValue = customRatios[activeStat];
         const diff = newValue - oldValue;
+
         customRatios[activeStat] = newValue;
 
         const otherStats = stats.filter(s => s !== activeStat);
@@ -128,11 +129,14 @@ function loadGym() {
 
         const finalSum = stats.reduce((sum, s) => sum + customRatios[s], 0);
         const correction = (100 - finalSum) / 4;
+
         stats.forEach(s => {
             customRatios[s] = Math.max(0, customRatios[s] + correction);
+            // Update both slider and input box to stay in sync
             $(`#slider-${s}`).val(customRatios[s]);
-            $(`#val-${s}`).text(Math.round(customRatios[s]) + "%");
+            $(`#input-${s}`).val(Math.round(customRatios[s]));
         });
+
         localStorage.setItem('customGymRatios', JSON.stringify(customRatios));
         refreshGymStatus();
     }
@@ -142,12 +146,30 @@ function loadGym() {
         const $sliderBox = $('<div id="custom-sliders" style="margin-top: 10px; border-top: 1px solid #333; padding-top: 10px;"></div>');
 
         stats.forEach(stat => {
-            const $wrapper = $('<div style="margin: 5px 0;"></div>');
-            const $label = $(`<label style="display:flex; justify-content: space-between; font-size: 12px;">
-            <span>${stat.capitalizeFirstLetter()}:</span>
-            <b id="val-${stat}">${Math.round(customRatios[stat])}%</b>
-        </label>`);
+            const $wrapper = $('<div style="margin: 8px 0;"></div>');
 
+            // Label and Input Box on one line
+            const $labelRow = $(`
+            <div style="display:flex; justify-content: space-between; align-items: center; font-size: 12px; margin-bottom: 4px;">
+                <span style="color: #ccc;">${stat.capitalizeFirstLetter()}:</span>
+                <div style="display: flex; align-items: center;">
+                    <input type="number" id="input-${stat}" min="0" max="100" 
+                        value="${Math.round(customRatios[stat])}" 
+                        style="width: 40px; background: #111; color: #fff; border: 1px solid #444; text-align: center; border-radius: 3px; font-size: 11px; padding: 2px;">
+                    <span style="margin-left: 3px; color: #888;">%</span>
+                </div>
+            </div>
+        `);
+
+            // Handle typing in the box
+            $labelRow.find('input').on("change", function() {
+                let val = parseInt($(this).val());
+                if (isNaN(val)) val = 0;
+                val = Math.max(0, Math.min(100, val));
+                updateAndBalanceRatios(stat, val);
+            });
+
+            // The Slider underneath
             const $slider = $("<input>", {
                 type: "range",
                 id: `slider-${stat}`,
@@ -155,26 +177,27 @@ function loadGym() {
                 max: 100,
                 step: 1,
                 value: customRatios[stat],
-                style: "width: 100%; cursor: pointer;"
+                style: "width: 100%; cursor: pointer; height: 12px;"
             }).on("input", function() {
                 updateAndBalanceRatios(stat, parseInt($(this).val()));
             });
 
-            $wrapper.append($label).append($slider);
+            $wrapper.append($labelRow).append($slider);
             $sliderBox.append($wrapper);
         });
 
-        // Add Reset Button
+        // Reset Button
         const $resetBtn = $("<button>", {
-            text: "Reset to 25%",
-            style: "width: 100%; margin-top: 10px; cursor: pointer; padding: 5px; background: #444; color: #fff; border: 1px solid #666; border-radius: 3px;"
+            text: "Reset to 25% Equal",
+            style: "width: 100%; margin-top: 10px; cursor: pointer; padding: 6px; background: #333; color: #fff; border: 1px solid #555; border-radius: 3px; font-size: 11px;"
         }).on("click", function() {
             stats.forEach(s => {
                 customRatios[s] = 25;
                 $(`#slider-${s}`).val(25);
-                $(`#val-${s}`).text("25%");
+                $(`#input-${s}`).val(25);
             });
             localStorage.setItem('customGymRatios', JSON.stringify(customRatios));
+            refreshGymStatus();
         });
 
         $sliderBox.append($resetBtn);
